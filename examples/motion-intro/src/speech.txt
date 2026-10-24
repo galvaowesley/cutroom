@@ -1,7 +1,13 @@
-cutroom. Fifteen skills that turn data and docs into decks, live diagrams, and isometric figures.
+cutroom.
 
-Scripted math and motion videos, brand systems, local voice cloning in twenty-three languages, and earshot sound design.
+A Swiss army knife, with fifteen skills, for making media.
 
-Compatible with six coding agents: Claude Code, Cursor, Codex, Antigravity, Gemini, and Kiro. Local, pinned, and parallel.
+Slides, diagrams, three-D figures, and document extraction.
 
-To start, just give the repository link to your coding agent, and let it configure cutroom.
+Math and motion videos, brands, local voice in twenty-three languages, and sound effects.
+
+Works with six coding agents: Claude Code, Cursor, Codex, Antigravity, Gemini, and Kiro.
+
+To install, just send the repository link to your agent, and let it configure everything.
+
+cutroom. Every piece cut on your machine.

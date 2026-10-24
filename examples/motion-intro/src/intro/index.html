@@ -1,295 +1,386 @@
 <!doctype html>
-<html lang="en" data-resolution="landscape">
+<html lang="en" data-resolution="portrait">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1920, height=1080" />
-    <title>cutroom — capabilities, agents and setup</title>
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>cutroom — vertical intro</title>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="assets/cutroom_motionkit.js"></script>
     <link rel="stylesheet" href="assets/brand/tokens.css" />
     <link rel="stylesheet" href="assets/brand/fonts.css" />
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #16072b; }
-      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Inter", sans-serif; }
-      .scene { position: absolute; inset: 0; overflow: hidden; }
-      .pad { position: absolute; inset: 0; padding: 76px 110px; display: flex; flex-direction: column; justify-content: space-between; }
-      .top-row, .cap-head { display: flex; align-items: center; justify-content: space-between; }
-      .eyebrow { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 24px; letter-spacing: 0.12em; text-transform: uppercase; }
-      .pill-tag { font-family: "JetBrains Mono NL", monospace; font-size: 22px; padding: 10px 22px; border-radius: 999px; font-weight: 600; }
-      .headline { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 68px; line-height: 1.04; letter-spacing: -0.025em; margin-top: 12px; }
-      .grid4 { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 28px; height: 700px; margin-top: 24px; }
-      .cap-card { border-radius: 26px; padding: 28px 34px; display: flex; flex-direction: column; justify-content: space-between; position: relative; overflow: hidden; }
-      .cap-title { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 36px; letter-spacing: -0.01em; }
-      .cap-skill { font-family: "JetBrains Mono NL", monospace; font-size: 20px; padding: 6px 14px; border-radius: 10px; }
-      .cap-stage { position: relative; height: 205px; border-radius: 18px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #16072b; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; }
+      .clip { position: absolute; inset: 0; }
+      .sc { position: absolute; inset: 0; overflow: hidden; }
+      .dark { background: #16072b; color: #fff7fa; }
+      .light { background: #fff7fa; color: #16072b; }
+      .grid { position: absolute; left: 0; top: -260px; width: 1080px; height: 2500px;
+        background-image: linear-gradient(rgba(255,255,255,0.055) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.055) 2px, transparent 2px);
+        background-size: 90px 90px; }
+      .glow { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,45,111,0.42) 0%, rgba(255,45,111,0) 68%); }
 
-      #s1, #s3, #s4 { background: #16072b; color: #ffffff; }
-      #s1 .eyebrow, #s3 .eyebrow { color: #ff9bc0; }
-      #s1 .pill-tag { background: #291247; color: #ffc43d; border: 2px solid #ff2d6f; }
-      #s1 .headline span { color: #ff2d6f; }
-      #s1 .cap-card { background: #210c3d; border: 2px solid #3d1d66; }
-      #s1 .cap-skill { background: #16072b; color: #ff9bc0; }
-      #s1 .cap-stage { background: #16072b; border: 1px solid #35175c; }
-      #s1-logo { height: 56px; width: auto; }
+      /* kinetic words: each word rises out of a mask */
+      .ln { display: block; white-space: nowrap; }
+      .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.08em 0.05em; margin: -0.08em -0.05em; }
+      .w i { display: inline-block; font-style: normal; }
+      .hl { font-family: "Bricolage Grotesque"; font-weight: 800; letter-spacing: -0.03em; line-height: 1.04; }
+      .pk { color: #ff2d6f; }
+      .mono { font-family: "JetBrains Mono NL", monospace; }
+      .eyebrow { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 26px; letter-spacing: 0.14em; text-transform: uppercase; }
+      .pill { font-family: "JetBrains Mono NL", monospace; font-weight: 700; font-size: 22px; padding: 10px 22px; border-radius: 999px; }
 
-      .deck-bars { display: flex; align-items: flex-end; gap: 18px; height: 150px; padding-bottom: 10px; }
-      .deck-bars i { width: 48px; border-radius: 8px 8px 0 0; background: #ff2d6f; display: block; transform-origin: 50% 100%; }
-      .deck-bars i.hi { background: #ffc43d; }
-      .deck-kpi { margin-left: 42px; text-align: left; }
-      .deck-kpi b { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 64px; color: #ffc43d; display: block; line-height: 1; }
-      .deck-kpi span { font-size: 22px; color: #e2d4f0; }
+      /* S1 */
+      #wm { position: absolute; left: 0; top: 0; width: 780px; height: auto; }
+      #ring { position: absolute; left: 540px; top: 930px; width: 0; height: 0; }
+      .chip { position: absolute; left: -62px; top: -62px; width: 124px; height: 124px; border-radius: 36px; background: #fff7fa; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 44px rgba(0,0,0,0.4); }
+      .chip img { width: 66px; height: 66px; }
+      #count { position: absolute; left: 0; top: 780px; width: 1080px; text-align: center; }
+      #count b { display: block; font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 300px; line-height: 0.9; letter-spacing: -0.04em; color: #ff2d6f; }
+      #count span { display: block; margin-top: 14px; font-size: 28px; color: #ff9bc0; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; font-family: "JetBrains Mono NL", monospace; }
+      #s1txt { position: absolute; left: 72px; right: 72px; top: 1420px; font-size: 96px; }
 
-      .ext-wrap { display: flex; align-items: center; gap: 34px; width: 100%; padding: 0 36px; justify-content: space-between; }
-      .pdf-doc { width: 140px; height: 164px; background: #2b134d; border: 2px solid #ff9bc0; border-radius: 12px; padding: 18px; position: relative; display: flex; flex-direction: column; gap: 12px; }
-      .pdf-doc i { height: 12px; border-radius: 4px; background: #9b84b8; display: block; }
-      #laser { position: absolute; left: 0; right: 0; top: 16px; height: 6px; background: #ff2d6f; border-radius: 3px; }
-      .md-out { flex: 1; background: #230e40; border: 2px solid #ffc43d; border-radius: 12px; padding: 16px 22px; font-family: "JetBrains Mono NL", monospace; font-size: 21px; color: #ffffff; line-height: 1.5; }
-      .md-out b { color: #ffc43d; }
+      /* S2 feed */
+      #feed { position: absolute; left: 72px; top: 0; width: 936px; }
+      .card { position: absolute; left: 0; width: 936px; height: 400px; border-radius: 44px; background: #fff; border: 2px solid #f2dde6; box-shadow: 0 24px 60px rgba(130,20,60,0.08); padding: 34px 40px; overflow: hidden; }
+      .card .hl2 { position: absolute; inset: 0; border-radius: 44px; border: 4px solid #ff2d6f; opacity: 0; pointer-events: none; }
+      .chead { display: flex; align-items: center; gap: 22px; height: 84px; }
+      .cic { width: 76px; height: 76px; border-radius: 22px; background: #ffe9f0; display: flex; align-items: center; justify-content: center; }
+      .cic img { width: 46px; height: 46px; }
+      .ctitle { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 50px; letter-spacing: -0.02em; flex: 1; }
+      .ctag { font-family: "JetBrains Mono NL", monospace; font-size: 22px; color: #7e7088; }
+      .st { position: absolute; left: 40px; right: 40px; top: 142px; bottom: 28px; }
+      #hdr { position: absolute; left: 0; top: 0; width: 1080px; height: 300px; background: linear-gradient(#fff7fa 62%, rgba(255,247,250,0)); z-index: 5; padding: 96px 72px 0 72px; }
+      #hdr .row { display: flex; justify-content: space-between; align-items: center; }
+      #hdr .eyebrow { color: #c91453; }
+      #hdr .pill { background: #ffe9f0; color: #ff2d6f; border: 1px solid #ffd0e0; }
 
-      #s2 { background: #fff7fa; color: #16072b; }
-      #s2 .eyebrow, #s2 .headline span { color: #c91453; }
-      #s2 .pill-tag { background: #16072b; color: #ffc43d; }
-      #s2 .cap-card { background: #ffffff; border: 2px solid #e8cad7; }
-      #s2 .cap-skill { background: #16072b; color: #ffffff; }
-      #s2 .cap-stage { background: #16072b; color: #ffffff; }
+      .bars { display: flex; align-items: flex-end; gap: 20px; height: 100%; }
+      .bars i { width: 54px; background: #ff2d6f; border-radius: 10px 10px 0 0; transform-origin: bottom; display: block; }
+      .kpi { position: absolute; right: 0; top: 10px; font-family: "JetBrains Mono NL", monospace; font-weight: 700; font-size: 62px; color: #c91453; background: #ffe9f0; padding: 14px 30px; border-radius: 20px; }
+      .pdf { position: absolute; left: 0; top: 0; width: 230px; height: 220px; border-radius: 18px; background: #fff; border: 3px solid #ff9bc0; padding: 22px; overflow: hidden; }
+      .pdf i { display: block; height: 12px; background: #e6d7e0; border-radius: 6px; margin-bottom: 14px; }
+      #laser { position: absolute; left: 0; right: 0; top: 0; height: 6px; background: #ff2d6f; box-shadow: 0 0 22px #ff2d6f; }
+      .md { position: absolute; left: 270px; right: 0; top: 0; bottom: 0; background: #16072b; border-radius: 18px; padding: 22px 28px; font-family: "JetBrains Mono NL", monospace; font-size: 26px; line-height: 1.6; color: #d4c7d6; overflow: hidden; }
+      .md div { white-space: nowrap; }
+      .md b { color: #ffc43d; }
+      .tr { display: flex; align-items: center; gap: 18px; margin-bottom: 16px; }
+      .tr label { font-family: "JetBrains Mono NL", monospace; font-weight: 700; font-size: 22px; width: 84px; color: #7e7088; }
+      .tr .bar { position: relative; flex: 1; height: 36px; border-radius: 10px; background: #ffe9f0; overflow: hidden; }
+      .tr .bar span { position: absolute; top: 0; bottom: 0; border-radius: 10px; transform-origin: left; }
+      #phead { position: absolute; top: -8px; bottom: -8px; width: 4px; background: #16072b; left: 100px; border-radius: 2px; }
+      .sw { display: flex; gap: 18px; align-items: center; }
+      .sw span { width: 96px; height: 96px; border-radius: 28px; border: 2px solid rgba(22,7,43,0.1); display: block; }
+      .langs { display: flex; flex-wrap: wrap; gap: 12px; width: 560px; }
+      .langs span { font-family: "JetBrains Mono NL", monospace; font-weight: 700; font-size: 24px; padding: 10px 18px; border-radius: 12px; background: #ffe9f0; color: #c91453; }
+      .big23 { position: absolute; right: 0; top: -6px; text-align: right; }
+      .big23 b { display: block; font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 130px; line-height: 0.95; color: #ff2d6f; }
+      .big23 span { font-family: "JetBrains Mono NL", monospace; font-size: 22px; color: #7e7088; }
+      .spec { display: flex; align-items: flex-end; gap: 9px; height: 100%; width: 600px; }
+      .spec i { flex: 1; background: #ff2d6f; border-radius: 6px 6px 0 0; display: block; }
 
-      .tl-tracks { width: 100%; padding: 0 32px; display: flex; flex-direction: column; gap: 14px; position: relative; }
-      .tl-row { display: flex; align-items: center; gap: 16px; }
-      .tl-lbl { font-family: "JetBrains Mono NL", monospace; font-size: 18px; color: #ff9bc0; width: 72px; }
-      .tl-bar { height: 28px; border-radius: 8px; flex: 1; background: #261045; position: relative; overflow: hidden; }
-      .tl-clip { position: absolute; top: 0; bottom: 0; border-radius: 8px; }
-      #playhead { position: absolute; top: -12px; bottom: -12px; left: 110px; width: 4px; background: #ffc43d; }
+      /* S3 agents */
+      #s3hdr { position: absolute; left: 72px; top: 110px; right: 72px; }
+      #six { position: absolute; left: 72px; top: 190px; font-size: 340px; color: #ff2d6f; line-height: 0.85; }
+      #sixlab { position: absolute; left: 300px; top: 260px; font-size: 76px; }
+      #vp { position: absolute; left: 72px; top: 560px; width: 936px; height: 1200px; overflow: hidden; }
+      #cam { position: absolute; left: 0; top: 0; width: 936px; height: 1200px; transform-origin: 0 0; }
+      .slot { position: absolute; width: 456px; height: 384px; border-radius: 34px; border: 3px dashed #482178; }
+      .ag { position: absolute; width: 456px; height: 384px; border-radius: 34px; background: #210c3d; border: 3px solid #5b2896; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 24px 56px rgba(0,0,0,0.45); }
+      .ag .mono-c { width: 92px; height: 92px; border-radius: 28px; background: #ff2d6f; color: #fff; display: flex; align-items: center; justify-content: center; font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 56px; }
+      .ag .nm { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; }
+      .ag .vd { font-family: "JetBrains Mono NL", monospace; font-size: 24px; color: #ffc43d; margin-top: 12px; }
 
-      .brand-stage { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 0 36px; gap: 28px; }
-      .sw-stack { flex: 1; height: 148px; border-radius: 14px; overflow: hidden; position: relative; border: 2px solid #ffffff; }
-      .pal { position: absolute; inset: 0; display: grid; grid-template-columns: 1.4fr 1fr 0.8fr 1fr; }
+      /* S4 install */
+      #s4hl { position: absolute; left: 72px; top: 130px; font-size: 118px; }
+      #persp { position: absolute; left: 0; top: 560px; width: 1080px; height: 1100px; perspective: 1800px; }
+      #chat { position: absolute; left: 72px; top: 40px; width: 936px; background: #210c3d; border: 3px solid #482178; border-radius: 44px; padding: 46px; box-shadow: 0 40px 100px rgba(0,0,0,0.6); transform-origin: 50% 50%; }
+      .dots { display: flex; gap: 14px; margin-bottom: 38px; }
+      .dots i { width: 20px; height: 20px; border-radius: 50%; display: block; }
+      #pbox { position: relative; background: #16072b; border: 3px solid #ff2d6f; border-radius: 26px; padding: 34px 36px; font-family: "JetBrains Mono NL", monospace; font-size: 34px; line-height: 1.5; min-height: 190px; word-break: break-all; }
+      #pbox .pr { color: #ff9bc0; }
+      #ptxt { color: #fff; font-weight: 700; }
+      #cur { color: #ff2d6f; }
+      #ripple { position: absolute; right: 30px; bottom: 26px; width: 80px; height: 80px; margin: -40px; border-radius: 50%; border: 5px solid #ff2d6f; opacity: 0; }
+      #prog { height: 12px; border-radius: 6px; background: #3d1b6a; margin-top: 40px; overflow: hidden; }
+      #prog i { display: block; height: 100%; width: 100%; background: #ff2d6f; transform-origin: left; border-radius: 6px; }
+      .rep { margin-top: 26px; font-size: 32px; color: #d4c7d6; display: flex; gap: 18px; align-items: center; }
+      .rep b { color: #ffc43d; font-family: "JetBrains Mono NL", monospace; font-size: 34px; }
+      #agents-row { position: absolute; left: 72px; right: 72px; top: 1730px; font-family: "Bricolage Grotesque"; font-weight: 600; font-size: 30px; color: #ff9bc0; text-align: center; }
 
-      .sound-stage { width: 100%; padding: 0 30px; display: flex; flex-direction: column; gap: 16px; }
-      .spec-bars { display: flex; align-items: center; gap: 8px; height: 105px; }
-      .spec-bars i { flex: 1; height: 24px; border-radius: 5px; background: #ff9bc0; display: block; }
-      .sound-badges { display: flex; gap: 14px; }
-      .s-badge { font-family: "JetBrains Mono NL", monospace; font-size: 19px; padding: 6px 14px; border-radius: 8px; background: #28104a; color: #ffc43d; border: 1px solid #ff2d6f; }
-
-      #s3 .headline span { color: #ffc43d; }
-      #s3-grid, #s3-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 28px; }
-      .ag-card { background: #220d3f; border: 3px solid #482178; border-radius: 24px; padding: 30px 34px; display: flex; flex-direction: column; gap: 12px; }
-      .ag-card b { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 44px; color: #ffffff; }
-      .ag-card span { font-family: "JetBrains Mono NL", monospace; font-size: 22px; color: #ff9bc0; }
-      .pillar { background: #1d0a36; border: 2px solid #ff2d6f; border-radius: 20px; padding: 24px 30px; display: flex; align-items: baseline; gap: 20px; }
-      .pillar b { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 42px; color: #ffc43d; }
-      .pillar span { font-size: 26px; color: #ffffff; }
-
-      #s4-chat { width: 1520px; margin: 0 auto; background: #210c3d; border: 3px solid #ff9bc0; border-radius: 28px; padding: 48px 58px; display: flex; flex-direction: column; gap: 30px; }
-      .chat-lbl { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: #ff9bc0; }
-      .prompt-box { background: #16072b; border: 2px solid #ffc43d; border-radius: 20px; padding: 30px 36px; font-family: "JetBrains Mono NL", monospace; font-size: 38px; color: #ffffff; display: flex; align-items: center; }
-      .prompt-box .tag { color: #ffc43d; margin-right: 18px; }
-      .caret { display: inline-block; width: 20px; height: 42px; background: #ff2d6f; margin-left: 8px; }
-      .reply-list { display: flex; flex-direction: column; gap: 16px; }
-      .reply-row { font-family: "Inter", sans-serif; font-weight: 600; font-size: 32px; color: #ffffff; display: flex; align-items: center; gap: 18px; }
-      .reply-row i { font-style: normal; font-family: "JetBrains Mono NL", monospace; color: #ffc43d; font-weight: 700; }
-      #s4-end { position: absolute; inset: 0; background: #ff2d6f; color: #16072b; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
-      #s4-end img { height: 180px; width: auto; }
-      #s4-end .tag { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 56px; letter-spacing: -0.02em; color: #16072b; }
-      #s4-end .url { font-family: "JetBrains Mono NL", monospace; font-weight: 600; font-size: 36px; background: #16072b; color: #ffffff; padding: 16px 36px; border-radius: 999px; }
+      /* S5 end */
+      .pinkbg { background: #ff2d6f; color: #16072b; }
+      #endwrap { position: absolute; inset: 0; }
+      #endlogo { position: absolute; left: 280px; top: 400px; width: 520px; height: auto; }
+      #endtag { position: absolute; left: 72px; right: 72px; top: 1000px; text-align: center; font-size: 100px; color: #16072b; }
+      #endurl { position: absolute; left: 0; width: 1080px; top: 1520px; text-align: center; }
+      #endurl div { display: inline-block; position: relative; overflow: hidden; font-family: "JetBrains Mono NL", monospace; font-weight: 700; font-size: 38px; color: #fff; background: #16072b; padding: 24px 52px; border-radius: 999px; }
+      #sheen { position: absolute; top: 0; bottom: 0; width: 90px; left: -120px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.35), rgba(255,255,255,0)); transform: skewX(-18deg); }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="29" data-width="1920" data-height="1080">
-      <div id="s1" class="scene clip" data-start="0" data-duration="6.45" data-track-index="1">
-        <div class="pad">
-          <div>
-            <div class="top-row"><img id="s1-logo" src="assets/brand/logos/wordmark-deep.svg" alt="cutroom" /><span class="pill-tag" id="s1-badge">15 MEDIA SKILLS · CUT IN CODE</span></div>
-            <p class="headline" id="s1-head">Turn data and documents into <span>live media</span></p>
-          </div>
-          <div class="grid4">
-            <div class="cap-card" id="c1">
-              <div class="cap-head"><span class="cap-title">16:9 Slide Decks</span><span class="cap-skill">cutroom-deck</span></div>
-              <div class="cap-stage"><div class="deck-bars"><i id="db1" style="height:48px"></i><i id="db2" style="height:76px"></i><i id="db3" style="height:104px"></i><i id="db4" class="hi" style="height:138px"></i></div><div class="deck-kpi"><b id="kpi-val">+42%</b><span>computed from data</span></div></div>
-            </div>
-            <div class="cap-card" id="c2">
-              <div class="cap-head"><span class="cap-title">Live HTML Diagrams</span><span class="cap-skill">cutroom-diagram</span></div>
-              <div class="cap-stage">
-                <svg width="680" height="170" viewBox="0 0 680 170">
-                  <path d="M130 85 C 210 35, 250 35, 330 85" stroke="#ff9bc0" stroke-width="4" fill="none" />
-                  <path d="M350 85 C 430 135, 470 135, 550 85" stroke="#ff9bc0" stroke-width="4" fill="none" />
-                  <rect x="40" y="53" width="110" height="64" rx="14" fill="#291247" stroke="#ff2d6f" stroke-width="3" /><text x="95" y="92" fill="#ffffff" font-family="JetBrains Mono NL" font-size="22" text-anchor="middle">Ingest</text>
-                  <rect x="285" y="53" width="110" height="64" rx="14" fill="#291247" stroke="#ffc43d" stroke-width="3" /><text x="340" y="92" fill="#ffffff" font-family="JetBrains Mono NL" font-size="22" text-anchor="middle">Router</text>
-                  <rect x="530" y="53" width="110" height="64" rx="14" fill="#291247" stroke="#ff2d6f" stroke-width="3" /><text x="585" y="92" fill="#ffffff" font-family="JetBrains Mono NL" font-size="22" text-anchor="middle">Render</text>
-                  <circle id="pkt" cx="130" cy="85" r="11" fill="#ffc43d" />
-                </svg>
-              </div>
-            </div>
-            <div class="cap-card" id="c3">
-              <div class="cap-head"><span class="cap-title">Isometric 3D Figures</span><span class="cap-skill">cutroom-iso3d</span></div>
-              <div class="cap-stage">
-                <svg width="680" height="180" viewBox="0 0 680 180">
-                  <g transform="translate(260,18)">
-                    <polygon points="80,10 160,46 80,82 0,46" fill="#2c144f" stroke="#ff9bc0" stroke-width="2.5" /><polygon points="0,46 80,82 80,142 0,106" fill="#210c3d" stroke="#ff9bc0" stroke-width="2.5" /><polygon points="160,46 80,82 80,142 160,106" fill="#381963" stroke="#ff9bc0" stroke-width="2.5" />
-                    <g id="iso-drawer"><polygon points="80,34 152,66 80,98 8,66" fill="#ff2d6f" stroke="#ffc43d" stroke-width="3" /><polygon points="8,66 80,98 80,124 8,92" fill="#c91453" stroke="#ffc43d" stroke-width="2.5" /><polygon points="152,66 80,98 80,124 152,92" fill="#ff5c8d" stroke="#ffc43d" stroke-width="2.5" /></g>
-                  </g>
-                </svg>
-              </div>
-            </div>
-            <div class="cap-card" id="c4">
-              <div class="cap-head"><span class="cap-title">Document Extraction</span><span class="cap-skill">cutroom-extract</span></div>
-              <div class="cap-stage"><div class="ext-wrap"><div class="pdf-doc"><i style="width:75%"></i><i style="width:100%"></i><i style="width:90%"></i><i style="width:60%"></i><i style="width:95%"></i><span id="laser"></span></div><div class="md-out" id="md-box"><div><b># Catalog</b> · Table 1</div><div>| SKU | Latency |</div><div>| <b>R-40</b> | <b>1.2 ms</b> |</div></div></div></div>
-            </div>
+    <div id="root" data-composition-id="main" data-width="1080" data-height="1920" data-duration="34.1">
+      <audio id="narr" src="assets/narration.m4a" data-start="0" data-duration="31.47" data-track-index="9" preload="auto"></audio>
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="34.0" data-track-index="10" preload="auto"></audio>
+
+      <!-- ============ S1: the name, the knife and the 15 skills (0 - 5.9) ============ -->
+      <div id="s1" class="clip" data-start="0" data-duration="5.74" data-track-index="0" style="z-index:1">
+        <div class="sc dark" id="s1in">
+          <div class="grid" id="g1"></div>
+          <div class="glow" id="glow1" style="left:-10px;top:370px;width:1100px;height:1100px"></div>
+          <img id="wm" src="assets/brand/logos/wordmark-deep.svg" alt="cutroom" />
+          <div id="ring"></div>
+          <div id="count"><b id="cnum">0</b><span>media skills</span></div>
+          <div id="s1txt" class="hl">
+            <span class="ln"><span class="w"><i>A</i></span> <span class="w"><i>Swiss army</i></span> <span class="w"><i class="pk">knife</i></span></span>
+            <span class="ln"><span class="w"><i>with</i></span> <span class="w"><i class="pk">15</i></span> <span class="w"><i>skills</i></span></span>
+            <span class="ln"><span class="w"><i>for</i></span> <span class="w"><i>making</i></span> <span class="w"><i class="pk">media</i></span></span>
           </div>
         </div>
       </div>
 
-      <div id="s2" class="scene clip" data-start="6.45" data-duration="6.87" data-track-index="1">
-        <div class="pad">
-          <div>
-            <div class="top-row"><span class="eyebrow">VIDEO · IDENTITY · VOICE · EARSHOT SOUND</span><span class="pill-tag">23 LANGUAGES · 252 SOUNDS</span></div>
-            <p class="headline" id="s2-head">Math, motion, brands &amp; <span>procedural audio</span></p>
-          </div>
-          <div class="grid4">
-            <div class="cap-card" id="m1">
-              <div class="cap-head"><span class="cap-title">Math &amp; Code Videos</span><span class="cap-skill">cutroom-math</span></div>
-              <div class="cap-stage">
-                <svg width="430" height="175" viewBox="0 0 430 175">
-                  <line x1="30" y1="145" x2="390" y2="145" stroke="#6f5b8a" stroke-width="2" /><line x1="70" y1="20" x2="70" y2="160" stroke="#6f5b8a" stroke-width="2" />
-                  <path d="M 40 140 Q 170 150, 240 85 T 380 24" stroke="#ff2d6f" stroke-width="5" fill="none" /><line id="tan-line" x1="145" y1="142" x2="335" y2="28" stroke="#ffc43d" stroke-width="4" /><circle cx="240" cy="85" r="8" fill="#ffc43d" />
-                </svg>
-                <div style="font-family:'JetBrains Mono NL',monospace;font-size:28px;color:#ffc43d;padding-right:24px"><div style="color:#ff9bc0;font-size:20px">tangent slope</div><b id="slope-readout">f'(x) = 1.25</b></div>
-              </div>
+      <!-- ============ S2: the capability feed (5.15 - 17.3) ============ -->
+      <div id="s2" class="clip" data-start="4.94" data-duration="11.21" data-track-index="1" style="z-index:2">
+        <div class="sc light" id="s2in">
+          <div id="s2wrap" style="position:absolute;inset:0">
+            <div id="feed">
+              <div class="card" id="k0" style="top:0px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/deck.svg" alt=""></div><div class="ctitle">Slides</div><div class="ctag">cutroom-deck</div></div>
+                <div class="st"><div class="bars"><i style="height:34%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:70%"></i><i style="height:86%"></i><i style="height:78%"></i><i style="height:100%"></i></div><div class="kpi" id="kpi">+0%</div></div></div>
+              <div class="card" id="k1" style="top:440px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/diagram.svg" alt=""></div><div class="ctitle">Diagrams</div><div class="ctag">cutroom-diagram</div></div>
+                <div class="st"><svg width="856" height="230" viewBox="0 0 856 230">
+                  <path id="dpath" d="M 70 115 L 280 60 L 500 160 L 780 85" fill="none" stroke="#e6d7e0" stroke-width="6" stroke-linejoin="round"/>
+                  <path id="dpath2" d="M 70 115 L 280 60 L 500 160 L 780 85" fill="none" stroke="#ff2d6f" stroke-width="6" stroke-linejoin="round" stroke-dasharray="1000" stroke-dashoffset="1000"/>
+                  <g class="dn"><circle cx="70" cy="115" r="38" fill="#fff" stroke="#ff2d6f" stroke-width="5"/><text x="70" y="122" text-anchor="middle" font-family="JetBrains Mono NL" font-weight="700" font-size="20" fill="#16072b">API</text></g>
+                  <g class="dn"><circle cx="280" cy="60" r="38" fill="#ff2d6f"/><text x="280" y="67" text-anchor="middle" font-family="JetBrains Mono NL" font-weight="700" font-size="20" fill="#fff">FLOW</text></g>
+                  <g class="dn"><circle cx="500" cy="160" r="38" fill="#fff" stroke="#ffc43d" stroke-width="5"/><text x="500" y="167" text-anchor="middle" font-family="JetBrains Mono NL" font-weight="700" font-size="20" fill="#16072b">DB</text></g>
+                  <g class="dn"><circle cx="780" cy="85" r="38" fill="#fff" stroke="#ff2d6f" stroke-width="5"/><text x="780" y="92" text-anchor="middle" font-family="JetBrains Mono NL" font-weight="700" font-size="20" fill="#16072b">UI</text></g>
+                  <circle id="dpulse" cx="70" cy="115" r="13" fill="#ffc43d" stroke="#16072b" stroke-width="3"/></svg></div></div>
+              <div class="card" id="k2" style="top:880px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/figure.svg" alt=""></div><div class="ctitle">3D figures</div><div class="ctag">cutroom-iso3d</div></div>
+                <div class="st"><svg width="856" height="230" viewBox="0 0 856 230"><g id="isoall" transform="translate(300 -6) scale(1.38)">
+                  <polygon points="80,10 160,46 80,82 0,46" fill="#ffd0e0" stroke="#16072b" stroke-width="2.5"/>
+                  <polygon points="0,46 80,82 80,142 0,106" fill="#c91453" stroke="#16072b" stroke-width="2.5"/>
+                  <polygon points="160,46 80,82 80,142 160,106" fill="#ff5c8d" stroke="#16072b" stroke-width="2.5"/>
+                  <g id="drw"><polygon points="80,50 152,82 80,114 8,82" fill="#ff2d6f" stroke="#16072b" stroke-width="3"/>
+                  <polygon points="8,82 80,114 80,134 8,102" fill="#c91453" stroke="#16072b" stroke-width="2.5"/>
+                  <polygon points="152,82 80,114 80,134 152,102" fill="#ff5c8d" stroke="#16072b" stroke-width="2.5"/></g></g></svg></div></div>
+              <div class="card" id="k3" style="top:1320px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/extract.svg" alt=""></div><div class="ctitle">Document extraction</div><div class="ctag">extract</div></div>
+                <div class="st"><div class="pdf"><i></i><i></i><i style="width:70%"></i><i></i><i style="width:55%"></i><span id="laser"></span></div>
+                  <div class="md"><div class="mdl"><b># Catalog</b></div><div class="mdl">| SKU | Latency |</div><div class="mdl">| <b>R-40</b> | <b>1.2 ms</b> |</div><div class="mdl">| <b>R-52</b> | <b>0.9 ms</b> |</div></div></div></div>
+              <div class="card" id="k4" style="top:1760px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/math.svg" alt=""></div><div class="ctitle">Math videos</div><div class="ctag">cutroom-math</div></div>
+                <div class="st"><svg width="856" height="230" viewBox="0 0 856 230">
+                  <line x1="10" y1="205" x2="846" y2="205" stroke="#e6d7e0" stroke-width="3"/>
+                  <path id="mpath" d="M 20 190 C 200 190, 250 30, 430 50 S 700 200, 840 60" fill="none" stroke="#ff2d6f" stroke-width="7" stroke-linecap="round"/>
+                  <line id="mtan" x1="0" y1="0" x2="0" y2="0" stroke="#ffc43d" stroke-width="6" stroke-linecap="round"/>
+                  <circle id="mdot" cx="0" cy="0" r="12" fill="#16072b"/></svg>
+                  <div class="mono" id="mread" style="position:absolute;right:0;top:0;font-size:32px;font-weight:700;color:#c91453">f′(x) = 0.00</div></div></div>
+              <div class="card" id="k5" style="top:2200px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/motion.svg" alt=""></div><div class="ctitle">Motion videos</div><div class="ctag">cutroom-motion</div></div>
+                <div class="st" style="top:150px"><div class="tr"><label>GSAP</label><div class="bar"><span class="cl" style="left:3%;width:70%;background:#ff2d6f"></span></div></div>
+                  <div class="tr"><label>VOICE</label><div class="bar"><span class="cl" style="left:10%;width:62%;background:#9b5de5"></span></div></div>
+                  <div class="tr"><label>SFX</label><div class="bar"><span class="cl" style="left:12%;width:12%;background:#ffc43d"></span><span class="cl" style="left:40%;width:12%;background:#ffc43d"></span><span class="cl" style="left:66%;width:14%;background:#ffc43d"></span></div></div>
+                  <span id="phead"></span></div></div>
+              <div class="card" id="k6" style="top:2640px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/brand.svg" alt=""></div><div class="ctitle">Brands and logos</div><div class="ctag">cutroom-brand</div></div>
+                <div class="st"><div class="sw"><span style="background:#ff2d6f"></span><span style="background:#16072b"></span><span style="background:#ffc43d"></span><span style="background:#ff9bc0"></span><span style="background:#fff7fa"></span></div>
+                  <img id="blogo" src="assets/brand/logos/stacked.svg" alt="" style="position:absolute;right:0;top:-8px;height:200px"></div></div>
+              <div class="card" id="k7" style="top:3080px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/voice.svg" alt=""></div><div class="ctitle">Local voice</div><div class="ctag">cutroom-voice</div></div>
+                <div class="st"><div class="langs" id="langs"></div><div class="big23"><b id="n23">0</b><span>languages</span></div></div></div>
+              <div class="card" id="k8" style="top:3520px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/edit.svg" alt=""></div><div class="ctitle">Sound effects</div><div class="ctag">earshot</div></div>
+                <div class="st"><div class="spec" id="spec"></div><div class="big23"><b id="n252">0</b><span>procedural sounds</span></div></div></div>
+              <div class="card" id="k9" style="top:3960px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/script.svg" alt=""></div><div class="ctitle">15 skills, one folder</div><div class="ctag">cutroom-studio</div></div>
+                <div class="st"><div class="langs" id="names" style="width:100%"></div></div></div>
             </div>
-            <div class="cap-card" id="m2">
-              <div class="cap-head"><span class="cap-title">Motion &amp; Post-Production</span><span class="cap-skill">cutroom-motion · edit</span></div>
-              <div class="cap-stage"><div class="tl-tracks"><div class="tl-row"><span class="tl-lbl">GSAP</span><div class="tl-bar"><span class="tl-clip" style="left:4%;width:82%;background:#ff2d6f"></span></div></div><div class="tl-row"><span class="tl-lbl">VOICE</span><div class="tl-bar"><span class="tl-clip" style="left:8%;width:74%;background:#9b5de5"></span></div></div><div class="tl-row"><span class="tl-lbl">SFX</span><div class="tl-bar"><span class="tl-clip" style="left:14%;width:16%;background:#ffc43d"></span><span class="tl-clip" style="left:46%;width:18%;background:#ffc43d"></span><span class="tl-clip" style="left:74%;width:14%;background:#ffc43d"></span></div></div><span id="playhead"></span></div></div>
-            </div>
-            <div class="cap-card" id="m3">
-              <div class="cap-head"><span class="cap-title">Brands &amp; Vector Logos</span><span class="cap-skill">cutroom-brand · logo</span></div>
-              <div class="cap-stage"><div class="brand-stage"><div class="sw-stack"><div class="pal" id="pal-a"><i style="background:#16072b"></i><i style="background:#ff2d6f"></i><i style="background:#ffc43d"></i><i style="background:#fff7fa"></i></div><div class="pal" id="pal-b"><i style="background:#0c0a1d"></i><i style="background:#5b2eff"></i><i style="background:#c5ff3d"></i><i style="background:#f7f5ff"></i></div><div class="pal" id="pal-c"><i style="background:#050a1f"></i><i style="background:#1f4bff"></i><i style="background:#ff6a13"></i><i style="background:#f6f8ff"></i></div></div><img src="assets/brand/logos/symbol.svg" style="height:126px;width:126px" alt="cutroom symbol" /></div></div>
-            </div>
-            <div class="cap-card" id="m4">
-              <div class="cap-head"><span class="cap-title">Voice Cloning &amp; Earshot SFX</span><span class="cap-skill">cutroom-voice · sound</span></div>
-              <div class="cap-stage"><div class="sound-stage"><div class="spec-bars" id="spec-wave"></div><div class="sound-badges"><span class="s-badge">Kokoro + Chatterbox (23 langs)</span><span class="s-badge">earshot · 252 SFX · -14 LUFS</span></div></div></div>
-            </div>
+            <div id="hdr"><div class="row"><span class="eyebrow">What it makes</span><span class="pill">15 SKILLS · LOCAL</span></div></div>
           </div>
         </div>
       </div>
 
-      <div id="s3" class="scene clip" data-start="13.32" data-duration="8.89" data-track-index="1">
-        <div class="pad">
-          <div>
-            <div class="top-row"><span class="eyebrow">EVERY AGENT · ONE HARNESS</span><span class="pill-tag" style="background:#291247;color:#ffc43d;border:2px solid #ff2d6f">MULTI-AGENT CREWS</span></div>
-            <p class="headline" id="s3-head">Compatible with <span>6 coding agents</span></p>
-          </div>
-          <div id="s3-grid">
-            <div class="ag-card" id="ag1"><b>Claude Code</b><span>~/.claude/skills · /cutroom-init</span></div>
-            <div class="ag-card" id="ag2"><b>Cursor</b><span>~/.cursor/skills · /cutroom-init</span></div>
-            <div class="ag-card" id="ag3"><b>Codex</b><span>~/.agents/skills · $cutroom-init</span></div>
-            <div class="ag-card" id="ag4"><b>Antigravity</b><span>~/.gemini/antigravity/skills</span></div>
-            <div class="ag-card" id="ag5"><b>Gemini CLI</b><span>cutroom crew runtime</span></div>
-            <div class="ag-card" id="ag6"><b>Kiro</b><span>~/.kiro/skills · IDE &amp; CLI</span></div>
-          </div>
-          <div id="s3-pillars">
-            <div class="pillar" id="pl1"><b>Local</b><span>nothing leaves your machine</span></div>
-            <div class="pillar" id="pl2"><b>Pinned</b><span>every tool version locked</span></div>
-            <div class="pillar" id="pl3"><b>Parallel</b><span>agents work together at once</span></div>
-          </div>
+      <!-- ============ S3: six agents (16.3 - 23.7) ============ -->
+      <div id="s3" class="clip" data-start="15.1" data-duration="7.83" data-track-index="2" style="z-index:3">
+        <div class="sc dark" id="s3in">
+          <div class="grid" id="g3"></div>
+          <div class="glow" style="left:380px;top:80px;width:900px;height:900px"></div>
+          <div id="s3hdr"><span class="eyebrow" style="color:#ff9bc0">Compatibility</span></div>
+          <div id="six" class="hl"><span class="w"><i id="sixi">6</i></span></div>
+          <div id="sixlab" class="hl"><span class="ln"><span class="w"><i>coding</i></span></span><span class="ln"><span class="w"><i class="pk">agents</i></span></span></div>
+          <div id="vp"><div id="cam"></div></div>
         </div>
       </div>
 
-      <div id="s4" class="scene clip" data-start="22.21" data-duration="5.14" data-track-index="1">
-        <div class="pad" style="justify-content:center">
-          <div id="s4-chat">
-            <div class="chat-lbl">Zero-friction setup · Just hand the link to your coding agent</div>
-            <div class="prompt-box"><span class="tag">You ›</span><span id="prompt-txt"></span><span class="caret"></span></div>
-            <div class="reply-list">
-              <div class="reply-row" id="rep1"><i>✓</i><span>Agent cloned repository and installed 15 cutroom-* skills</span></div>
-              <div class="reply-row" id="rep2"><i>✓</i><span>Active brand, local voices, and earshot sound bank ready</span></div>
+      <!-- ============ S4: install (22.6 - 30.4) ============ -->
+      <div id="s4" class="clip" data-start="21.88" data-duration="6.9" data-track-index="3" style="z-index:4">
+        <div class="sc dark" id="s4in">
+          <div class="grid" id="g4"></div>
+          <div class="glow" style="left:60px;top:1000px;width:1000px;height:1000px"></div>
+          <div id="s4hl" class="hl"><span class="ln"><span class="w"><i>Just send</i></span></span><span class="ln"><span class="w"><i>the <b class="pk" style="font-weight:800">link</b></i></span></span></div>
+          <div id="persp"><div id="chat">
+            <div class="dots"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i></div>
+            <div id="pbox"><span class="pr">&gt; </span><span id="ptxt"></span><span id="cur">▌</span><span id="ripple"></span></div>
+            <div id="prog"><i id="progi"></i></div>
+            <div class="rep" id="rp1"><b>●</b> reading the repository…</div>
+            <div class="rep" id="rp2"><b>✓</b> 15 skills installed</div>
+            <div class="rep" id="rp3"><b>✓</b> ready to use</div>
+          </div></div>
+          <div id="agents-row">Claude · Cursor · Codex · Antigravity · Gemini · Kiro</div>
+        </div>
+      </div>
+
+      <!-- ============ S5: end card (29.3 - 36) ============ -->
+      <div id="s5" class="clip" data-start="27.88" data-duration="6.22" data-track-index="4" style="z-index:5">
+        <div class="sc pinkbg" id="s5in">
+          <div id="endwrap">
+            <img id="endlogo" src="assets/brand/logos/stacked-contrast.svg" alt="cutroom" />
+            <div id="endtag" class="hl">
+              <span class="ln"><span class="w"><i>Every</i></span> <span class="w"><i>piece</i></span></span>
+              <span class="ln"><span class="w"><i>cut</i></span> <span class="w"><i>on</i></span> <span class="w"><i>your</i></span></span>
+              <span class="ln"><span class="w"><i style="color:#fff">machine.</i></span></span>
             </div>
+            <div id="endurl"><div id="endurli">github.com/galvaowesley/cutroom<span id="sheen"></span></div></div>
           </div>
         </div>
       </div>
-
-      <div id="s5" class="scene clip" data-start="27.35" data-duration="1.65" data-track-index="1">
-        <div id="s4-end">
-          <img id="s5-logo" src="assets/brand/logos/wordmark-light.svg" alt="cutroom" />
-          <p class="tag" id="s5-tag">Every piece, cut on your machine.</p>
-          <p class="url" id="s5-url">github.com/galvaowesley/cutroom</p>
-        </div>
-      </div>
-
-      <audio id="narration" src="assets/narration.m4a" data-start="0" data-track-index="10" data-volume="1"></audio>
     </div>
 
     <script>
-      (function () {
-        function bezier(p1x, p1y, p2x, p2y) {
-          const cx = 3 * p1x, bx = 3 * (p2x - p1x) - cx, ax = 1 - cx - bx;
-          const cy = 3 * p1y, by = 3 * (p2y - p1y) - cy, ay = 1 - cy - by;
-          const sx = (t) => ((ax * t + bx) * t + cx) * t, sy = (t) => ((ay * t + by) * t + cy) * t;
-          return (x) => {
-            if (x <= 0) return 0;
-            if (x >= 1) return 1;
-            let lo = 0, hi = 1, t = x;
-            for (let i = 0; i < 40; i++) { if (sx(t) < x) lo = t; else hi = t; t = (lo + hi) / 2; }
-            return sy(t);
-          };
-        }
-        const E = bezier(0.2, 0.8, 0.2, 1);
+      (() => {
+        const TM = {"DUR": 34.1, "wm0": 0.4, "ring0": 1.74, "l1": [1.74, 1.911, 2.536], "l2": [2.93, 3.108, 3.584], "l3": [4.16, 4.349, 4.681], "count0": 3.108, "zoom0": 4.81, "r2": 4.94, "A": [5.56, 6.16, 7.13, 8.107, 9.74, 10.34, 11.32, 12.51, 14.417], "n23": 12.833, "k9scroll": 14.8, "names0": 14.64, "r3": 15.1, "six0": 16.102, "slot0": 16.359, "ag": [17.59, 18.49, 18.9, 19.447, 20.335, 21.223], "camEnd": 21.77, "r4": 21.88, "s6": 22.32, "type0": 23.667, "send": 25.74, "rp2": 26.573, "rp3": 27.077, "r5": 27.88, "s7": 28.43, "t1": [29.14, 29.405], "t2": [29.67, 29.881, 30.04], "t3": [30.199], "url0": 30.62, "s1_dur": 5.74, "s2_dur": 11.21, "s3_dur": 7.83, "s4_dur": 6.9, "s5_dur": 6.22, "prog_dur": 1.39, "narr_dur": 31.47, "sfx_dur": 34.0};
         const tl = gsap.timeline({ paused: true });
-        const up = (el, at, d = 0.45, y = 28) => tl.fromTo(el, { opacity: 0, y }, { opacity: 1, y: 0, duration: d, ease: E }, at);
+        const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+        const K = CutroomMotion, { clamp, ss } = K;           // cutroom_motionkit.js (harness)
+        const EXPO = "expo.out", IO = "power3.inOut";
+        const words = (sel, times, dur) => K.words(tl, sel, times, dur);
 
-        tl.fromTo("#s1-logo", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.45, ease: E }, 0.05);
-        up("#s1-badge", 0.12, 0.4, 16);
-        up("#s1-head", 0.2, 0.45, 24);
-        ["#c1", "#c2", "#c3", "#c4"].forEach((id, i) => up(id, 0.65 + i * 0.14, 0.45, 32));
-        ["#db1", "#db2", "#db3", "#db4"].forEach((id, i) => tl.fromTo(id, { scaleY: 0.15 }, { scaleY: 1, duration: 0.55, ease: E }, 1.75 + i * 0.12));
-        const kpi = { v: 10 }, kpiEl = document.querySelector("#kpi-val");
-        tl.to(kpi, { v: 42, duration: 0.9, ease: E, onUpdate: () => { kpiEl.textContent = "+" + Math.round(kpi.v) + "%"; } }, 1.8);
-        tl.fromTo("#pkt", { attr: { cx: 130, cy: 85 } }, { attr: { cx: 340, cy: 85 }, duration: 0.7, ease: E }, 2.95);
-        tl.to("#pkt", { attr: { cx: 550, cy: 85 }, duration: 0.7, ease: E }, 3.7);
-        tl.fromTo("#iso-drawer", { x: 0, y: 0 }, { x: -26, y: 14, duration: 0.65, ease: E, yoyo: true, repeat: 1 }, 4.35);
-        tl.fromTo("#laser", { y: 0 }, { y: 120, duration: 1.1, ease: "none", yoyo: true, repeat: 1 }, 4.2);
-        up("#md-box", 4.5, 0.4, 18);
+        // ---------- continuous backdrop motion (never still)
+        tl.fromTo("#g1", { y: 0 }, { y: 30 * TM.s1_dur, duration: TM.s1_dur, ease: "none" }, 0);
+        tl.fromTo("#g3", { y: 0 }, { y: 32 * TM.s3_dur, duration: TM.s3_dur, ease: "none" }, TM.r3);
+        tl.fromTo("#g4", { y: 0 }, { y: 30 * TM.s4_dur, duration: TM.s4_dur, ease: "none" }, TM.r4);
+        tl.fromTo("#glow1", { scale: 0.85 }, { scale: 1.12, duration: TM.s1_dur, ease: "sine.inOut" }, 0);
 
-        const s2 = 6.45;
-        up("#s2-head", s2 + 0.08, 0.45, 24);
-        ["#m1", "#m2", "#m3", "#m4"].forEach((id, i) => up(id, s2 + 0.18 + i * 0.12, 0.42, 28));
-        const sl = { v: 3.53 }, slEl = document.querySelector("#slope-readout");
-        tl.fromTo("#tan-line", { rotation: -18, svgOrigin: "240 85" }, { rotation: 0, duration: 1.6, ease: E }, s2 + 0.45);
-        tl.to(sl, { v: 1.25, duration: 1.6, ease: E, onUpdate: () => { slEl.textContent = "f'(x) = " + sl.v.toFixed(2); } }, s2 + 0.45);
-        tl.fromTo("#playhead", { x: 0 }, { x: 560, duration: 2.4, ease: "none" }, s2 + 0.9);
-        tl.set("#pal-b", { opacity: 0 }, s2).set("#pal-c", { opacity: 0 }, s2);
-        tl.fromTo("#pal-b", { clipPath: "inset(0 0 0 100%)", opacity: 1 }, { clipPath: "inset(0 0 0 0%)", duration: 0.4, ease: E }, s2 + 2.95);
-        tl.fromTo("#pal-c", { clipPath: "inset(0 0 0 100%)", opacity: 1 }, { clipPath: "inset(0 0 0 0%)", duration: 0.4, ease: E }, s2 + 3.55);
-        const wave = document.querySelector("#spec-wave"), bars = [];
-        for (let i = 0; i < 28; i++) { const b = document.createElement("i"); wave.appendChild(b); bars.push(b); }
-        const w = { p: 0 };
-        tl.to(w, { p: 1, duration: 4.8, ease: "none", onUpdate: () => {
-          bars.forEach((b, i) => {
-            const v = Math.abs(Math.sin(i * 0.6 + w.p * 22)) * Math.abs(Math.cos(i * 0.21 + w.p * 9));
-            b.style.height = (16 + v * 84).toFixed(1) + "px";
-            b.style.background = i % 5 === Math.floor(w.p * 12) % 5 ? "#ffc43d" : "#ff2d6f";
-          });
-        } }, s2 + 1.8);
+        // ============ S1 (0 - 5.9) ============
+        tl.fromTo("#wm", { clipPath: "inset(0 100% 0 0)", scale: 1.12 }, { clipPath: "inset(0 0% 0 0)", scale: 1, duration: 0.7, ease: EXPO }, TM.wm0);
+        gsap.set("#wm", { x: 150, y: 800, transformOrigin: "50% 50%" });
+        tl.to("#wm", { y: 150, scale: 0.7, duration: 0.9, ease: IO }, TM.ring0 - 0.3);
+        // the 15 skill icons: a ring that bursts out when the skills are named
+        const ringNames = ["deck", "diagram", "figure", "extract", "math", "motion", "brand", "voice", "edit", "graphic", "script", "video"];
+        const chips = ringNames.map((n) => { const d = document.createElement("div"); d.className = "chip"; d.innerHTML = `<img src="assets/brand/icons/${n}.svg" alt="">`; $("#ring").appendChild(d); return d; });
+        const ringAt = K.ring(chips, { start: TM.ring0, zoomStart: TM.zoom0 });
+        words("#s1txt .ln:nth-child(1)", TM.l1);
+        words("#s1txt .ln:nth-child(2)", TM.l2);
+        words("#s1txt .ln:nth-child(3)", TM.l3);
+        tl.fromTo("#count", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.55, ease: EXPO }, TM.count0 - 0.05);
+        // zoom-through into S2
+        tl.to("#s1txt", { y: -260, opacity: 0, filter: "blur(10px)", duration: 0.7, ease: "power3.in" }, TM.zoom0 + 0.05);
+        tl.to("#count", { scale: 5, opacity: 0, filter: "blur(14px)", duration: 0.75, ease: "power3.in" }, TM.zoom0);
+        tl.to("#wm", { scale: 1.6, opacity: 0, duration: 0.6, ease: "power3.in" }, TM.zoom0 + 0.05);
 
-        const s3 = 13.32;
-        up("#s3-head", s3 + 0.08, 0.45, 24);
-        [0.45, 1.85, 2.55, 3.25, 4.15, 4.85].forEach((t, i) => {
-          const id = `#ag${i + 1}`;
-          up(id, s3 + t, 0.38, 24);
-          tl.fromTo(id, { borderColor: "#482178" }, { borderColor: "#ffc43d", duration: 0.3, ease: E }, s3 + t + 0.15);
+        // ============ S2 (5.15 - 17.3) ============
+        const A = TM.A;
+        K.circleIn(tl, "#s2in", TM.r2);
+        tl.fromTo("#s2wrap", { scale: 1.22 }, { scale: 1, duration: 0.9, ease: "power3.out" }, TM.r2);
+        // whip out to S3
+        K.whipOut(tl, "#s2wrap", TM.r3);
+        const DT = K.pathTable("#dpath", 300), MT = K.pathTable("#mpath", 600), at = K.pointAt;   // measured once, at build time
+        const feedFocus = K.feed("#feed", A.map((_, i) => document.getElementById("k" + i)), A,
+          { top: 800, enterAt: TM.r2 + 0.05, extra: [{ at: TM.k9scroll, shift: 396, dur: 0.9 }] });
+        const feedAt = (t) => {
+          feedFocus(t);
+          // deck KPI
+          $("#kpi").textContent = "+" + Math.round(142 * ss((t - A[0] - 0.25) / 0.9)) + "%";
+          // diagram pulse
+          const pd = clamp((t - A[1] - 0.2) / 1.1);
+          $("#dpath2").style.strokeDashoffset = (1000 * (1 - pd)).toFixed(1);
+          const q = at(DT, (((t - A[1]) / 1.7) % 1 + 1) % 1);
+          gsap.set("#dpulse", { attr: { cx: q.x, cy: q.y }, opacity: t > A[1] ? 1 : 0 });
+          // iso drawer
+          const sl = Math.sin(clamp((t - A[2]) / 2.6) * Math.PI * 2 * 1.5 - Math.PI / 2) * 0.5 + 0.5;
+          gsap.set("#drw", { x: 38 * sl * ss((t - A[2]) / 0.4), y: 19 * sl * ss((t - A[2]) / 0.4) });
+          // laser + markdown
+          const lp = clamp((t - A[3] - 0.15) / 1.3);
+          gsap.set("#laser", { y: 200 * lp, opacity: lp > 0 && lp < 1 ? 1 : 0 });
+          $$("#k3 .mdl").forEach((el, i) => gsap.set(el, { opacity: ss((lp * 4 - i) / 0.6), x: 14 * (1 - ss((lp * 4 - i) / 0.6)) }));
+          // math tangent
+          const pm = clamp((t - A[4] - 0.15) / 2.3), e = ss(pm);
+          const p0 = at(MT, Math.max(0, e - 0.012)), p1 = at(MT, Math.min(1, e + 0.012)), pc = at(MT, e);
+          const dx = p1.x - p0.x, dy = p1.y - p0.y, n = Math.hypot(dx, dy) || 1;
+          gsap.set("#mtan", { attr: { x1: pc.x - dx / n * 130, y1: pc.y - dy / n * 130, x2: pc.x + dx / n * 130, y2: pc.y + dy / n * 130 }, opacity: pm > 0 ? 1 : 0 });
+          gsap.set("#mdot", { attr: { cx: pc.x, cy: pc.y }, opacity: pm > 0 ? 1 : 0 });
+          $("#mread").textContent = "f′(x) = " + (-dy / dx * 2.2).toFixed(2);
+          // timeline playhead
+          gsap.set("#phead", { x: 840 * ss((t - A[5] - 0.1) / 2.2) });
+          // languages count + spectrum
+          $("#n23").textContent = Math.round(23 * ss((t - TM.n23) / 0.85));
+          $("#n252").textContent = Math.round(252 * ss((t - A[8] - 0.1) / 1.2));
+          $$("#spec i").forEach((b, i) => { const v = t > A[8] ? Math.abs(Math.sin(i * 0.6 + t * 7)) * Math.abs(Math.cos(i * 0.35 + t * 4.3)) : 0.05; b.style.height = (10 + 85 * v).toFixed(1) + "%"; });
+        };
+        for (let i = 0; i < 24; i++) $("#spec").appendChild(document.createElement("i"));
+        ["brand","deck","diagram","edit","extract","graphic","init","iso3d","logo","math","motion","script","sound","studio","voice"].forEach((l) => { const s = document.createElement("span"); s.textContent = l; $("#names").appendChild(s); });
+        ["en", "pt", "es", "fr", "it", "de", "ja", "zh", "hi", "ru", "ko", "ar", "nl", "tr"].forEach((l) => { const s = document.createElement("span"); s.textContent = l; $("#langs").appendChild(s); });
+        tl.fromTo("#k0 .bars i", { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: EXPO, stagger: 0.07 }, A[0] - 0.05);
+        tl.fromTo("#k1 .dn", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: EXPO, stagger: 0.12 }, A[1] - 0.1);
+        tl.fromTo("#k5 .cl", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: EXPO, stagger: 0.08 }, A[5] - 0.05);
+        tl.fromTo("#k6 .sw span", { scale: 0 }, { scale: 1, duration: 0.5, ease: EXPO, stagger: 0.09 }, A[6] - 0.05);
+        tl.fromTo("#blogo", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.7, ease: EXPO }, A[6] + 0.3);
+        tl.fromTo("#names span", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3, ease: EXPO, stagger: 0.05 }, TM.names0);
+        tl.fromTo("#langs span", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3, ease: EXPO, stagger: 0.07 }, A[7] + 0.1);
+
+        // ============ S3 (16.3 - 23.7) ============
+        K.whipIn(tl, "#s3in", TM.r3);
+        tl.fromTo("#sixi", { yPercent: 118 }, { yPercent: 0, duration: 0.7, ease: EXPO }, TM.six0);
+        words("#sixlab", [TM.six0 + 0.17, TM.six0 + 0.27]);
+        tl.to("#six", { scale: 1.08, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1, transformOrigin: "0 50%" }, TM.six0 + 0.05);
+        const AG = [["Claude Code", "Anthropic", "C", TM.ag[0]], ["Cursor", "Anysphere", "Cu", TM.ag[1]], ["Codex", "OpenAI", "Cx", TM.ag[2]], ["Antigravity", "Google DeepMind", "A", TM.ag[3]], ["Gemini CLI", "Google", "G", TM.ag[4]], ["Kiro", "AWS", "K", TM.ag[5]]];
+        const pos = (i) => ({ x: (i % 2) * 480, y: Math.floor(i / 2) * 408 });
+        AG.forEach((a, i) => {
+          const p = pos(i);
+          const slot = document.createElement("div"); slot.className = "slot"; slot.style.left = p.x + "px"; slot.style.top = p.y + "px"; $("#cam").appendChild(slot);
+          const c = document.createElement("div"); c.className = "ag"; c.id = "ag" + i; c.style.left = p.x + "px"; c.style.top = p.y + "px";
+          c.innerHTML = `<div class="mono-c">${a[2]}</div><div><div class="nm">${a[0]}</div><div class="vd">${a[1]}</div></div>`; $("#cam").appendChild(c);
+          tl.fromTo(c, { scale: 0.82, clipPath: "inset(0 0 100% 0 round 34px)", transformOrigin: "50% 50%" }, { scale: 1, clipPath: "inset(0 0 0% 0 round 34px)", duration: 0.55, ease: EXPO }, a[3] - 0.1);
+          tl.fromTo(c, { borderColor: "#ffc43d" }, { borderColor: "#5b2896", duration: 0.9, ease: "power2.out" }, a[3] + 0.2);
         });
-        [6.35, 7.05, 7.65].forEach((t, i) => up(`#pl${i + 1}`, s3 + t, 0.38, 20));
+        tl.fromTo(".slot", { borderColor: "#482178" }, { borderColor: "#ff2d6f", duration: 0.3, stagger: 0.17, yoyo: true, repeat: 1, ease: "power2.out" }, TM.slot0);
+        const camFoc = AG.map((a, i) => { const p = pos(i); return { t: a[3], cx: p.x + 228, cy: p.y + 192, s: 1.5 }; });
+        camFoc.push({ t: TM.camEnd, cx: 468, cy: 600, s: 1 });
+        const camAt = K.camera("#cam", camFoc, { w: 936, h: 1200, base: (t) => ({ cx: 468, cy: 600, s: 1 + 0.06 * clamp((t - TM.r3 - 0.5) / 2.2) }) });
+        K.pushOut(tl, "#s3in", TM.r4 - 0.1);
 
-        const s4 = 22.21;
-        up("#s4-chat", s4 + 0.08, 0.45, 32);
-        const promptText = "Configure https://github.com/galvaowesley/cutroom";
-        const pEl = document.querySelector("#prompt-txt"), pState = { n: 0 };
-        tl.to(pState, { n: promptText.length, duration: 2.1, ease: "none", onUpdate: () => {
-          pEl.textContent = promptText.slice(0, Math.round(pState.n));
-        } }, s4 + 0.55);
-        up("#rep1", s4 + 3.1, 0.38, 18);
-        up("#rep2", s4 + 3.65, 0.38, 18);
-        tl.fromTo("#s5-logo", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.4, ease: E }, 27.38);
-        up("#s5-tag", 27.48, 0.35, 20);
-        up("#s5-url", 27.58, 0.35, 20);
+        // ============ S4 (22.6 - 30.4) ============
+        K.pushIn(tl, "#s4in", TM.r4);
+        words("#s4hl .ln:nth-child(1)", [TM.s6 - 0.05]); words("#s4hl .ln:nth-child(2)", [TM.s6 + 0.2]);
+        tl.fromTo("#chat", { rotationX: 38, y: 260, scale: 0.86, opacity: 0 }, { rotationX: 0, y: 0, scale: 1, opacity: 1, duration: 1.0, ease: "power4.out" }, TM.s6);
+        tl.fromTo("#persp", { scale: 1 }, { scale: 1.1, duration: TM.r5 - TM.s6 - 0.35, ease: "none" }, TM.s6 + 0.35);
+        tl.fromTo("#agents-row", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: EXPO }, TM.s6 + 1.0);
+        const TXT = "Configure https://github.com/galvaowesley/cutroom";
+        const type4 = K.typed("#ptxt", "#cur", TXT, TM.type0, TM.send - 0.1, TM.send);
+        tl.to("#pbox", { scale: 0.97, duration: 0.12, ease: "power2.in", yoyo: true, repeat: 1 }, TM.send);
+        tl.fromTo("#ripple", { scale: 0.2, opacity: 0.9 }, { scale: 3.2, opacity: 0, duration: 0.7, ease: "power2.out" }, TM.send + 0.02);
+        tl.fromTo("#progi", { scaleX: 0 }, { scaleX: 1, duration: TM.prog_dur, ease: "power1.inOut" }, TM.send + 0.25);
+        gsap.set("#progi", { scaleX: 0 });
+        tl.fromTo("#rp1", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: EXPO }, TM.send + 0.4);
+        tl.fromTo("#rp2", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: EXPO }, TM.rp2);
+        tl.fromTo("#rp3", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: EXPO }, TM.rp3);
+
+        // ============ S5 (29.3 - 36) ============
+        K.circleIn(tl, "#s5in", TM.r5, { y: "62%", r: 115 });
+        tl.fromTo("#endlogo", { clipPath: "inset(100% 0 0 0)", y: 40 }, { clipPath: "inset(0% 0 0 0)", y: 0, duration: 0.8, ease: EXPO }, TM.s7 + 0.02);
+        words("#endtag .ln:nth-child(1)", TM.t1); words("#endtag .ln:nth-child(2)", TM.t2); words("#endtag .ln:nth-child(3)", TM.t3);
+        tl.fromTo("#endurl", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: EXPO }, TM.url0);
+        tl.fromTo("#sheen", { x: 0 }, { x: 1150, duration: 1.3, ease: "power2.inOut" }, TM.url0 + 0.9);
+        // the last frame stays alive: a slow push, no cut
+        tl.fromTo("#endwrap", { scale: 1 }, { scale: 1.045, duration: TM.DUR - TM.s7 - 0.2, ease: "none" }, TM.s7 + 0.2);
+
+        // ---------- one clock drives every procedural piece
+        const cnt = K.counter("#cnum", 15, TM.count0, 0.8);
+        K.clock(tl, TM.DUR, [ringAt, feedAt, camAt, type4, cnt]);
 
         window.__timelines["main"] = tl;
       })();

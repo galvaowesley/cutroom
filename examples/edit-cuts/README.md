@@ -3,24 +3,24 @@
 **Request:** "Demonstrate post-production editing recipes on existing video and audio assets: synthesize a music bed with ffmpeg aevalsrc, score video with ducking over narration and earshot SFX, normalize loudness, reframe to 9:16 with blur fill, burn subtitles, generate square audiogram, compress for email, make an animated GIF, and generate contact sheets."
 
 <p align="center">
-  <a href="out/intro-final.mp4"><img src="out/intro.gif" width="760" alt="Watch intro-final.mp4 with narration, earshot SFX, and ducked music bed"></a>
+  <a href="out/intro-final.mp4"><img src="out/intro.gif" width="300" alt="Watch intro-final.mp4 with narration, earshot SFX, and ducked music bed"></a>
 </p>
 <p align="center">
-  <a href="out/intro-final.mp4"><strong>▶ Watch &amp; listen: <code>out/intro-final.mp4</code> (29.0 s, 1080p, -14.2 LUFS)</strong></a> ·
+  <a href="out/intro-final.mp4"><strong>▶ Watch &amp; listen: <code>out/intro-final.mp4</code> (34.1 s, 1080×1920, -14.1 LUFS)</strong></a> ·
   <a href="out/derivative-9x16-captions.mp4"><strong>▶ 9:16 Vertical + Captions (<code>out/derivative-9x16-captions.mp4</code>)</strong></a> ·
   <a href="out/intro-audiogram.mp4"><strong>▶ 1:1 Audiogram (<code>out/intro-audiogram.mp4</code>)</strong></a>
 </p>
 
-[`out/intro-final.mp4`](out/intro-final.mp4) (29.0 s, 1080p, -14.2 LUFS, 2.77 MB) · [`out/derivative-9x16-captions.mp4`](out/derivative-9x16-captions.mp4) (29.93 s, 1080x1920 vertical, 1.49 MB) · [`out/intro-audiogram.mp4`](out/intro-audiogram.mp4) (27.5 s, 1080x1080, 7.90 MB) · [`out/intro-email.mp4`](out/intro-email.mp4) (29.0 s, 540p, 550 KB) · source in [`src/bed.m4a`](src/bed.m4a)
+[`out/intro-final.mp4`](out/intro-final.mp4) (34.1 s, 1080×1920, -14.1 LUFS, 4.48 MB) · [`out/derivative-9x16-captions.mp4`](out/derivative-9x16-captions.mp4) (29.93 s, 1080x1920 vertical, 1.49 MB) · [`out/intro-audiogram.mp4`](out/intro-audiogram.mp4) (34.1 s, 1080x1080, 8.26 MB) · [`out/intro-email.mp4`](out/intro-email.mp4) (34.1 s, 304×540, 707 KB) · source in [`src/bed.m4a`](src/bed.m4a)
 
 | File | Description |
 |---|---|
 | [`src/bed.m4a`](src/bed.m4a) | Synthesized music bed generated with `ffmpeg aevalsrc` (32.12 s, AAC stereo, -30.6 LUFS, 339 KB) |
-| [`out/intro-final.mp4`](out/intro-final.mp4) | Scored product intro with music bed ducked under narration + `earshot` SFX, normalized to -14.2 LUFS (29.0 s, 2.77 MB) |
-| [`out/intro-email.mp4`](out/intro-email.mp4) | Compressed 960×540 email preset deliverable under 1 MB (29.0 s, 550 KB) |
+| [`out/intro-final.mp4`](out/intro-final.mp4) | Scored product intro with music bed ducked under narration + `earshot` SFX, normalized to -14.1 LUFS (34.1 s, 4.48 MB) |
+| [`out/intro-email.mp4`](out/intro-email.mp4) | Compressed 540 px email preset deliverable under 1 MB (34.1 s, 304×540, 707 KB) |
 | [`out/derivative-9x16-captions.mp4`](out/derivative-9x16-captions.mp4) | 9:16 vertical reframe of math video with blur padding, `earshot` SFX, and burned brand captions (29.93 s, 1.49 MB) |
-| [`out/intro-audiogram.mp4`](out/intro-audiogram.mp4) | 1:1 square audiogram with animated waveform in Sunflower yellow on Night Plum (27.5 s, 7.90 MB) |
-| [`out/intro.gif`](out/intro.gif) | 720 px animated preview GIF at 12 fps (720 KB) |
+| [`out/intro-audiogram.mp4`](out/intro-audiogram.mp4) | 1:1 square audiogram with animated waveform in Sunflower yellow on Night Plum (34.1 s, 8.26 MB) |
+| [`out/intro.gif`](out/intro.gif) | 300 px animated preview GIF of the first 12 s at 10 fps (2.0 MB) |
 | [`out/intro-sheet.png`](out/intro-sheet.png) | 4×3 contact sheet of `intro-final.mp4` |
 | [`out/derivative-9x16-sheet.png`](out/derivative-9x16-sheet.png) | 4×3 contact sheet of `derivative-9x16-captions.mp4` showing subtitle placement |
 
@@ -36,7 +36,7 @@ All operations use the `cutroom edit` tool wrappers around standard `ffmpeg` fil
    ```
 
 2. **Scoring with Ducking (`cutroom edit score`):**
-   Combines the video (and its existing narration + `earshot` SFX audio track) from `examples/motion-intro` with `src/bed.m4a`. The music automatically ducks in volume whenever speech or accents occur:
+   Combines the English vertical intro (and its existing narration + `earshot` SFX audio track) from `examples/motion-intro` with `src/bed.m4a`. The music automatically ducks in volume whenever speech or accents occur:
    ```bash
    cutroom edit score ../motion-intro/out/intro.mp4 --music src/bed.m4a --duck -o work/intro-scored.mp4
    ```
@@ -48,7 +48,7 @@ All operations use the `cutroom edit` tool wrappers around standard `ffmpeg` fil
    ```
 
 4. **Web / Email Compression (`cutroom edit compress`):**
-   Re-encodes video to under 1 MB at 960×540 for lightweight sharing or email attachments:
+   Re-encodes video to under 1 MB at 540 px tall for lightweight sharing or email attachments:
    ```bash
    cutroom edit compress out/intro-final.mp4 -o out/intro-email.mp4 --preset email
    ```
@@ -69,13 +69,13 @@ All operations use the `cutroom edit` tool wrappers around standard `ffmpeg` fil
    Generates a 1:1 social video (1080×1080) with dynamic audio waveform reactive to the speech track:
    ```bash
    cutroom edit audiogram ../motion-intro/src/intro/assets/narration.m4a \
-     -o out/intro-audiogram.mp4 --title "cutroom in 29 seconds" --aspect 1:1
+     -o out/intro-audiogram.mp4 --title "cutroom in 34 seconds" --aspect 1:1
    ```
 
 8. **Preview GIF (`cutroom edit gif`):**
-   Generates a 720 px animated GIF preview of the first 12 seconds:
+   Generates an animated GIF preview of the first 12 seconds (300 px wide, 10 fps):
    ```bash
-   cutroom edit gif out/intro-final.mp4 -o out/intro.gif --start 0 --duration 12 --fps 12 --width 720
+   cutroom edit gif out/intro-final.mp4 -o out/intro.gif --start 0 --duration 12 --fps 10 --width 300
    ```
 
 9. **Contact Sheets (`cutroom edit sheet`):**
@@ -88,10 +88,10 @@ All operations use the `cutroom edit` tool wrappers around standard `ffmpeg` fil
 ## What to verify
 
 - `cutroom edit probe` verified file properties:
-  - `out/intro-final.mp4`: duration 29.0 s, 1920×1080, 30.0 fps, loudness -14.2 LUFS (target was -14 LUFS).
-  - `out/intro-email.mp4`: duration 29.0 s, 960×540, 30.0 fps, size 550 KB (well below 1 MB email limit).
+  - `out/intro-final.mp4`: duration 34.1 s, 1080×1920, 30.0 fps, loudness -14.1 LUFS (target was -14 LUFS).
+  - `out/intro-email.mp4`: duration 34.1 s, 304×540, 30.0 fps, size 707 KB (below the 1 MB email limit).
   - `out/derivative-9x16-captions.mp4`: duration 29.93 s, 1080×1920, 19.01 fps, loudness -22.1 LUFS.
-  - `out/intro-audiogram.mp4`: duration 27.5 s, 1080×1080, 30.0 fps, size 7.90 MB.
+  - `out/intro-audiogram.mp4`: duration 34.1 s, 1080×1080, 30.0 fps, size 8.26 MB.
   - `src/bed.m4a`: duration 32.12 s, AAC 48,000 Hz stereo, loudness -30.6 LUFS.
 - Subtitle placement: [`out/derivative-9x16-sheet.png`](out/derivative-9x16-sheet.png) confirms captions render within the lower third and do not collide with formulas.
-- Audio ducking audit: music drops during voice sections and rises during scene transition pauses while preserving all 19 `earshot` cues.
+- Audio ducking audit: music drops during voice sections and rises during scene transition pauses while preserving all 96 `earshot` cues.

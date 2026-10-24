@@ -14,7 +14,7 @@ their phoneme counts. Phonemes come from the voice's own language (pt-br, es, fr
 
 Sentence clips `work/v{n}.wav` are synthesized when missing (and reused when present, so a text change only
 re-synthesizes what changed: delete that clip). Everything downstream (composition, cues) reads timing.json:
-see examples/motion-intro-vertical/src/build.py and make_cues_pt.py.
+see examples/motion-intro/src/build.py and make_cues.py.
 """
 import json
 import re

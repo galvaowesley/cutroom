@@ -6,7 +6,8 @@
   <a href="out/intro-vertical-pt.mp4"><img src="out/preview.gif" width="300" alt="Assistir intro-vertical-pt.mp4 com narração e efeitos sonoros"></a>
 </p>
 <p align="center">
-  <a href="out/intro-vertical-pt.mp4"><strong>▶ Assistir &amp; ouvir com áudio (<code>out/intro-vertical-pt.mp4</code> · 34,4 s · 1080×1920 vertical · pf_dora)</strong></a>
+  <a href="out/intro-vertical-pt.mp4"><strong>▶ Assistir &amp; ouvir com áudio (<code>out/intro-vertical-pt.mp4</code> · 34,4 s · 1080×1920 vertical · pf_dora)</strong></a> ·
+  <a href="../motion-intro/"><strong>English version</strong></a>
 </p>
 
 [`out/intro-vertical-pt.mp4`](out/intro-vertical-pt.mp4) (34.4 s, 1080x1920 @ 30 fps, H.264 + AAC, 4.7 MB, -15 LUFS) · [`out/sheet.png`](out/sheet.png) (folha de contato) · [`out/sound-sheet.png`](out/sound-sheet.png) (folha de áudio do earshot) · [`out/last-frame.png`](out/last-frame.png) · [`out/intro-vertical-pt.srt`](out/intro-vertical-pt.srt) · [`src/cues_pt.json`](src/cues_pt.json) (96 cues, gerados por [`src/make_cues_pt.py`](src/make_cues_pt.py)) · [`src/SCRIPT_PT.md`](src/SCRIPT_PT.md) · composição em [`src/intro/`](src/intro)
@@ -28,7 +29,7 @@ As peças do estilo (anel de ícones com zoom-through, feed de foco, câmera sob
 ## Como refazer
 
 ```bash
-cd examples/motion-intro-vertical
+cd examples/motion-intro-pt
 # 1. uma frase por arquivo em work/v4/ (s1.txt ... s7.txt) a partir de src/speech_pt.txt, depois
 tts -f work/v4/s2.txt -o work/v4/v2.wav --voice pf_dora@1.0 --pronounce src/pronounce_pt.json   # e as demais
 python3 src/timing.py          # monta a narração com as pausas e mede os tempos das palavras
@@ -40,3 +41,8 @@ cd src/intro && hyperframes render --quality delivery --output ../../out/intro-v
 ```
 
 Conferência: `hyperframes snapshot`, `cutroom edit sheet` e `earshot sheet --cues` (94% dos cues a menos de 100 ms do evento). A pronúncia dos nomes em inglês segue o dicionário de [`src/pronounce_pt.json`](src/pronounce_pt.json) e foi verificada pelos fonemas, não de ouvido.
+
+
+## Uma peça por idioma
+
+Cada idioma tem o seu roteiro, fala, dicionário de pronúncia e cues, feitos pelo mesmo código. A versão em inglês está em [`../motion-intro`](../motion-intro/) (`src/SCRIPT.md`, `speech.txt`, `pronounce.json`, `cues.json`). Para outro idioma, copie uma pasta, traduza as frases em `src/timing.py` e o texto de `src/intro.template.html`, ajuste os índices das palavras em `src/build.py` e reescreva os nomes com `voice phonemes <voz> "<palavra>"`.
