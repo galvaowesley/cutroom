@@ -1,0 +1,23 @@
+__pycache__/
+*.pyc
+.venv/
+node_modules/
+.DS_Store
+
+# intermediate tool output (the versioned examples live in examples/*/out)
+.archify/
+.hyperframes/
+renders/
+voice/
+shots/
+work/
+logs/
+
+# generated per install from brand.json
+harness/brands/*/tokens.css
+harness/brands/*/fonts.css
+harness/brands/*/book/
+harness/brands/*/specimen.*
+
+.env
+.env.*
