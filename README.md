@@ -12,8 +12,18 @@ cloning, procedural sound effects and audio critique, social graphics, post-prod
 
 <p align="center">Claude Code · Cursor · Codex · Antigravity · Gemini CLI · Kiro &nbsp;·&nbsp; Linux · macOS · Windows &nbsp;·&nbsp; MIT</p>
 
-<p align="center"><a href="examples/motion-intro/out/intro.mp4"><img src="examples/motion-intro/out/preview.gif" width="320" alt="cutroom in 34 seconds: the vertical intro video, made with cutroom-motion, cutroom-voice and earshot"></a></p>
-<p align="center"><a href="examples/motion-intro/out/intro.mp4"><strong>▶ Watch &amp; listen to the intro (<code>intro.mp4</code> · 34 s · 1080×1920 · narration &amp; earshot sound effects)</strong></a> · <a href="examples/motion-intro-pt/out/intro-vertical-pt.mp4"><strong>▶ Em português (<code>intro-vertical-pt.mp4</code>)</strong></a></p>
+<p align="center"><b>cutroom in 34 seconds</b> · vertical, with narration and <code>earshot</code> sound effects · made with cutroom-motion, cutroom-voice and cutroom-sound</p>
+
+https://github.com/user-attachments/assets/666b37ae-d702-4c18-baf8-9fb04eb9f3c5
+
+<details>
+<summary><b>▶ Em português do Brasil</b></summary>
+
+https://github.com/user-attachments/assets/a41c3389-c294-4043-86da-765efd25c8f0
+
+</details>
+
+<p align="center"><a href="examples/motion-intro/">English: script, pronunciation and sources</a> · <a href="examples/motion-intro-pt/">Português: roteiro, pronúncia e fontes</a></p>
 
 cutroom is a set of [Agent Skills](https://agentskills.io) plus a small harness. You ask your agent for a piece
 ("a 30-second explainer of the derivative", "a deck from this PDF for leadership", "Instagram posts for the
@@ -49,8 +59,9 @@ chains one tool into the next.
 
 Every example was made with the skills themselves, in cutroom's brand. Each folder has the sources in `src/`, the
 results in `out/` and a README with the request, the commands and what was checked. Video examples include embedded
-narration and strategic `earshot` sound cues. The previews are silent GIFs (GitHub does not render `<video>` tags in a
-README): click one, or its **▶ Watch & listen** link, to open the `.mp4` with sound.
+narration and strategic `earshot` sound cues. The intro above plays in the page. The other
+previews are silent GIFs (GitHub does not render `<video>` tags from a repository file): click one, or its **▶ Watch & listen**
+link, to open the `.mp4` with sound.
 
 ### The math example: gradient descent, from one weight to two (50 s)
 
