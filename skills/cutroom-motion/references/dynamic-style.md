@@ -1,6 +1,6 @@
 # Dynamic style for motion videos (HyperFrames)
 
-The style of `examples/motion-intro-vertical`: a piece that is never still, whose picture follows the voice
+The style of `examples/motion-intro` (English) and `examples/motion-intro-pt` (pt-BR): a piece that is never still, whose picture follows the voice
 word by word. The reusable parts are `harness/cutroom_motionkit.js` (animation) and `harness/cutroom_timing.py`
 (narration times). This page says when to use each pattern. It is a catalogue: add new patterns at the end of
 each table (section 5 says how).

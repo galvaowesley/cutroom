@@ -78,7 +78,7 @@ rm -f "$J/src/<slug>/CLAUDE.md" "$J/src/<slug>/AGENTS.md"  # they ask to run ski
   word, last frame held 3 to 3.5 s. Read `references/dynamic-style.md` in this skill's folder. The pieces are
   `harness/cutroom_motionkit.js` (`cp ~/.local/share/cutroom/harness/cutroom_motionkit.js "$J/src/<slug>/assets/"`,
   then `<script src="assets/cutroom_motionkit.js">` after GSAP) and `harness/cutroom_timing.py` (sentence clips with
-  natural pauses and word times, for any language). Worked example: `examples/motion-intro-vertical`.
+  natural pauses and word times, for any language). Worked examples: `examples/motion-intro` (English) and `examples/motion-intro-pt` (pt-BR).
 - **Narration** (`cutroom-voice`): the audio the composition plays is a source of it, in `$J/src/<slug>/assets/`.
   Generate in `work/` and convert there:
   `tts -f "$J/src/speech.txt" -o "$J/work/narration.wav" --voice narrator && cutroom edit loudnorm "$J/work/narration.wav" -o "$J/src/<slug>/assets/narration.m4a" --target -16`.

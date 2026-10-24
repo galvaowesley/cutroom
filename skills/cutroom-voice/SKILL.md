@@ -101,7 +101,7 @@ Then:
   envelope), place the sentences on the timeline with natural pauses (0.45 to 0.85 s), and spread the words of a
   sentence between its measured silences in proportion to their phoneme counts (phonemes of the voice's own language).
   `harness/cutroom_timing.py` does this (`build(sentences, work_dir, voice=..., pronounce=...)` or the command line),
-  and a composition built from its `timing.json` (`examples/motion-intro-vertical`) cannot drift from the voice.
+  and a composition built from its `timing.json` (`examples/motion-intro`, `examples/motion-intro-pt`) cannot drift from the voice.
 - **Cue points** to time scenes: `cutroom edit silences "$J/work/narration.wav"` lists the pauses.
 - **Finishing:** loudness for podcasts and voice-over `cutroom edit loudnorm in.wav -o out.m4a --target -16`; music
   under the voice with ducking `cutroom edit mix --voice narration.wav --music bed.mp3 --duck -o mix.m4a`; a

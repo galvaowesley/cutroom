@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="pt-BR" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>cutroom — apresentação vertical</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="assets/cutroom_motionkit.js"></script>
+    <link rel="stylesheet" href="assets/brand/tokens.css" />
+    <link rel="stylesheet" href="assets/brand/fonts.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #16072b; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; }
+      .clip { position: absolute; inset: 0; }
+      .sc { position: absolute; inset: 0; overflow: hidden; }
+      .dark { background: #16072b; color: #fff7fa; }
+      .light { background: #fff7fa; color: #16072b; }
+      .grid { position: absolute; left: 0; top: -260px; width: 1080px; height: 2500px;
+        background-image: linear-gradient(rgba(255,255,255,0.055) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.055) 2px, transparent 2px);
+        background-size: 90px 90px; }
+      .glow { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(255,45,111,0.42) 0%, rgba(255,45,111,0) 68%); }
+
+      /* kinetic words: each word rises out of a mask */
+      .ln { display: block; white-space: nowrap; }
+      .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0.08em 0.05em; margin: -0.08em -0.05em; }
+      .w i { display: inline-block; font-style: normal; }
+      .hl { font-family: "Bricolage Grotesque"; font-weight: 800; letter-spacing: -0.03em; line-height: 1.04; }
+      .pk { color: #ff2d6f; }
+      .mono { font-family: "JetBrains Mono NL", monospace; }
+      .eyebrow { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 26px; letter-spacing: 0.14em; text-transform: uppercase; }
+      .pill { font-family: "JetBrains Mono NL", monospace; font-weight: 700; font-size: 22px; padding: 10px 22px; border-radius: 999px; }
+
+      /* S1 */
+      #wm { position: absolute; left: 0; top: 0; width: 780px; height: auto; }
+      #ring { position: absolute; left: 540px; top: 930px; width: 0; height: 0; }
+      .chip { position: absolute; left: -62px; top: -62px; width: 124px; height: 124px; border-radius: 36px; background: #fff7fa; display: flex; align-items: center; justify-content: center; box-shadow: 0 18px 44px rgba(0,0,0,0.4); }
+      .chip img { width: 66px; height: 66px; }
+      #count { position: absolute; left: 0; top: 780px; width: 1080px; text-align: center; }
+      #count b { display: block; font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 300px; line-height: 0.9; letter-spacing: -0.04em; color: #ff2d6f; }
+      #count span { display: block; margin-top: 14px; font-size: 28px; color: #ff9bc0; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; font-family: "JetBrains Mono NL", monospace; }
+      #s1txt { position: absolute; left: 72px; right: 72px; top: 1420px; font-size: 96px; }
+
+      /* S2 feed */
+      #feed { position: absolute; left: 72px; top: 0; width: 936px; }
+      .card { position: absolute; left: 0; width: 936px; height: 400px; border-radius: 44px; background: #fff; border: 2px solid #f2dde6; box-shadow: 0 24px 60px rgba(130,20,60,0.08); padding: 34px 40px; overflow: hidden; }
+      .card .hl2 { position: absolute; inset: 0; border-radius: 44px; border: 4px solid #ff2d6f; opacity: 0; pointer-events: none; }
+      .chead { display: flex; align-items: center; gap: 22px; height: 84px; }
+      .cic { width: 76px; height: 76px; border-radius: 22px; background: #ffe9f0; display: flex; align-items: center; justify-content: center; }
+      .cic img { width: 46px; height: 46px; }
+      .ctitle { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 50px; letter-spacing: -0.02em; flex: 1; }
+      .ctag { font-family: "JetBrains Mono NL", monospace; font-size: 22px; color: #7e7088; }
+      .st { position: absolute; left: 40px; right: 40px; top: 142px; bottom: 28px; }
+      #hdr { position: absolute; left: 0; top: 0; width: 1080px; height: 300px; background: linear-gradient(#fff7fa 62%, rgba(255,247,250,0)); z-index: 5; padding: 96px 72px 0 72px; }
+      #hdr .row { display: flex; justify-content: space-between; align-items: center; }
+      #hdr .eyebrow { color: #c91453; }
+      #hdr .pill { background: #ffe9f0; color: #ff2d6f; border: 1px solid #ffd0e0; }
+
+      .bars { display: flex; align-items: flex-end; gap: 20px; height: 100%; }
+      .bars i { width: 54px; background: #ff2d6f; border-radius: 10px 10px 0 0; transform-origin: bottom; display: block; }
+      .kpi { position: absolute; right: 0; top: 10px; font-family: "JetBrains Mono NL", monospace; font-weight: 700; font-size: 62px; color: #c91453; background: #ffe9f0; padding: 14px 30px; border-radius: 20px; }
+      .pdf { position: absolute; left: 0; top: 0; width: 230px; height: 220px; border-radius: 18px; background: #fff; border: 3px solid #ff9bc0; padding: 22px; overflow: hidden; }
+      .pdf i { display: block; height: 12px; background: #e6d7e0; border-radius: 6px; margin-bottom: 14px; }
+      #laser { position: absolute; left: 0; right: 0; top: 0; height: 6px; background: #ff2d6f; box-shadow: 0 0 22px #ff2d6f; }
+      .md { position: absolute; left: 270px; right: 0; top: 0; bottom: 0; background: #16072b; border-radius: 18px; padding: 22px 28px; font-family: "JetBrains Mono NL", monospace; font-size: 26px; line-height: 1.6; color: #d4c7d6; overflow: hidden; }
+      .md div { white-space: nowrap; }
+      .md b { color: #ffc43d; }
+      .tr { display: flex; align-items: center; gap: 18px; margin-bottom: 16px; }
+      .tr label { font-family: "JetBrains Mono NL", monospace; font-weight: 700; font-size: 22px; width: 84px; color: #7e7088; }
+      .tr .bar { position: relative; flex: 1; height: 36px; border-radius: 10px; background: #ffe9f0; overflow: hidden; }
+      .tr .bar span { position: absolute; top: 0; bottom: 0; border-radius: 10px; transform-origin: left; }
+      #phead { position: absolute; top: -8px; bottom: -8px; width: 4px; background: #16072b; left: 100px; border-radius: 2px; }
+      .sw { display: flex; gap: 18px; align-items: center; }
+      .sw span { width: 96px; height: 96px; border-radius: 28px; border: 2px solid rgba(22,7,43,0.1); display: block; }
+      .langs { display: flex; flex-wrap: wrap; gap: 12px; width: 560px; }
+      .langs span { font-family: "JetBrains Mono NL", monospace; font-weight: 700; font-size: 24px; padding: 10px 18px; border-radius: 12px; background: #ffe9f0; color: #c91453; }
+      .big23 { position: absolute; right: 0; top: -6px; text-align: right; }
+      .big23 b { display: block; font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 130px; line-height: 0.95; color: #ff2d6f; }
+      .big23 span { font-family: "JetBrains Mono NL", monospace; font-size: 22px; color: #7e7088; }
+      .spec { display: flex; align-items: flex-end; gap: 9px; height: 100%; width: 600px; }
+      .spec i { flex: 1; background: #ff2d6f; border-radius: 6px 6px 0 0; display: block; }
+
+      /* S3 agents */
+      #s3hdr { position: absolute; left: 72px; top: 110px; right: 72px; }
+      #six { position: absolute; left: 72px; top: 190px; font-size: 340px; color: #ff2d6f; line-height: 0.85; }
+      #sixlab { position: absolute; left: 300px; top: 260px; font-size: 76px; }
+      #vp { position: absolute; left: 72px; top: 560px; width: 936px; height: 1200px; overflow: hidden; }
+      #cam { position: absolute; left: 0; top: 0; width: 936px; height: 1200px; transform-origin: 0 0; }
+      .slot { position: absolute; width: 456px; height: 384px; border-radius: 34px; border: 3px dashed #482178; }
+      .ag { position: absolute; width: 456px; height: 384px; border-radius: 34px; background: #210c3d; border: 3px solid #5b2896; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 24px 56px rgba(0,0,0,0.45); }
+      .ag .mono-c { width: 108px; height: 108px; border-radius: 30px; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(0,0,0,0.35); }
+      .ag .mono-c img { width: 72px; height: 72px; object-fit: contain; }
+      .ag .nm { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; }
+      .ag .vd { font-family: "JetBrains Mono NL", monospace; font-size: 24px; color: #ffc43d; margin-top: 12px; }
+
+      /* S4 install */
+      #s4hl { position: absolute; left: 72px; top: 130px; font-size: 118px; }
+      #persp { position: absolute; left: 0; top: 560px; width: 1080px; height: 1100px; perspective: 1800px; }
+      #chat { position: absolute; left: 72px; top: 40px; width: 936px; background: #210c3d; border: 3px solid #482178; border-radius: 44px; padding: 46px; box-shadow: 0 40px 100px rgba(0,0,0,0.6); transform-origin: 50% 50%; }
+      .dots { display: flex; gap: 14px; margin-bottom: 38px; }
+      .dots i { width: 20px; height: 20px; border-radius: 50%; display: block; }
+      #pbox { position: relative; background: #16072b; border: 3px solid #ff2d6f; border-radius: 26px; padding: 34px 36px; font-family: "JetBrains Mono NL", monospace; font-size: 34px; line-height: 1.5; min-height: 190px; word-break: break-all; }
+      #pbox .pr { color: #ff9bc0; }
+      #ptxt { color: #fff; font-weight: 700; }
+      #cur { color: #ff2d6f; }
+      #ripple { position: absolute; right: 30px; bottom: 26px; width: 80px; height: 80px; margin: -40px; border-radius: 50%; border: 5px solid #ff2d6f; opacity: 0; }
+      #prog { height: 12px; border-radius: 6px; background: #3d1b6a; margin-top: 40px; overflow: hidden; }
+      #prog i { display: block; height: 100%; width: 100%; background: #ff2d6f; transform-origin: left; border-radius: 6px; }
+      .rep { margin-top: 26px; font-size: 32px; color: #d4c7d6; display: flex; gap: 18px; align-items: center; }
+      .rep b { color: #ffc43d; font-family: "JetBrains Mono NL", monospace; font-size: 34px; }
+      #agents-row { position: absolute; left: 72px; right: 72px; top: 1730px; font-family: "Bricolage Grotesque"; font-weight: 600; font-size: 30px; color: #ff9bc0; text-align: center; }
+
+      /* S5 end */
+      .pinkbg { background: #ff2d6f; color: #16072b; }
+      #endwrap { position: absolute; inset: 0; }
+      #endlogo { position: absolute; left: 280px; top: 400px; width: 520px; height: auto; }
+      #endtag { position: absolute; left: 72px; right: 72px; top: 1000px; text-align: center; font-size: 100px; color: #16072b; }
+      #endurl { position: absolute; left: 0; width: 1080px; top: 1520px; text-align: center; }
+      #endurl div { display: inline-block; position: relative; overflow: hidden; font-family: "JetBrains Mono NL", monospace; font-weight: 700; font-size: 38px; color: #fff; background: #16072b; padding: 24px 52px; border-radius: 999px; }
+      #sheen { position: absolute; top: 0; bottom: 0; width: 90px; left: -120px; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.35), rgba(255,255,255,0)); transform: skewX(-18deg); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-width="1080" data-height="1920" data-duration="34.4">
+      <audio id="narr" src="assets/narration.m4a" data-start="0" data-duration="31.85" data-track-index="9" preload="auto"></audio>
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="34.3" data-track-index="10" preload="auto"></audio>
+
+      <!-- ============ S1: o nome, o canivete e as 15 skills (0 - 5.9) ============ -->
+      <div id="s1" class="clip" data-start="0" data-duration="5.85" data-track-index="0" style="z-index:1">
+        <div class="sc dark" id="s1in">
+          <div class="grid" id="g1"></div>
+          <div class="glow" id="glow1" style="left:-10px;top:370px;width:1100px;height:1100px"></div>
+          <img id="wm" src="assets/brand/logos/wordmark-deep.svg" alt="cutroom" />
+          <div id="ring"></div>
+          <div id="count"><b id="cnum">0</b><span>skills de mídia</span></div>
+          <div id="s1txt" class="hl">
+            <span class="ln"><span class="w"><i>Um</i></span> <span class="w"><i>canivete</i></span> <span class="w"><i class="pk">suíço</i></span></span>
+            <span class="ln"><span class="w"><i>com</i></span> <span class="w"><i class="pk">15</i></span> <span class="w"><i>skills</i></span></span>
+            <span class="ln"><span class="w"><i>para</i></span> <span class="w"><i>criação</i></span> <span class="w"><i>de</i></span> <span class="w"><i class="pk">mídia</i></span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ S2: o feed de capacidades (5.15 - 17.3) ============ -->
+      <div id="s2" class="clip" data-start="5.05" data-duration="11.66" data-track-index="1" style="z-index:2">
+        <div class="sc light" id="s2in">
+          <div id="s2wrap" style="position:absolute;inset:0">
+            <div id="feed">
+              <div class="card" id="k0" style="top:0px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/deck.svg" alt=""></div><div class="ctitle">Slides</div><div class="ctag">cutroom-deck</div></div>
+                <div class="st"><div class="bars"><i style="height:34%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:70%"></i><i style="height:86%"></i><i style="height:78%"></i><i style="height:100%"></i></div><div class="kpi" id="kpi">+0%</div></div></div>
+              <div class="card" id="k1" style="top:440px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/diagram.svg" alt=""></div><div class="ctitle">Diagramas</div><div class="ctag">cutroom-diagram</div></div>
+                <div class="st"><svg width="856" height="230" viewBox="0 0 856 230">
+                  <path id="dpath" d="M 70 115 L 280 60 L 500 160 L 780 85" fill="none" stroke="#e6d7e0" stroke-width="6" stroke-linejoin="round"/>
+                  <path id="dpath2" d="M 70 115 L 280 60 L 500 160 L 780 85" fill="none" stroke="#ff2d6f" stroke-width="6" stroke-linejoin="round" stroke-dasharray="1000" stroke-dashoffset="1000"/>
+                  <g class="dn"><circle cx="70" cy="115" r="38" fill="#fff" stroke="#ff2d6f" stroke-width="5"/><text x="70" y="122" text-anchor="middle" font-family="JetBrains Mono NL" font-weight="700" font-size="20" fill="#16072b">API</text></g>
+                  <g class="dn"><circle cx="280" cy="60" r="38" fill="#ff2d6f"/><text x="280" y="67" text-anchor="middle" font-family="JetBrains Mono NL" font-weight="700" font-size="20" fill="#fff">FLOW</text></g>
+                  <g class="dn"><circle cx="500" cy="160" r="38" fill="#fff" stroke="#ffc43d" stroke-width="5"/><text x="500" y="167" text-anchor="middle" font-family="JetBrains Mono NL" font-weight="700" font-size="20" fill="#16072b">DB</text></g>
+                  <g class="dn"><circle cx="780" cy="85" r="38" fill="#fff" stroke="#ff2d6f" stroke-width="5"/><text x="780" y="92" text-anchor="middle" font-family="JetBrains Mono NL" font-weight="700" font-size="20" fill="#16072b">UI</text></g>
+                  <circle id="dpulse" cx="70" cy="115" r="13" fill="#ffc43d" stroke="#16072b" stroke-width="3"/></svg></div></div>
+              <div class="card" id="k2" style="top:880px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/figure.svg" alt=""></div><div class="ctitle">Figuras 3D</div><div class="ctag">cutroom-iso3d</div></div>
+                <div class="st"><svg width="856" height="230" viewBox="0 0 856 230"><g id="isoall" transform="translate(300 -6) scale(1.38)">
+                  <polygon points="80,10 160,46 80,82 0,46" fill="#ffd0e0" stroke="#16072b" stroke-width="2.5"/>
+                  <polygon points="0,46 80,82 80,142 0,106" fill="#c91453" stroke="#16072b" stroke-width="2.5"/>
+                  <polygon points="160,46 80,82 80,142 160,106" fill="#ff5c8d" stroke="#16072b" stroke-width="2.5"/>
+                  <g id="drw"><polygon points="80,50 152,82 80,114 8,82" fill="#ff2d6f" stroke="#16072b" stroke-width="3"/>
+                  <polygon points="8,82 80,114 80,134 8,102" fill="#c91453" stroke="#16072b" stroke-width="2.5"/>
+                  <polygon points="152,82 80,114 80,134 152,102" fill="#ff5c8d" stroke="#16072b" stroke-width="2.5"/></g></g></svg></div></div>
+              <div class="card" id="k3" style="top:1320px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/extract.svg" alt=""></div><div class="ctitle">Extração de documentos</div><div class="ctag">extract</div></div>
+                <div class="st"><div class="pdf"><i></i><i></i><i style="width:70%"></i><i></i><i style="width:55%"></i><span id="laser"></span></div>
+                  <div class="md"><div class="mdl"><b># Catálogo</b></div><div class="mdl">| SKU | Latência |</div><div class="mdl">| <b>R-40</b> | <b>1.2 ms</b> |</div><div class="mdl">| <b>R-52</b> | <b>0.9 ms</b> |</div></div></div></div>
+              <div class="card" id="k4" style="top:1760px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/math.svg" alt=""></div><div class="ctitle">Vídeos de matemática</div><div class="ctag">cutroom-math</div></div>
+                <div class="st"><svg width="856" height="230" viewBox="0 0 856 230">
+                  <line x1="10" y1="205" x2="846" y2="205" stroke="#e6d7e0" stroke-width="3"/>
+                  <path id="mpath" d="M 20 190 C 200 190, 250 30, 430 50 S 700 200, 840 60" fill="none" stroke="#ff2d6f" stroke-width="7" stroke-linecap="round"/>
+                  <line id="mtan" x1="0" y1="0" x2="0" y2="0" stroke="#ffc43d" stroke-width="6" stroke-linecap="round"/>
+                  <circle id="mdot" cx="0" cy="0" r="12" fill="#16072b"/></svg>
+                  <div class="mono" id="mread" style="position:absolute;right:0;top:0;font-size:32px;font-weight:700;color:#c91453">f′(x) = 0.00</div></div></div>
+              <div class="card" id="k5" style="top:2200px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/motion.svg" alt=""></div><div class="ctitle">Vídeos de motion</div><div class="ctag">cutroom-motion</div></div>
+                <div class="st" style="top:150px"><div class="tr"><label>GSAP</label><div class="bar"><span class="cl" style="left:3%;width:70%;background:#ff2d6f"></span></div></div>
+                  <div class="tr"><label>VOZ</label><div class="bar"><span class="cl" style="left:10%;width:62%;background:#9b5de5"></span></div></div>
+                  <div class="tr"><label>SFX</label><div class="bar"><span class="cl" style="left:12%;width:12%;background:#ffc43d"></span><span class="cl" style="left:40%;width:12%;background:#ffc43d"></span><span class="cl" style="left:66%;width:14%;background:#ffc43d"></span></div></div>
+                  <span id="phead"></span></div></div>
+              <div class="card" id="k6" style="top:2640px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/brand.svg" alt=""></div><div class="ctitle">Marcas e logos</div><div class="ctag">cutroom-brand</div></div>
+                <div class="st"><div class="sw"><span style="background:#ff2d6f"></span><span style="background:#16072b"></span><span style="background:#ffc43d"></span><span style="background:#ff9bc0"></span><span style="background:#fff7fa"></span></div>
+                  <img id="blogo" src="assets/brand/logos/stacked.svg" alt="" style="position:absolute;right:0;top:-8px;height:200px"></div></div>
+              <div class="card" id="k7" style="top:3080px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/voice.svg" alt=""></div><div class="ctitle">Voz local</div><div class="ctag">cutroom-voice</div></div>
+                <div class="st"><div class="langs" id="langs"></div><div class="big23"><b id="n23">0</b><span>idiomas</span></div></div></div>
+              <div class="card" id="k8" style="top:3520px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/edit.svg" alt=""></div><div class="ctitle">Efeitos sonoros</div><div class="ctag">earshot</div></div>
+                <div class="st"><div class="spec" id="spec"></div><div class="big23"><b id="n252">0</b><span>sons procedurais</span></div></div></div>
+              <div class="card" id="k9" style="top:3960px"><div class="hl2"></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/script.svg" alt=""></div><div class="ctitle">15 skills, uma pasta</div><div class="ctag">cutroom-studio</div></div>
+                <div class="st"><div class="langs" id="names" style="width:100%"></div></div></div>
+            </div>
+            <div id="hdr"><div class="row"><span class="eyebrow">O que ele faz</span><span class="pill">15 SKILLS · LOCAL</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ S3: seis agentes (16.3 - 23.7) ============ -->
+      <div id="s3" class="clip" data-start="15.66" data-duration="7.59" data-track-index="2" style="z-index:3">
+        <div class="sc dark" id="s3in">
+          <div class="grid" id="g3"></div>
+          <div class="glow" style="left:380px;top:80px;width:900px;height:900px"></div>
+          <div id="s3hdr"><span class="eyebrow" style="color:#ff9bc0">Compatibilidade</span></div>
+          <div id="six" class="hl"><span class="w"><i id="sixi">6</i></span></div>
+          <div id="sixlab" class="hl"><span class="ln"><span class="w"><i>agentes</i></span></span><span class="ln"><span class="w"><i class="pk">de código</i></span></span></div>
+          <div id="vp"><div id="cam"></div></div>
+        </div>
+      </div>
+
+      <!-- ============ S4: instalar (22.6 - 30.4) ============ -->
+      <div id="s4" class="clip" data-start="22.2" data-duration="6.78" data-track-index="3" style="z-index:4">
+        <div class="sc dark" id="s4in">
+          <div class="grid" id="g4"></div>
+          <div class="glow" style="left:60px;top:1000px;width:1000px;height:1000px"></div>
+          <div id="s4hl" class="hl"><span class="ln"><span class="w"><i>Só mande</i></span></span><span class="ln"><span class="w"><i>o <b class="pk" style="font-weight:800">link</b></i></span></span></div>
+          <div id="persp"><div id="chat">
+            <div class="dots"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i></div>
+            <div id="pbox"><span class="pr">&gt; </span><span id="ptxt"></span><span id="cur">▌</span><span id="ripple"></span></div>
+            <div id="prog"><i id="progi"></i></div>
+            <div class="rep" id="rp1"><b>●</b> lendo o repositório…</div>
+            <div class="rep" id="rp2"><b>✓</b> 15 skills instaladas</div>
+            <div class="rep" id="rp3"><b>✓</b> pronto para usar</div>
+          </div></div>
+          <div id="agents-row">Claude · Cursor · Codex · Antigravity · Gemini · Kiro</div>
+        </div>
+      </div>
+
+      <!-- ============ S5: encerramento (29.3 - 36) ============ -->
+      <div id="s5" class="clip" data-start="28.08" data-duration="6.32" data-track-index="4" style="z-index:5">
+        <div class="sc pinkbg" id="s5in">
+          <div id="endwrap">
+            <img id="endlogo" src="assets/brand/logos/stacked-contrast.svg" alt="cutroom" />
+            <div id="endtag" class="hl">
+              <span class="ln"><span class="w"><i>Toda</i></span> <span class="w"><i>peça</i></span></span>
+              <span class="ln"><span class="w"><i>gerada</i></span> <span class="w"><i>na</i></span> <span class="w"><i>sua</i></span></span>
+              <span class="ln"><span class="w"><i style="color:#fff">máquina.</i></span></span>
+            </div>
+            <div id="endurl"><div id="endurli">github.com/galvaowesley/cutroom<span id="sheen"></span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const TM = {"DUR": 34.4, "wm0": 0.4, "ring0": 1.75, "l1": [1.75, 1.911, 2.503], "l2": [3.02, 3.17, 3.47], "l3": [3.87, 4.12, 4.67, 4.82], "count0": 3.17, "zoom0": 4.92, "r2": 5.05, "A": [5.67, 6.27, 6.939, 8.307, 10.11, 11.6, 12.2, 12.8, 14.726], "n23": 13.218, "k9scroll": 15.36, "names0": 15.2, "r3": 15.66, "six0": 16.914, "slot0": 17.169, "ag": [18.59, 19.37, 19.92, 20.32, 21.233, 21.804], "camEnd": 22.09, "r4": 22.2, "s6": 22.64, "type0": 23.725, "send": 25.84, "rp2": 26.868, "rp3": 27.512, "r5": 28.08, "s7": 28.63, "t1": [29.106, 29.403], "t2": [29.701, 30.177, 30.296], "t3": [30.534], "url0": 31.0, "s1_dur": 5.85, "s2_dur": 11.66, "s3_dur": 7.59, "s4_dur": 6.78, "s5_dur": 6.32, "prog_dur": 1.49, "narr_dur": 31.85, "sfx_dur": 34.3};
+        const tl = gsap.timeline({ paused: true });
+        const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
+        const K = CutroomMotion, { clamp, ss } = K;           // cutroom_motionkit.js (harness)
+        const EXPO = "expo.out", IO = "power3.inOut";
+        const words = (sel, times, dur) => K.words(tl, sel, times, dur);
+
+        // ---------- continuous backdrop motion (never still)
+        tl.fromTo("#g1", { y: 0 }, { y: 30 * TM.s1_dur, duration: TM.s1_dur, ease: "none" }, 0);
+        tl.fromTo("#g3", { y: 0 }, { y: 32 * TM.s3_dur, duration: TM.s3_dur, ease: "none" }, TM.r3);
+        tl.fromTo("#g4", { y: 0 }, { y: 30 * TM.s4_dur, duration: TM.s4_dur, ease: "none" }, TM.r4);
+        tl.fromTo("#glow1", { scale: 0.85 }, { scale: 1.12, duration: TM.s1_dur, ease: "sine.inOut" }, 0);
+
+        // ============ S1 (0 - 5.9) ============
+        tl.fromTo("#wm", { clipPath: "inset(0 100% 0 0)", scale: 1.12 }, { clipPath: "inset(0 0% 0 0)", scale: 1, duration: 0.7, ease: EXPO }, TM.wm0);
+        gsap.set("#wm", { x: 150, y: 800, transformOrigin: "50% 50%" });
+        tl.to("#wm", { y: 150, scale: 0.7, duration: 0.9, ease: IO }, TM.ring0 - 0.3);
+        // the 15 skill icons: a ring that bursts out when the skills are named
+        const ringNames = ["deck", "diagram", "figure", "extract", "math", "motion", "brand", "voice", "edit", "graphic", "script", "video"];
+        const chips = ringNames.map((n) => { const d = document.createElement("div"); d.className = "chip"; d.innerHTML = `<img src="assets/brand/icons/${n}.svg" alt="">`; $("#ring").appendChild(d); return d; });
+        const ringAt = K.ring(chips, { start: TM.ring0, zoomStart: TM.zoom0 });
+        words("#s1txt .ln:nth-child(1)", TM.l1);
+        words("#s1txt .ln:nth-child(2)", TM.l2);
+        words("#s1txt .ln:nth-child(3)", TM.l3);
+        tl.fromTo("#count", { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.55, ease: EXPO }, TM.count0 - 0.05);
+        // zoom-through into S2
+        tl.to("#s1txt", { y: -260, opacity: 0, filter: "blur(10px)", duration: 0.7, ease: "power3.in" }, TM.zoom0 + 0.05);
+        tl.to("#count", { scale: 5, opacity: 0, filter: "blur(14px)", duration: 0.75, ease: "power3.in" }, TM.zoom0);
+        tl.to("#wm", { scale: 1.6, opacity: 0, duration: 0.6, ease: "power3.in" }, TM.zoom0 + 0.05);
+
+        // ============ S2 (5.15 - 17.3) ============
+        const A = TM.A;
+        K.circleIn(tl, "#s2in", TM.r2);
+        tl.fromTo("#s2wrap", { scale: 1.22 }, { scale: 1, duration: 0.9, ease: "power3.out" }, TM.r2);
+        // whip out to S3
+        K.whipOut(tl, "#s2wrap", TM.r3);
+        const DT = K.pathTable("#dpath", 300), MT = K.pathTable("#mpath", 600), at = K.pointAt;   // measured once, at build time
+        const feedFocus = K.feed("#feed", A.map((_, i) => document.getElementById("k" + i)), A,
+          { top: 800, enterAt: TM.r2 + 0.05, extra: [{ at: TM.k9scroll, shift: 396, dur: 0.9 }] });
+        const feedAt = (t) => {
+          feedFocus(t);
+          // deck KPI
+          $("#kpi").textContent = "+" + Math.round(142 * ss((t - A[0] - 0.25) / 0.9)) + "%";
+          // diagram pulse
+          const pd = clamp((t - A[1] - 0.2) / 1.1);
+          $("#dpath2").style.strokeDashoffset = (1000 * (1 - pd)).toFixed(1);
+          const q = at(DT, (((t - A[1]) / 1.7) % 1 + 1) % 1);
+          gsap.set("#dpulse", { attr: { cx: q.x, cy: q.y }, opacity: t > A[1] ? 1 : 0 });
+          // iso drawer
+          const sl = Math.sin(clamp((t - A[2]) / 2.6) * Math.PI * 2 * 1.5 - Math.PI / 2) * 0.5 + 0.5;
+          gsap.set("#drw", { x: 38 * sl * ss((t - A[2]) / 0.4), y: 19 * sl * ss((t - A[2]) / 0.4) });
+          // laser + markdown
+          const lp = clamp((t - A[3] - 0.15) / 1.3);
+          gsap.set("#laser", { y: 200 * lp, opacity: lp > 0 && lp < 1 ? 1 : 0 });
+          $$("#k3 .mdl").forEach((el, i) => gsap.set(el, { opacity: ss((lp * 4 - i) / 0.6), x: 14 * (1 - ss((lp * 4 - i) / 0.6)) }));
+          // math tangent
+          const pm = clamp((t - A[4] - 0.15) / 2.3), e = ss(pm);
+          const p0 = at(MT, Math.max(0, e - 0.012)), p1 = at(MT, Math.min(1, e + 0.012)), pc = at(MT, e);
+          const dx = p1.x - p0.x, dy = p1.y - p0.y, n = Math.hypot(dx, dy) || 1;
+          gsap.set("#mtan", { attr: { x1: pc.x - dx / n * 130, y1: pc.y - dy / n * 130, x2: pc.x + dx / n * 130, y2: pc.y + dy / n * 130 }, opacity: pm > 0 ? 1 : 0 });
+          gsap.set("#mdot", { attr: { cx: pc.x, cy: pc.y }, opacity: pm > 0 ? 1 : 0 });
+          $("#mread").textContent = "f′(x) = " + (-dy / dx * 2.2).toFixed(2);
+          // timeline playhead
+          gsap.set("#phead", { x: 840 * ss((t - A[5] - 0.1) / 2.2) });
+          // languages count + spectrum
+          $("#n23").textContent = Math.round(23 * ss((t - TM.n23) / 0.85));
+          $("#n252").textContent = Math.round(252 * ss((t - A[8] - 0.1) / 1.2));
+          $$("#spec i").forEach((b, i) => { const v = t > A[8] ? Math.abs(Math.sin(i * 0.6 + t * 7)) * Math.abs(Math.cos(i * 0.35 + t * 4.3)) : 0.05; b.style.height = (10 + 85 * v).toFixed(1) + "%"; });
+        };
+        for (let i = 0; i < 24; i++) $("#spec").appendChild(document.createElement("i"));
+        ["brand","deck","diagram","edit","extract","graphic","init","iso3d","logo","math","motion","script","sound","studio","voice"].forEach((l) => { const s = document.createElement("span"); s.textContent = l; $("#names").appendChild(s); });
+        ["pt", "en", "es", "fr", "it", "de", "ja", "zh", "hi", "ru", "ko", "ar", "nl", "tr"].forEach((l) => { const s = document.createElement("span"); s.textContent = l; $("#langs").appendChild(s); });
+        tl.fromTo("#k0 .bars i", { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: EXPO, stagger: 0.07 }, A[0] - 0.05);
+        tl.fromTo("#k1 .dn", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: EXPO, stagger: 0.12 }, A[1] - 0.1);
+        tl.fromTo("#k5 .cl", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: EXPO, stagger: 0.08 }, A[5] - 0.05);
+        tl.fromTo("#k6 .sw span", { scale: 0 }, { scale: 1, duration: 0.5, ease: EXPO, stagger: 0.09 }, A[6] - 0.05);
+        tl.fromTo("#blogo", { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.7, ease: EXPO }, A[6] + 0.3);
+        tl.fromTo("#names span", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3, ease: EXPO, stagger: 0.05 }, TM.names0);
+        tl.fromTo("#langs span", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3, ease: EXPO, stagger: 0.07 }, A[7] + 0.1);
+
+        // ============ S3 (16.3 - 23.7) ============
+        K.whipIn(tl, "#s3in", TM.r3);
+        tl.fromTo("#sixi", { yPercent: 118 }, { yPercent: 0, duration: 0.7, ease: EXPO }, TM.six0);
+        words("#sixlab", [TM.six0 + 0.17, TM.six0 + 0.27]);
+        tl.to("#six", { scale: 1.08, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1, transformOrigin: "0 50%" }, TM.six0 + 0.05);
+        // [name, vendor, icon file, tile color, time]: the icons are the agents' own marks, on a tile that keeps each one legible
+        const AG = [["Claude Code", "Anthropic", "claude.png", "#fff", TM.ag[0]], ["Cursor", "Anysphere", "cursor.png", "#fff", TM.ag[1]], ["Codex", "OpenAI", "codex.png", "#fff", TM.ag[2]], ["Antigravity", "Google DeepMind", "antigravity.png", "#fff", TM.ag[3]], ["Gemini CLI", "Google", "gemini.svg", "#fff", TM.ag[4]], ["Kiro", "AWS", "kiro.png", "#9046ff", TM.ag[5]]];
+        const pos = (i) => ({ x: (i % 2) * 480, y: Math.floor(i / 2) * 408 });
+        AG.forEach((a, i) => {
+          const p = pos(i);
+          const slot = document.createElement("div"); slot.className = "slot"; slot.style.left = p.x + "px"; slot.style.top = p.y + "px"; $("#cam").appendChild(slot);
+          const c = document.createElement("div"); c.className = "ag"; c.id = "ag" + i; c.style.left = p.x + "px"; c.style.top = p.y + "px";
+          c.innerHTML = `<div class="mono-c" style="background:${a[3]}"><img src="assets/agents/${a[2]}" alt=""></div><div><div class="nm">${a[0]}</div><div class="vd">${a[1]}</div></div>`; $("#cam").appendChild(c);
+          tl.fromTo(c, { scale: 0.82, clipPath: "inset(0 0 100% 0 round 34px)", transformOrigin: "50% 50%" }, { scale: 1, clipPath: "inset(0 0 0% 0 round 34px)", duration: 0.55, ease: EXPO }, a[4] - 0.1);
+          tl.fromTo(c, { borderColor: "#ffc43d" }, { borderColor: "#5b2896", duration: 0.9, ease: "power2.out" }, a[4] + 0.2);
+        });
+        tl.fromTo(".slot", { borderColor: "#482178" }, { borderColor: "#ff2d6f", duration: 0.3, stagger: 0.17, yoyo: true, repeat: 1, ease: "power2.out" }, TM.slot0);
+        const camFoc = AG.map((a, i) => { const p = pos(i); return { t: a[4], cx: p.x + 228, cy: p.y + 192, s: 1.5 }; });
+        camFoc.push({ t: TM.camEnd, cx: 468, cy: 600, s: 1 });
+        const camAt = K.camera("#cam", camFoc, { w: 936, h: 1200, base: (t) => ({ cx: 468, cy: 600, s: 1 + 0.06 * clamp((t - TM.r3 - 0.5) / 2.2) }) });
+        K.pushOut(tl, "#s3in", TM.r4 - 0.1);
+
+        // ============ S4 (22.6 - 30.4) ============
+        K.pushIn(tl, "#s4in", TM.r4);
+        words("#s4hl .ln:nth-child(1)", [TM.s6 - 0.05]); words("#s4hl .ln:nth-child(2)", [TM.s6 + 0.2]);
+        tl.fromTo("#chat", { rotationX: 38, y: 260, scale: 0.86, opacity: 0 }, { rotationX: 0, y: 0, scale: 1, opacity: 1, duration: 1.0, ease: "power4.out" }, TM.s6);
+        tl.fromTo("#persp", { scale: 1 }, { scale: 1.1, duration: TM.r5 - TM.s6 - 0.35, ease: "none" }, TM.s6 + 0.35);
+        tl.fromTo("#agents-row", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: EXPO }, TM.s6 + 1.0);
+        const TXT = "Configure https://github.com/galvaowesley/cutroom";
+        const type4 = K.typed("#ptxt", "#cur", TXT, TM.type0, TM.send - 0.1, TM.send);
+        tl.to("#pbox", { scale: 0.97, duration: 0.12, ease: "power2.in", yoyo: true, repeat: 1 }, TM.send);
+        tl.fromTo("#ripple", { scale: 0.2, opacity: 0.9 }, { scale: 3.2, opacity: 0, duration: 0.7, ease: "power2.out" }, TM.send + 0.02);
+        tl.fromTo("#progi", { scaleX: 0 }, { scaleX: 1, duration: TM.prog_dur, ease: "power1.inOut" }, TM.send + 0.25);
+        gsap.set("#progi", { scaleX: 0 });
+        tl.fromTo("#rp1", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: EXPO }, TM.send + 0.4);
+        tl.fromTo("#rp2", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: EXPO }, TM.rp2);
+        tl.fromTo("#rp3", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.5, ease: EXPO }, TM.rp3);
+
+        // ============ S5 (29.3 - 36) ============
+        K.circleIn(tl, "#s5in", TM.r5, { y: "62%", r: 115 });
+        tl.fromTo("#endlogo", { clipPath: "inset(100% 0 0 0)", y: 40 }, { clipPath: "inset(0% 0 0 0)", y: 0, duration: 0.8, ease: EXPO }, TM.s7 + 0.02);
+        words("#endtag .ln:nth-child(1)", TM.t1); words("#endtag .ln:nth-child(2)", TM.t2); words("#endtag .ln:nth-child(3)", TM.t3);
+        tl.fromTo("#endurl", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: EXPO }, TM.url0);
+        tl.fromTo("#sheen", { x: 0 }, { x: 1150, duration: 1.3, ease: "power2.inOut" }, TM.url0 + 0.9);
+        // the last frame stays alive: a slow push, no cut
+        tl.fromTo("#endwrap", { scale: 1 }, { scale: 1.045, duration: TM.DUR - TM.s7 - 0.2, ease: "none" }, TM.s7 + 0.2);
+
+        // ---------- one clock drives every procedural piece
+        const cnt = K.counter("#cnum", 15, TM.count0, 0.8);
+        K.clock(tl, TM.DUR, [ringAt, feedAt, camAt, type4, cnt]);
+
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>

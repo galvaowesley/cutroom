@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="pt-BR" data-resolution="portrait">
+<html lang="en" data-resolution="portrait">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
-    <title>cutroom — apresentação vertical</title>
+    <title>cutroom — vertical intro</title>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <script src="assets/cutroom_motionkit.js"></script>
     <link rel="stylesheet" href="assets/brand/tokens.css" />
@@ -88,7 +88,8 @@
       #cam { position: absolute; left: 0; top: 0; width: 936px; height: 1200px; transform-origin: 0 0; }
       .slot { position: absolute; width: 456px; height: 384px; border-radius: 34px; border: 3px dashed #482178; }
       .ag { position: absolute; width: 456px; height: 384px; border-radius: 34px; background: #210c3d; border: 3px solid #5b2896; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 24px 56px rgba(0,0,0,0.45); }
-      .ag .mono-c { width: 92px; height: 92px; border-radius: 28px; background: #ff2d6f; color: #fff; display: flex; align-items: center; justify-content: center; font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 56px; }
+      .ag .mono-c { width: 108px; height: 108px; border-radius: 30px; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(0,0,0,0.35); }
+      .ag .mono-c img { width: 72px; height: 72px; object-fit: contain; }
       .ag .nm { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; }
       .ag .vd { font-family: "JetBrains Mono NL", monospace; font-size: 24px; color: #ffc43d; margin-top: 12px; }
 
@@ -120,28 +121,28 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-width="1080" data-height="1920" data-duration="34.4">
-      <audio id="narr" src="assets/narration.m4a" data-start="0" data-duration="31.85" data-track-index="9" preload="auto"></audio>
-      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="34.3" data-track-index="10" preload="auto"></audio>
+    <div id="root" data-composition-id="main" data-width="1080" data-height="1920" data-duration="{{DUR}}">
+      <audio id="narr" src="assets/narration.m4a" data-start="0" data-duration="{{narr_dur}}" data-track-index="9" preload="auto"></audio>
+      <audio id="sfx" src="assets/sfx.wav" data-start="0" data-duration="{{sfx_dur}}" data-track-index="10" preload="auto"></audio>
 
-      <!-- ============ S1: o nome, o canivete e as 15 skills (0 - 5.9) ============ -->
-      <div id="s1" class="clip" data-start="0" data-duration="5.85" data-track-index="0" style="z-index:1">
+      <!-- ============ S1: the name, the knife and the 15 skills (0 - 5.9) ============ -->
+      <div id="s1" class="clip" data-start="0" data-duration="{{s1_dur}}" data-track-index="0" style="z-index:1">
         <div class="sc dark" id="s1in">
           <div class="grid" id="g1"></div>
           <div class="glow" id="glow1" style="left:-10px;top:370px;width:1100px;height:1100px"></div>
           <img id="wm" src="assets/brand/logos/wordmark-deep.svg" alt="cutroom" />
           <div id="ring"></div>
-          <div id="count"><b id="cnum">0</b><span>skills de mídia</span></div>
+          <div id="count"><b id="cnum">0</b><span>media skills</span></div>
           <div id="s1txt" class="hl">
-            <span class="ln"><span class="w"><i>Um</i></span> <span class="w"><i>canivete</i></span> <span class="w"><i class="pk">suíço</i></span></span>
-            <span class="ln"><span class="w"><i>com</i></span> <span class="w"><i class="pk">15</i></span> <span class="w"><i>skills</i></span></span>
-            <span class="ln"><span class="w"><i>para</i></span> <span class="w"><i>criação</i></span> <span class="w"><i>de</i></span> <span class="w"><i class="pk">mídia</i></span></span>
+            <span class="ln"><span class="w"><i>A</i></span> <span class="w"><i>Swiss army</i></span> <span class="w"><i class="pk">knife</i></span></span>
+            <span class="ln"><span class="w"><i>with</i></span> <span class="w"><i class="pk">15</i></span> <span class="w"><i>skills</i></span></span>
+            <span class="ln"><span class="w"><i>for</i></span> <span class="w"><i>making</i></span> <span class="w"><i class="pk">media</i></span></span>
           </div>
         </div>
       </div>
 
-      <!-- ============ S2: o feed de capacidades (5.15 - 17.3) ============ -->
-      <div id="s2" class="clip" data-start="5.05" data-duration="11.66" data-track-index="1" style="z-index:2">
+      <!-- ============ S2: the capability feed (5.15 - 17.3) ============ -->
+      <div id="s2" class="clip" data-start="{{r2}}" data-duration="{{s2_dur}}" data-track-index="1" style="z-index:2">
         <div class="sc light" id="s2in">
           <div id="s2wrap" style="position:absolute;inset:0">
             <div id="feed">
@@ -149,7 +150,7 @@
                 <div class="chead"><div class="cic"><img src="assets/brand/icons/deck.svg" alt=""></div><div class="ctitle">Slides</div><div class="ctag">cutroom-deck</div></div>
                 <div class="st"><div class="bars"><i style="height:34%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:70%"></i><i style="height:86%"></i><i style="height:78%"></i><i style="height:100%"></i></div><div class="kpi" id="kpi">+0%</div></div></div>
               <div class="card" id="k1" style="top:440px"><div class="hl2"></div>
-                <div class="chead"><div class="cic"><img src="assets/brand/icons/diagram.svg" alt=""></div><div class="ctitle">Diagramas</div><div class="ctag">cutroom-diagram</div></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/diagram.svg" alt=""></div><div class="ctitle">Diagrams</div><div class="ctag">cutroom-diagram</div></div>
                 <div class="st"><svg width="856" height="230" viewBox="0 0 856 230">
                   <path id="dpath" d="M 70 115 L 280 60 L 500 160 L 780 85" fill="none" stroke="#e6d7e0" stroke-width="6" stroke-linejoin="round"/>
                   <path id="dpath2" d="M 70 115 L 280 60 L 500 160 L 780 85" fill="none" stroke="#ff2d6f" stroke-width="6" stroke-linejoin="round" stroke-dasharray="1000" stroke-dashoffset="1000"/>
@@ -159,7 +160,7 @@
                   <g class="dn"><circle cx="780" cy="85" r="38" fill="#fff" stroke="#ff2d6f" stroke-width="5"/><text x="780" y="92" text-anchor="middle" font-family="JetBrains Mono NL" font-weight="700" font-size="20" fill="#16072b">UI</text></g>
                   <circle id="dpulse" cx="70" cy="115" r="13" fill="#ffc43d" stroke="#16072b" stroke-width="3"/></svg></div></div>
               <div class="card" id="k2" style="top:880px"><div class="hl2"></div>
-                <div class="chead"><div class="cic"><img src="assets/brand/icons/figure.svg" alt=""></div><div class="ctitle">Figuras 3D</div><div class="ctag">cutroom-iso3d</div></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/figure.svg" alt=""></div><div class="ctitle">3D figures</div><div class="ctag">cutroom-iso3d</div></div>
                 <div class="st"><svg width="856" height="230" viewBox="0 0 856 230"><g id="isoall" transform="translate(300 -6) scale(1.38)">
                   <polygon points="80,10 160,46 80,82 0,46" fill="#ffd0e0" stroke="#16072b" stroke-width="2.5"/>
                   <polygon points="0,46 80,82 80,142 0,106" fill="#c91453" stroke="#16072b" stroke-width="2.5"/>
@@ -168,11 +169,11 @@
                   <polygon points="8,82 80,114 80,134 8,102" fill="#c91453" stroke="#16072b" stroke-width="2.5"/>
                   <polygon points="152,82 80,114 80,134 152,102" fill="#ff5c8d" stroke="#16072b" stroke-width="2.5"/></g></g></svg></div></div>
               <div class="card" id="k3" style="top:1320px"><div class="hl2"></div>
-                <div class="chead"><div class="cic"><img src="assets/brand/icons/extract.svg" alt=""></div><div class="ctitle">Extração de documentos</div><div class="ctag">extract</div></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/extract.svg" alt=""></div><div class="ctitle">Document extraction</div><div class="ctag">extract</div></div>
                 <div class="st"><div class="pdf"><i></i><i></i><i style="width:70%"></i><i></i><i style="width:55%"></i><span id="laser"></span></div>
-                  <div class="md"><div class="mdl"><b># Catálogo</b></div><div class="mdl">| SKU | Latência |</div><div class="mdl">| <b>R-40</b> | <b>1.2 ms</b> |</div><div class="mdl">| <b>R-52</b> | <b>0.9 ms</b> |</div></div></div></div>
+                  <div class="md"><div class="mdl"><b># Catalog</b></div><div class="mdl">| SKU | Latency |</div><div class="mdl">| <b>R-40</b> | <b>1.2 ms</b> |</div><div class="mdl">| <b>R-52</b> | <b>0.9 ms</b> |</div></div></div></div>
               <div class="card" id="k4" style="top:1760px"><div class="hl2"></div>
-                <div class="chead"><div class="cic"><img src="assets/brand/icons/math.svg" alt=""></div><div class="ctitle">Vídeos de matemática</div><div class="ctag">cutroom-math</div></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/math.svg" alt=""></div><div class="ctitle">Math videos</div><div class="ctag">cutroom-math</div></div>
                 <div class="st"><svg width="856" height="230" viewBox="0 0 856 230">
                   <line x1="10" y1="205" x2="846" y2="205" stroke="#e6d7e0" stroke-width="3"/>
                   <path id="mpath" d="M 20 190 C 200 190, 250 30, 430 50 S 700 200, 840 60" fill="none" stroke="#ff2d6f" stroke-width="7" stroke-linecap="round"/>
@@ -180,69 +181,69 @@
                   <circle id="mdot" cx="0" cy="0" r="12" fill="#16072b"/></svg>
                   <div class="mono" id="mread" style="position:absolute;right:0;top:0;font-size:32px;font-weight:700;color:#c91453">f′(x) = 0.00</div></div></div>
               <div class="card" id="k5" style="top:2200px"><div class="hl2"></div>
-                <div class="chead"><div class="cic"><img src="assets/brand/icons/motion.svg" alt=""></div><div class="ctitle">Vídeos de motion</div><div class="ctag">cutroom-motion</div></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/motion.svg" alt=""></div><div class="ctitle">Motion videos</div><div class="ctag">cutroom-motion</div></div>
                 <div class="st" style="top:150px"><div class="tr"><label>GSAP</label><div class="bar"><span class="cl" style="left:3%;width:70%;background:#ff2d6f"></span></div></div>
-                  <div class="tr"><label>VOZ</label><div class="bar"><span class="cl" style="left:10%;width:62%;background:#9b5de5"></span></div></div>
+                  <div class="tr"><label>VOICE</label><div class="bar"><span class="cl" style="left:10%;width:62%;background:#9b5de5"></span></div></div>
                   <div class="tr"><label>SFX</label><div class="bar"><span class="cl" style="left:12%;width:12%;background:#ffc43d"></span><span class="cl" style="left:40%;width:12%;background:#ffc43d"></span><span class="cl" style="left:66%;width:14%;background:#ffc43d"></span></div></div>
                   <span id="phead"></span></div></div>
               <div class="card" id="k6" style="top:2640px"><div class="hl2"></div>
-                <div class="chead"><div class="cic"><img src="assets/brand/icons/brand.svg" alt=""></div><div class="ctitle">Marcas e logos</div><div class="ctag">cutroom-brand</div></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/brand.svg" alt=""></div><div class="ctitle">Brands and logos</div><div class="ctag">cutroom-brand</div></div>
                 <div class="st"><div class="sw"><span style="background:#ff2d6f"></span><span style="background:#16072b"></span><span style="background:#ffc43d"></span><span style="background:#ff9bc0"></span><span style="background:#fff7fa"></span></div>
                   <img id="blogo" src="assets/brand/logos/stacked.svg" alt="" style="position:absolute;right:0;top:-8px;height:200px"></div></div>
               <div class="card" id="k7" style="top:3080px"><div class="hl2"></div>
-                <div class="chead"><div class="cic"><img src="assets/brand/icons/voice.svg" alt=""></div><div class="ctitle">Voz local</div><div class="ctag">cutroom-voice</div></div>
-                <div class="st"><div class="langs" id="langs"></div><div class="big23"><b id="n23">0</b><span>idiomas</span></div></div></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/voice.svg" alt=""></div><div class="ctitle">Local voice</div><div class="ctag">cutroom-voice</div></div>
+                <div class="st"><div class="langs" id="langs"></div><div class="big23"><b id="n23">0</b><span>languages</span></div></div></div>
               <div class="card" id="k8" style="top:3520px"><div class="hl2"></div>
-                <div class="chead"><div class="cic"><img src="assets/brand/icons/edit.svg" alt=""></div><div class="ctitle">Efeitos sonoros</div><div class="ctag">earshot</div></div>
-                <div class="st"><div class="spec" id="spec"></div><div class="big23"><b id="n252">0</b><span>sons procedurais</span></div></div></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/edit.svg" alt=""></div><div class="ctitle">Sound effects</div><div class="ctag">earshot</div></div>
+                <div class="st"><div class="spec" id="spec"></div><div class="big23"><b id="n252">0</b><span>procedural sounds</span></div></div></div>
               <div class="card" id="k9" style="top:3960px"><div class="hl2"></div>
-                <div class="chead"><div class="cic"><img src="assets/brand/icons/script.svg" alt=""></div><div class="ctitle">15 skills, uma pasta</div><div class="ctag">cutroom-studio</div></div>
+                <div class="chead"><div class="cic"><img src="assets/brand/icons/script.svg" alt=""></div><div class="ctitle">15 skills, one folder</div><div class="ctag">cutroom-studio</div></div>
                 <div class="st"><div class="langs" id="names" style="width:100%"></div></div></div>
             </div>
-            <div id="hdr"><div class="row"><span class="eyebrow">O que ele faz</span><span class="pill">15 SKILLS · LOCAL</span></div></div>
+            <div id="hdr"><div class="row"><span class="eyebrow">What it makes</span><span class="pill">15 SKILLS · LOCAL</span></div></div>
           </div>
         </div>
       </div>
 
-      <!-- ============ S3: seis agentes (16.3 - 23.7) ============ -->
-      <div id="s3" class="clip" data-start="15.66" data-duration="7.59" data-track-index="2" style="z-index:3">
+      <!-- ============ S3: six agents (16.3 - 23.7) ============ -->
+      <div id="s3" class="clip" data-start="{{r3}}" data-duration="{{s3_dur}}" data-track-index="2" style="z-index:3">
         <div class="sc dark" id="s3in">
           <div class="grid" id="g3"></div>
           <div class="glow" style="left:380px;top:80px;width:900px;height:900px"></div>
-          <div id="s3hdr"><span class="eyebrow" style="color:#ff9bc0">Compatibilidade</span></div>
+          <div id="s3hdr"><span class="eyebrow" style="color:#ff9bc0">Compatibility</span></div>
           <div id="six" class="hl"><span class="w"><i id="sixi">6</i></span></div>
-          <div id="sixlab" class="hl"><span class="ln"><span class="w"><i>agentes</i></span></span><span class="ln"><span class="w"><i class="pk">de código</i></span></span></div>
+          <div id="sixlab" class="hl"><span class="ln"><span class="w"><i>coding</i></span></span><span class="ln"><span class="w"><i class="pk">agents</i></span></span></div>
           <div id="vp"><div id="cam"></div></div>
         </div>
       </div>
 
-      <!-- ============ S4: instalar (22.6 - 30.4) ============ -->
-      <div id="s4" class="clip" data-start="22.2" data-duration="6.78" data-track-index="3" style="z-index:4">
+      <!-- ============ S4: install (22.6 - 30.4) ============ -->
+      <div id="s4" class="clip" data-start="{{r4}}" data-duration="{{s4_dur}}" data-track-index="3" style="z-index:4">
         <div class="sc dark" id="s4in">
           <div class="grid" id="g4"></div>
           <div class="glow" style="left:60px;top:1000px;width:1000px;height:1000px"></div>
-          <div id="s4hl" class="hl"><span class="ln"><span class="w"><i>Só mande</i></span></span><span class="ln"><span class="w"><i>o <b class="pk" style="font-weight:800">link</b></i></span></span></div>
+          <div id="s4hl" class="hl"><span class="ln"><span class="w"><i>Just send</i></span></span><span class="ln"><span class="w"><i>the <b class="pk" style="font-weight:800">link</b></i></span></span></div>
           <div id="persp"><div id="chat">
             <div class="dots"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i></div>
             <div id="pbox"><span class="pr">&gt; </span><span id="ptxt"></span><span id="cur">▌</span><span id="ripple"></span></div>
             <div id="prog"><i id="progi"></i></div>
-            <div class="rep" id="rp1"><b>●</b> lendo o repositório…</div>
-            <div class="rep" id="rp2"><b>✓</b> 15 skills instaladas</div>
-            <div class="rep" id="rp3"><b>✓</b> pronto para usar</div>
+            <div class="rep" id="rp1"><b>●</b> reading the repository…</div>
+            <div class="rep" id="rp2"><b>✓</b> 15 skills installed</div>
+            <div class="rep" id="rp3"><b>✓</b> ready to use</div>
           </div></div>
           <div id="agents-row">Claude · Cursor · Codex · Antigravity · Gemini · Kiro</div>
         </div>
       </div>
 
-      <!-- ============ S5: encerramento (29.3 - 36) ============ -->
-      <div id="s5" class="clip" data-start="28.08" data-duration="6.32" data-track-index="4" style="z-index:5">
+      <!-- ============ S5: end card (29.3 - 36) ============ -->
+      <div id="s5" class="clip" data-start="{{r5}}" data-duration="{{s5_dur}}" data-track-index="4" style="z-index:5">
         <div class="sc pinkbg" id="s5in">
           <div id="endwrap">
             <img id="endlogo" src="assets/brand/logos/stacked-contrast.svg" alt="cutroom" />
             <div id="endtag" class="hl">
-              <span class="ln"><span class="w"><i>Toda</i></span> <span class="w"><i>peça</i></span></span>
-              <span class="ln"><span class="w"><i>gerada</i></span> <span class="w"><i>na</i></span> <span class="w"><i>sua</i></span></span>
-              <span class="ln"><span class="w"><i style="color:#fff">máquina.</i></span></span>
+              <span class="ln"><span class="w"><i>Every</i></span> <span class="w"><i>piece</i></span></span>
+              <span class="ln"><span class="w"><i>cut</i></span> <span class="w"><i>on</i></span> <span class="w"><i>your</i></span></span>
+              <span class="ln"><span class="w"><i style="color:#fff">machine.</i></span></span>
             </div>
             <div id="endurl"><div id="endurli">github.com/galvaowesley/cutroom<span id="sheen"></span></div></div>
           </div>
@@ -252,7 +253,7 @@
 
     <script>
       (() => {
-        const TM = {"DUR": 34.4, "wm0": 0.4, "ring0": 1.75, "l1": [1.75, 1.911, 2.503], "l2": [3.02, 3.17, 3.47], "l3": [3.87, 4.12, 4.67, 4.82], "count0": 3.17, "zoom0": 4.92, "r2": 5.05, "A": [5.67, 6.27, 6.939, 8.307, 10.11, 11.6, 12.2, 12.8, 14.726], "n23": 13.218, "k9scroll": 15.36, "names0": 15.2, "r3": 15.66, "six0": 16.914, "slot0": 17.169, "ag": [18.59, 19.37, 19.92, 20.32, 21.233, 21.804], "camEnd": 22.09, "r4": 22.2, "s6": 22.64, "type0": 23.725, "send": 25.84, "rp2": 26.868, "rp3": 27.512, "r5": 28.08, "s7": 28.63, "t1": [29.106, 29.403], "t2": [29.701, 30.177, 30.296], "t3": [30.534], "url0": 31.0, "s1_dur": 5.85, "s2_dur": 11.66, "s3_dur": 7.59, "s4_dur": 6.78, "s5_dur": 6.32, "prog_dur": 1.49, "narr_dur": 31.85, "sfx_dur": 34.3};
+        const TM = {{TM_JSON}};
         const tl = gsap.timeline({ paused: true });
         const $ = (s) => document.querySelector(s), $$ = (s) => [...document.querySelectorAll(s)];
         const K = CutroomMotion, { clamp, ss } = K;           // cutroom_motionkit.js (harness)
@@ -323,7 +324,7 @@
         };
         for (let i = 0; i < 24; i++) $("#spec").appendChild(document.createElement("i"));
         ["brand","deck","diagram","edit","extract","graphic","init","iso3d","logo","math","motion","script","sound","studio","voice"].forEach((l) => { const s = document.createElement("span"); s.textContent = l; $("#names").appendChild(s); });
-        ["pt", "en", "es", "fr", "it", "de", "ja", "zh", "hi", "ru", "ko", "ar", "nl", "tr"].forEach((l) => { const s = document.createElement("span"); s.textContent = l; $("#langs").appendChild(s); });
+        ["en", "pt", "es", "fr", "it", "de", "ja", "zh", "hi", "ru", "ko", "ar", "nl", "tr"].forEach((l) => { const s = document.createElement("span"); s.textContent = l; $("#langs").appendChild(s); });
         tl.fromTo("#k0 .bars i", { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: EXPO, stagger: 0.07 }, A[0] - 0.05);
         tl.fromTo("#k1 .dn", { scale: 0, transformOrigin: "50% 50%" }, { scale: 1, duration: 0.5, ease: EXPO, stagger: 0.12 }, A[1] - 0.1);
         tl.fromTo("#k5 .cl", { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: EXPO, stagger: 0.08 }, A[5] - 0.05);
@@ -337,18 +338,19 @@
         tl.fromTo("#sixi", { yPercent: 118 }, { yPercent: 0, duration: 0.7, ease: EXPO }, TM.six0);
         words("#sixlab", [TM.six0 + 0.17, TM.six0 + 0.27]);
         tl.to("#six", { scale: 1.08, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1, transformOrigin: "0 50%" }, TM.six0 + 0.05);
-        const AG = [["Claude Code", "Anthropic", "C", TM.ag[0]], ["Cursor", "Anysphere", "Cu", TM.ag[1]], ["Codex", "OpenAI", "Cx", TM.ag[2]], ["Antigravity", "Google DeepMind", "A", TM.ag[3]], ["Gemini CLI", "Google", "G", TM.ag[4]], ["Kiro", "AWS", "K", TM.ag[5]]];
+        // [name, vendor, icon file, tile color, time]: the icons are the agents' own marks, on a tile that keeps each one legible
+        const AG = [["Claude Code", "Anthropic", "claude.png", "#fff", TM.ag[0]], ["Cursor", "Anysphere", "cursor.png", "#fff", TM.ag[1]], ["Codex", "OpenAI", "codex.png", "#fff", TM.ag[2]], ["Antigravity", "Google DeepMind", "antigravity.png", "#fff", TM.ag[3]], ["Gemini CLI", "Google", "gemini.svg", "#fff", TM.ag[4]], ["Kiro", "AWS", "kiro.png", "#9046ff", TM.ag[5]]];
         const pos = (i) => ({ x: (i % 2) * 480, y: Math.floor(i / 2) * 408 });
         AG.forEach((a, i) => {
           const p = pos(i);
           const slot = document.createElement("div"); slot.className = "slot"; slot.style.left = p.x + "px"; slot.style.top = p.y + "px"; $("#cam").appendChild(slot);
           const c = document.createElement("div"); c.className = "ag"; c.id = "ag" + i; c.style.left = p.x + "px"; c.style.top = p.y + "px";
-          c.innerHTML = `<div class="mono-c">${a[2]}</div><div><div class="nm">${a[0]}</div><div class="vd">${a[1]}</div></div>`; $("#cam").appendChild(c);
-          tl.fromTo(c, { scale: 0.82, clipPath: "inset(0 0 100% 0 round 34px)", transformOrigin: "50% 50%" }, { scale: 1, clipPath: "inset(0 0 0% 0 round 34px)", duration: 0.55, ease: EXPO }, a[3] - 0.1);
-          tl.fromTo(c, { borderColor: "#ffc43d" }, { borderColor: "#5b2896", duration: 0.9, ease: "power2.out" }, a[3] + 0.2);
+          c.innerHTML = `<div class="mono-c" style="background:${a[3]}"><img src="assets/agents/${a[2]}" alt=""></div><div><div class="nm">${a[0]}</div><div class="vd">${a[1]}</div></div>`; $("#cam").appendChild(c);
+          tl.fromTo(c, { scale: 0.82, clipPath: "inset(0 0 100% 0 round 34px)", transformOrigin: "50% 50%" }, { scale: 1, clipPath: "inset(0 0 0% 0 round 34px)", duration: 0.55, ease: EXPO }, a[4] - 0.1);
+          tl.fromTo(c, { borderColor: "#ffc43d" }, { borderColor: "#5b2896", duration: 0.9, ease: "power2.out" }, a[4] + 0.2);
         });
         tl.fromTo(".slot", { borderColor: "#482178" }, { borderColor: "#ff2d6f", duration: 0.3, stagger: 0.17, yoyo: true, repeat: 1, ease: "power2.out" }, TM.slot0);
-        const camFoc = AG.map((a, i) => { const p = pos(i); return { t: a[3], cx: p.x + 228, cy: p.y + 192, s: 1.5 }; });
+        const camFoc = AG.map((a, i) => { const p = pos(i); return { t: a[4], cx: p.x + 228, cy: p.y + 192, s: 1.5 }; });
         camFoc.push({ t: TM.camEnd, cx: 468, cy: 600, s: 1 });
         const camAt = K.camera("#cam", camFoc, { w: 936, h: 1200, base: (t) => ({ cx: 468, cy: 600, s: 1 + 0.06 * clamp((t - TM.r3 - 0.5) / 2.2) }) });
         K.pushOut(tl, "#s3in", TM.r4 - 0.1);
