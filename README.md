@@ -100,6 +100,18 @@ cutroom doctor
 Update: `git pull && python3 install.py`. Remove a component: `cutroom remove <component> --yes`. Remove the skills
 from the agents: `python3 install.py --uninstall`.
 
+To listen for updates in the upstream skill/tool repositories (`earshot`, `hyperframes`, `manimgx`, `archify`,
+`anatomy`, `hairline`, `logo`, `docling`, etc.), use `cutroom updates`—with manual approval (`ask`, default) or
+pre-approved automatic updates (`auto`):
+
+```bash
+cutroom updates check                                 # check all upstream skill/tool repos in parallel
+cutroom updates apply earshot --yes                   # manually approve and apply a local update
+cutroom updates policy --mode auto                    # pre-approve automatic updates for all upstream repos
+cutroom updates policy --mode ask --approve earshot   # auto-update earshot, require manual approval for the rest
+cutroom updates watch --interval 60 --apply-auto      # background listener (or --once on session start)
+```
+
 ## Brands
 
 Everything comes out in the active brand. A brand is a folder: `brand.json` (colors, fonts, logos, motion, narration
@@ -187,8 +199,10 @@ install.py        cross-platform installer (install.sh and install.ps1 wrap it)
 Python environments are locked by `uv.lock` (`extract`: Docling with CPU torch; `media`: ManimGX and Kokoro; `clone`:
 Chatterbox; `sound`: earshot with CLAP and AudioSet AST), the HyperFrames CLI by npm version, and every official skill
 by git tag. Telemetry is off, cloud API keys are unset in the shell the skills use, and no skill sends content to a
-cloud service unless you ask. To upgrade a pin: change it in `harness/cutroom.py` or
-`harness/envs/<env>/pyproject.toml`, `uv lock`, rerun the component's example, open a PR.
+cloud service unless you ask. You can keep every version strictly pinned, or use `cutroom updates` to listen to the
+upstream repositories and apply updates with manual approval (`ask`, default) or pre-approved automatic updates
+(`cutroom updates policy --mode auto` / `--approve <source>`). To upgrade a default repository pin: change it in
+`harness/cutroom.py` or `harness/envs/<env>/pyproject.toml`, `uv lock`, rerun the component's example, open a PR.
 
 ## Credits and third-party repositories
 

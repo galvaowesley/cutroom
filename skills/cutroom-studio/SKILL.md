@@ -15,7 +15,10 @@ Read the conventions first: `~/.local/share/cutroom/harness/conventions.md`.
 
 Run `cutroom doctor --json`. Plan only with installed components. If the best route needs a missing one, say which,
 how much it downloads and the alternative with what exists. Installation goes through `cutroom-init`, by the
-person's choice.
+person's choice. If `doctor` reports available upstream skill updates (from `<cutroom home>/updates.json`), or if the
+person asks to check updates, follow `updates.mode`: in `ask` mode (default), suggest the update and wait for manual
+approval (`cutroom updates apply <source> --yes`); in `auto` mode (or for pre-approved sources), run
+`cutroom updates check --apply-auto`.
 
 ## Step 1: understand the delivery
 

@@ -1,6 +1,6 @@
 ---
 name: cutroom-init
-description: "Entry point of the cutroom media skills (cutroom-*), for Claude Code, Cursor, Codex, Antigravity, Gemini CLI and Kiro, on Linux, macOS and Windows. Shows the catalog (each skill, what it does, the tool behind it, what it downloads and how much) and installs only what the person chooses, in a pinned environment (uv + Python, Node 22, pinned versions). Tools: Docling, ManimGX, HyperFrames, Archify, Anatomy, Hairline, Kokoro, Chatterbox, earshot, the logo-design skill, Chrome and ffmpeg. Also diagnoses (doctor), removes components and changes settings (output folder, language, brand). Use to install, configure, check, update or remove the media skills, or when another cutroom-* skill says a component is missing. Usage: cutroom-init [doctor | remove <component...> | <component...> | config]"
+description: "Entry point of the cutroom media skills (cutroom-*), for Claude Code, Cursor, Codex, Antigravity, Gemini CLI and Kiro, on Linux, macOS and Windows. Shows the catalog (each skill, what it does, the tool behind it, what it downloads and how much) and installs only what the person chooses, in a pinned environment (uv + Python, Node 22, pinned versions). Tools: Docling, ManimGX, HyperFrames, Archify, Anatomy, Hairline, Kokoro, Chatterbox, earshot, the logo-design skill, Chrome and ffmpeg. Also diagnoses (doctor), listens for upstream skill/tool updates with manual or pre-approved automatic updates (updates), removes components and changes settings (output folder, language, brand, update policy). Use to install, configure, check, update or remove the media skills, or when another cutroom-* skill says a component is missing. Usage: cutroom-init [doctor | updates | remove <component...> | <component...> | config]"
 metadata:
   version: "2.0.0"
 ---
@@ -19,6 +19,7 @@ costs on disk, and installs only the choice. Read the shared conventions first:
 |---|---|
 | empty | Step 2 (catalog and choice) |
 | `doctor` | run `cutroom doctor`, show it, explain what is missing, stop |
+| `updates` | Step 7 (check/listen for upstream skill updates and configure manual or auto-update policy) |
 | `remove <comp...>` | Step 5 |
 | component names (`extract`, `math`...) | Step 3 with those |
 | `config` | Step 6 |
@@ -119,6 +120,26 @@ user brands are kept (remove them with `voice remove` and `cutroom brand remove`
 | default voice | `voice default <profile or preset>` (see `cutroom-voice`) |
 | where the harness lives | rerun `python3 install.py --home <folder>` from the clone (e.g. to keep it in Documents); components installed in the old home are not moved |
 | agents | rerun `python3 install.py --agent claude,cursor,codex,antigravity,kiro` |
+| upstream update mode | `cutroom updates policy --mode ask\|auto\|off` (or `--approve <source...>`) |
+
+## Step 7: checking and watching upstream skill updates (`cutroom updates`)
+
+The harness can listen to the upstream GitHub repositories of the skills and tools (`manimgx`, `archify`, `hyperframes`, `anatomy`, `hairline`, `logo`, `earshot`, `docling`, `kokoro-onnx`, `chatterbox`, and `cutroom` itself):
+
+```bash
+cutroom updates check                                 # check all upstream skill/tool repos in parallel
+cutroom updates check --apply-auto                    # check and automatically apply any pre-approved updates
+cutroom updates apply <source...> --yes               # manually approve and apply local update(s)
+cutroom updates policy --mode ask                     # default: suggest updates and wait for manual approval
+cutroom updates policy --mode auto                    # pre-approve automatic updates for all upstream repos
+cutroom updates policy --mode ask --approve earshot   # auto-update earshot, ask manually for the rest
+cutroom updates watch --interval 60 --apply-auto      # background listener (or --once on session start)
+```
+
+When `updates.mode` is `ask` (the default) and `cutroom updates check` finds a newer tag or commit, show the available update (`<source>: <installed> → <latest>`) and ask with options whether the person wants to:
+1. Update locally now (`cutroom updates apply <source> --yes`),
+2. Pre-approve automatic updates for that source (`cutroom updates policy --approve <source>`), or
+3. Keep the current pinned version.
 
 ## The default environment
 

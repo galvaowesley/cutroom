@@ -38,6 +38,7 @@ Commands:
   render ...                 HTML to PNG/JPG/PDF/SVG at platform sizes (see `cutroom render --help`)
   edit ...                   ffmpeg post-production recipes (see `cutroom edit --help`)
   crew ...                   run parts of a piece in parallel on Claude, Cursor, Codex, Antigravity, Gemini or Kiro CLIs
+  updates ...                listen for upstream skill/tool updates, approve manually or auto-update (see `cutroom updates --help`)
   refresh                    regenerate env.sh and bin/ (install.py runs it)
 """
 import argparse
@@ -352,6 +353,7 @@ def default_config():
         "language": "en",
         "brand": "cutroom",
         "voice": {"default": None},
+        "updates": {"mode": "ask", "channel": "tags", "interval_hours": 12, "preapproved": []},
     }
 
 
@@ -359,7 +361,10 @@ def load_config():
     path = os.path.join(HOME, "config.json")
     cfg = default_config()
     if os.path.exists(path):
-        cfg.update(json.load(open(path)))
+        loaded = json.load(open(path))
+        upd = {**cfg["updates"], **(loaded.get("updates") if isinstance(loaded.get("updates"), dict) else {})}
+        cfg.update(loaded)
+        cfg["updates"] = upd
     return cfg
 
 
@@ -751,16 +756,31 @@ def cmd_doctor(a):
     pre = prereqs()
     comps = {c: dict(zip(("installed", "detail"), status(c)), skill=COMPONENTS[c]["skill"]) for c in COMPONENTS}
     cfg = load_config()
+    try:
+        import cutroom_updates
+        upd = cutroom_updates.cached_summary()
+    except Exception:
+        upd = {"mode": cfg.get("updates", {}).get("mode", "ask"), "available": []}
     if a.json:
         print(json.dumps({"home": HOME, "free_gb": free_gb(), "brand": cfg["brand"], "language": cfg["language"],
-                          "prereqs": pre, "components": comps}, indent=2, ensure_ascii=False))
+                          "prereqs": pre, "components": comps, "updates": upd}, indent=2, ensure_ascii=False))
         return
-    print(f"cutroom in {HOME}  (free disk: {free_gb()} GB) · brand {cfg['brand']} · language {cfg['language']}\n\nPrerequisites")
+    mode = (upd.get("mode") if isinstance(upd, dict) else None) or cfg.get("updates", {}).get("mode", "ask")
+    print(f"cutroom in {HOME}  (free disk: {free_gb()} GB) · brand {cfg['brand']} · language {cfg['language']} · updates: {mode}\n\nPrerequisites")
     for k, v in pre.items():
         print(f"  {'✓' if v['ok'] else '✗'} {k:<8} {v['info'] or ''}" + ("" if v["ok"] else f"   → {v['fix']}"))
     print("\nComponents")
     for c, v in comps.items():
         print(f"  {'✓' if v['installed'] else '·'} {c:<12} {v['detail'] if v['installed'] else 'not installed'}  (/{v['skill']})")
+    avail = upd.get("available") if isinstance(upd, dict) else None
+    if avail:
+        print("\nUpstream updates")
+        items = avail.items() if isinstance(avail, dict) else [(u.get("source") or u.get("name") or "?", u) for u in avail]
+        for src, u in items:
+            cur = u.get("current") or u.get("installed") or u.get("pinned") or "-"
+            lat = u.get("latest") or u.get("remote") or "-"
+            print(f"  ! {src}: {cur} → {lat}")
+        print("  Apply with: cutroom updates apply --yes  (or: cutroom updates policy --mode auto)")
 
 
 def cmd_setup(a):
@@ -852,8 +872,27 @@ def cmd_config(a):
         raise SystemExit("use `cutroom brand use <name>` (it also registers the fonts)")
     if a.key == "voice.default":
         raise SystemExit("use `voice default <name>`")
+    if a.key == "updates.mode":
+        if a.value not in ("ask", "auto", "off"):
+            raise SystemExit("updates.mode must be one of: ask, auto, off")
+        cfg.setdefault("updates", {})["mode"] = a.value
+        save_config(cfg)
+        print(f"✓ {a.key} = {a.value}")
+        return
+    if a.key == "updates.channel":
+        if a.value not in ("tags", "commits"):
+            raise SystemExit("updates.channel must be one of: tags, commits")
+        cfg.setdefault("updates", {})["channel"] = a.value
+        save_config(cfg)
+        print(f"✓ {a.key} = {a.value}")
+        return
+    if a.key == "updates.interval_hours":
+        cfg.setdefault("updates", {})["interval_hours"] = int(a.value)
+        save_config(cfg)
+        print(f"✓ {a.key} = {cfg['updates']['interval_hours']}")
+        return
     if a.key not in ("output_dir", "language"):
-        raise SystemExit("settable keys: output_dir, language")
+        raise SystemExit("settable keys: output_dir, language, updates.mode (ask|auto|off), updates.channel (tags|commits), updates.interval_hours (or use 'cutroom updates policy')")
     cfg[a.key] = os.path.expanduser(a.value) if a.key == "output_dir" else a.value
     save_config(cfg)
     print(f"✓ {a.key} = {cfg[a.key]}")
@@ -874,7 +913,7 @@ def delegate(module, argv):
 
 
 DELEGATES = {"brand": "cutroom_brand", "script": "cutroom_script", "deck": "cutroom_deck", "voice": "cutroom_voice",
-             "render": "cutroom_render", "edit": "cutroom_edit", "crew": "cutroom_crew"}
+             "render": "cutroom_render", "edit": "cutroom_edit", "crew": "cutroom_crew", "updates": "cutroom_updates"}
 
 
 def main():
