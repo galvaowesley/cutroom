@@ -1,7 +1,11 @@
-How does AI find the best weights out of billions? It slides down a loss landscape.
+How does a model learn? It rolls downhill. Start with one weight.
 
-At any point, the tangent slope gives the gradient. It points steepest uphill, so we step in reverse.
+Zoom into any point, and the curve turns into a line. Its slope is the gradient.
 
-Scaled by the learning rate eta, each gradient step descends toward the minimum.
+Step against the slope. The new weight is the old weight, minus the learning rate times the slope. The flatter the curve, the smaller the step.
 
-Where the curve flattens, the gradient vanishes to zero. The descent converges, locking into optimal weights.
+Now, change the learning rate. Too small, and it crawls. Just right, and it settles. Too big, and it overshoots.
+
+Add a second weight, and the curve becomes a surface. Now there are two slopes, one per weight. Together, they are the gradient. Step against it: the same rule works in any dimension.
+
+Billions of weights. One rule.

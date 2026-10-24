@@ -1,52 +1,92 @@
 1
-00:00:00,050 --> 00:00:02,200
-How does AI find the best weights out of
+00:00:00,040 --> 00:00:01,057
+How does a model learn?
 
 2
-00:00:02,200 --> 00:00:02,672
-billions?
+00:00:01,322 --> 00:00:02,117
+It rolls downhill.
 
 3
-00:00:02,987 --> 00:00:04,665
-It slides down a loss landscape.
+00:00:02,382 --> 00:00:03,355
+Start with one weight.
 
 4
-00:00:05,117 --> 00:00:07,450
-At any point, the tangent slope gives the
+00:00:04,280 --> 00:00:06,522
+Zoom into any point, and the curve turns
 
 5
-00:00:07,450 --> 00:00:07,927
-gradient.
+00:00:06,522 --> 00:00:07,148
+into a line.
 
 6
-00:00:08,245 --> 00:00:10,525
-It points steepest uphill, so we step in
+00:00:07,461 --> 00:00:08,817
+Its slope is the gradient.
 
 7
-00:00:10,525 --> 00:00:10,949
-reverse.
+00:00:12,862 --> 00:00:14,002
+Step against the slope.
 
 8
-00:00:11,379 --> 00:00:13,452
-Scaled by the learning rate eta, each
+00:00:14,300 --> 00:00:16,382
+The new weight is the old weight, minus
 
 9
-00:00:13,452 --> 00:00:15,628
-gradient step descends toward the minimum.
+00:00:16,382 --> 00:00:18,067
+the learning rate times the slope.
 
 10
-00:00:17,838 --> 00:00:20,099
-Where the curve flattens, the gradient
+00:00:18,364 --> 00:00:20,397
+The flatter the curve, the smaller the
 
 11
-00:00:20,099 --> 00:00:21,037
-vanishes to zero.
+00:00:20,397 --> 00:00:20,645
+step.
 
 12
-00:00:21,368 --> 00:00:23,464
-The descent converges, locking into
+00:00:22,244 --> 00:00:23,465
+Now, change the learning rate.
 
 13
-00:00:23,464 --> 00:00:24,347
-optimal weights.
+00:00:24,284 --> 00:00:25,348
+Too small, and it crawls.
+
+14
+00:00:26,904 --> 00:00:28,006
+Just right, and it settles.
+
+15
+00:00:28,994 --> 00:00:30,245
+Too big, and it overshoots.
+
+16
+00:00:32,324 --> 00:00:34,412
+Add a second weight, and the curve becomes
+
+17
+00:00:34,412 --> 00:00:34,876
+a surface.
+
+18
+00:00:35,374 --> 00:00:37,103
+Now there are two slopes, one per weight.
+
+19
+00:00:38,014 --> 00:00:39,442
+Together, they are the gradient.
+
+20
+00:00:39,954 --> 00:00:42,080
+Step against it: the same rule works in
+
+21
+00:00:42,080 --> 00:00:42,741
+any dimension.
+
+22
+00:00:46,546 --> 00:00:47,399
+Billions of weights.
+
+23
+00:00:47,655 --> 00:00:48,040
+One rule.
 

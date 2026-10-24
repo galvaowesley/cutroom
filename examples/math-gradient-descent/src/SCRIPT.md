@@ -1,12 +1,12 @@
-# Gradient Descent: Descending the Loss Landscape
+# Gradient descent, from one weight to two
 
 | Field | Value |
 |---|---|
 | Format | explainer video |
 | Audience | technical (machine learning developers and students) |
-| Goal | whoever watches understands how gradient descent updates weights using the negative gradient and learning rate |
-| Key message | Gradient descent steers parameters down the loss landscape: each step takes the negative gradient scaled by eta until the slope flattens to zero. |
-| Target duration | 28 s |
+| Goal | whoever watches sees the gradient as the slope of a curve, why a step against it goes downhill, what the learning rate changes, and that the same rule holds with two weights |
+| Key message | The slope of the loss tells which way is up; step against it, scaled by the learning rate, and the same rule works with any number of weights. |
+| Target duration | 50 s |
 | Voice | narrator (af_heart@0.95) |
 | Brand | cutroom |
 
@@ -14,48 +14,66 @@
 
 | id | fact | value | source | period |
 |---|---|---|---|---|
-| F1 | initial parameter weight | w = 2.10 | examples/math-gradient-descent/src/scene.py | step 0 |
-| F2 | learning rate eta | eta = 0.20 | examples/math-gradient-descent/src/scene.py | step 0 |
-| F3 | converged minimum weight | w = 0.81 | examples/math-gradient-descent/src/scene.py | convergence |
-| F4 | loss function formula | 0.5 * w^2 + 0.3 * cos(2.5 * w) | examples/math-gradient-descent/src/scene.py | v2.0 |
-| F5 | vanishing gradient at minimum | 0.000 | examples/math-gradient-descent/src/scene.py | convergence |
+| F1 | slope of the loss at the start | 2.74 | src/scene.py, df(X0) | start point |
+| F2 | learning rate that crawls | 0.04 | src/scene.py, LR_CRAWL | run 1 |
+| F3 | learning rate that settles | 0.25 | src/scene.py, LR_GOOD | run 2 |
+| F4 | learning rate that overshoots | 1.5 | src/scene.py, LR_BOUNCE | run 3 |
+| F5 | steps of the descent on the surface | 12 steps | src/scene.py, run_3d() | learning rate 0.35 |
+| F6 | zoom at which the curve reads as a line | 1600 | src/scene.py, lz | scene 2 |
 
 ## Scenes
 
-### 1. The Loss Landscape · 0:00–0:07
+### 1. Landscape · 0:00–0:04.3
 
-- **Goal:** open with a compelling question in the first 3 seconds and reveal the 3-zone spatial layout with the loss bowl.
-- **On screen:** Optimization · gradient step · L(w) loss bowl
-- **Speech:** How does AI find the [best weights out of billions]? It slides down a [loss landscape].
-- **Visual:** Zone 1 eyebrow and formula appear, Zone 2 draws the curved loss bowl on Night Plum with tactile grid, and Zone 3 captions highlight loss landscape.
-- **Facts:** F4
+- **Goal:** open with the question and cut the loss surface down to one curve.
+- **On screen:** How does a model learn? It rolls downhill.
+- **Speech:** How does a model learn? It rolls downhill. Start with one weight.
+- **Visual:** cutroom-math: the surface fades in while the camera swings; it fades out and the camera goes side-on, leaving its slice as a 2D curve.
+- **Facts:** —
 
-### 2. The Gradient and Step · 0:07–0:14
+### 2. Zoom and slope · 0:04.3–0:12.9
 
-- **Goal:** show the tangent slope and the negative gradient direction vector.
-- **On screen:** Gradient vector · tangent slope ∇L
-- **Speech:** At any point, the [tangent slope] gives the gradient. It points steepest uphill, so we [step in reverse].
-- **Visual:** Tangent line sweeps to the point at w = 2.10, live telemetry readout updates, and an accent Hot Signal arrow points downhill.
+- **Goal:** show that a curve is a line up close, and that the slope is the gradient.
+- **On screen:** Zoom into any point, and the curve turns into a line. Its slope is the gradient.
+- **Speech:** Zoom into any point, and the curve turns into a line. Its slope is the gradient.
+- **Visual:** cutroom-math: a shaded gap between curve and tangent falls from about 600 px to 1 px while the zoom readout climbs; then the point slides and the slope changes sign.
+- **Facts:** F1, F6
+
+### 3. Step and the rule · 0:12.9–0:22.2
+
+- **Goal:** turn the slope into an update, and explain each term of it before using it.
+- **On screen:** New weight = old weight − learning rate × slope
+- **Speech:** Step against the slope. The new weight is the old weight, minus the learning rate times the slope. The flatter the curve, the smaller the step.
+- **Visual:** cutroom-math: an arrow points against the slope; the rule is built piece by piece with a label under each term (new weight, old weight, learning rate in yellow, slope in blue); then the point hops down the curve with a trail.
 - **Facts:** F1
+- **Sync:** each term appears as its words are spoken.
 
-### 3. Rolling into the Valley · 0:14–0:21
+### 4. Learning rate · 0:22.2–0:32.3
 
-- **Goal:** execute discrete gradient descent steps shrinking in magnitude as the slope flattens.
-- **On screen:** ValueTracker telemetry · w updates step by step
-- **Speech:** Scaled by the [learning rate eta], each gradient step [descends toward the minimum].
-- **Visual:** Stepping dot moves through discrete iterations; telemetry counts step 00 to 04 with live loss L(w) and slope readouts.
-- **Facts:** F2
+- **Goal:** show three learning rates on the same curve.
+- **On screen:** lr = 0.04 crawls · lr = 0.25 settles · lr = 1.5 overshoots
+- **Speech:** Now, change the learning rate. Too small, and it crawls. Just right, and it settles. Too big, and it overshoots.
+- **Visual:** cutroom-math: three runs from the same start; a slow trail, a trail that settles in a few hops, and a trail that bounces across the valley.
+- **Facts:** F2, F3, F4
 
-### 4. Convergence Lockup · 0:21–0:28
+### 5. Two weights · 0:32.3–0:46.2
 
-- **Goal:** highlight the flat tangent at the minimum where the gradient vanishes.
-- **On screen:** Convergence · ∇L → 0.000 · optimal w = 0.81
-- **Speech:** Where the curve flattens, the [gradient vanishes to zero]. The descent [converges], locking into optimal weights.
-- **Visual:** Flat tangent locks at w = 0.81, telemetry shows ∇L = 0.000, and a final accent flash marks convergence.
-- **Facts:** F3, F5
+- **Goal:** extrapolate from the curve to a surface.
+- **On screen:** Add a second weight, and the curve becomes a surface. Two slopes, one per weight, make the gradient.
+- **Speech:** Add a second weight, and the curve becomes a surface. Now there are two slopes, one per weight. Together, they are the gradient. Step against it: the same rule works in any dimension.
+- **Visual:** cutroom-math: the camera turns to an isometric view from above and the surface is drawn as a mesh; the camera then orbits the figure and closes in, so the two tangent lines and the gradient arrow are seen from a side where nothing hides them; the arrow flips while the view keeps turning; the camera follows the point down in 12 steps from another side, with live readouts.
+- **Facts:** F5
+
+### 6. Close · 0:46.2–0:49.9
+
+- **Goal:** tie the surface back to the question.
+- **On screen:** Billions of weights. One rule.
+- **Speech:** Billions of weights. One rule.
+- **Visual:** cutroom-math: the camera drifts; the logo closes.
+- **Facts:** —
 
 ## Pronunciation
 
 | written | spoken |
 |---|---|
-| eta | ay-tuh |
+| cutroom | cut room |

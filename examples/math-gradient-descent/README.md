@@ -1,69 +1,67 @@
-# Example: Gradient Descent (cutroom-math / ManimGX + Kokoro + earshot)
+# Example: Gradient descent, from one weight to two (cutroom-math / ManimGX + Kokoro + earshot)
 
-**Request:** "26 s ManimGX explainer demonstrating the new cutroom-math standard: 3-Zone Spatial Hierarchy, tactile loss landscape, live monospace telemetry, synchronized editorial captions, and strategic earshot sound design."
+**Request:** "Explain the gradient in 2D, talk about the learning rate, explain the equation, and extrapolate to 3D, in under 50 seconds, with the fluid, dynamic look of the best vertical math explainers." This is the repository's official math example.
 
 <p align="center">
-  <video src="out/gradient-descent.mp4" controls preload="metadata" poster="out/sheet.png" width="800">
-    <a href="out/gradient-descent.mp4"><img src="out/preview.gif" width="800" alt="Watch gradient-descent.mp4 with narration and earshot sound effects"></a>
-  </video>
+  <a href="out/gradient-descent.mp4"><img src="out/preview.gif" width="320" alt="Gradient descent: a zoom that turns a curve into a line, three learning rates, then a surface"></a>
 </p>
 <p align="center">
-  <a href="out/gradient-descent.mp4"><strong>▶ Watch &amp; listen with audio (<code>out/gradient-descent.mp4</code> · 25.78 s · 1080p)</strong></a>
+  <a href="out/gradient-descent.mp4"><strong>▶ Watch &amp; listen with sound (<code>out/gradient-descent.mp4</code> · 49.8 s · 1080×1920 vertical)</strong></a>
 </p>
 
-[`out/gradient-descent.mp4`](out/gradient-descent.mp4) (25.78 s, 1920x1080 @ 40.72 fps, H.264 + AAC stereo, 1.40 MB) · [`out/gradient-descent.srt`](out/gradient-descent.srt) (subtitles, 52 lines) · [`out/sheet.png`](out/sheet.png) (contact sheet) · [`out/sound-sheet.png`](out/sound-sheet.png) (earshot audio-visual sheet) · [`src/cues.json`](src/cues.json) (10 earshot SFX cues) · source in [`src/`](src)
+[`out/gradient-descent.mp4`](out/gradient-descent.mp4) (49.8 s, 1080x1920 @ 30 fps, H.264 + AAC, 13 MB, -16 LUFS) · [`out/gradient-descent.srt`](out/gradient-descent.srt) · [`out/sheet.png`](out/sheet.png) (contact sheet) · [`out/sound-sheet.png`](out/sound-sheet.png) (earshot sheet) · [`src/cues.json`](src/cues.json) (122 earshot cues, generated) · source in [`src/`](src)
 
 | File | Description |
 |---|---|
-| [`out/gradient-descent.mp4`](out/gradient-descent.mp4) | Deliverable: 25.78 s explainer video with embedded narration, 10 strategic `earshot` SFX cues, and live telemetry (1.40 MB) |
-| [`out/gradient-descent.srt`](out/gradient-descent.srt) | Timed subtitles with 13 synchronized cues |
-| [`out/preview.gif`](out/preview.gif) | Animated preview GIF of the descent trajectory and live telemetry (481 KB) |
-| [`out/sheet.png`](out/sheet.png) | 4×3 contact sheet showing 12 keyframes with timestamps |
-| [`out/sound-sheet.png`](out/sound-sheet.png) | `earshot sheet` audio-visual contact sheet showing spectrogram, waveform, loudness, and 10 cue sync markers |
-| [`src/SCRIPT.md`](src/SCRIPT.md) | Structured production script with 4 scenes and verified facts F1–F5 |
-| [`src/scene.py`](src/scene.py) | ManimGX scene implementing the 3-zone spatial layout, continuous updates, and telemetry |
-| [`src/cues.json`](src/cues.json) | 10 sample-accurate sound cues mapped to visual events |
+| [`out/gradient-descent.mp4`](out/gradient-descent.mp4) | Deliverable: narrated vertical video with 122 `earshot` cues |
+| [`out/preview.gif`](out/preview.gif) | 12 s silent preview of the 3D half: the surface, the two slopes, the arrow and the descent while the camera orbits |
+| [`out/sheet.png`](out/sheet.png) | 4×3 contact sheet |
+| [`out/sound-sheet.png`](out/sound-sheet.png) | `earshot sheet`: spectrogram, loudness and cue sync (81% of cues within 40 ms of their beat) |
+| [`src/SCRIPT.md`](src/SCRIPT.md) | Script with six scenes and facts F1 to F6; `cutroom script check` passes with no warnings |
+| [`src/scene.py`](src/scene.py) | The ManimGX scene; it also writes `work/events.json` with the time of every beat |
+| [`src/make_cues.py`](src/make_cues.py) | Turns those events into `src/cues.json`: one sound per sentence, zoom tick, hop, tab and camera move |
 
-## The 3-Zone Spatial Hierarchy Applied
+## What happens
 
-Following the new standard in [`skills/cutroom-math/references/style-and-nuances.md`](../../skills/cutroom-math/references/style-and-nuances.md):
+One continuous camera, no cuts. Captions reveal word by word at the top, a breadcrumb tracks the chapter (`slope · step · rate · 3D`), and live readouts prove each claim in numbers.
 
-1. **Zone 1: Context Breadcrumb & Formula (Top-Left)**
-   - Eyebrow: `Optimization · gradient step` in Inter SemiBold muted mauve (`#8E929F`).
-   - Formula: $w_{t+1} = w_t - \eta \nabla L(w_t)$ in warm white with the update term $\eta \nabla L$ highlighted in brand Hot Signal (`#FF2D6F`).
-2. **Zone 2: Tactile Mechanism + Live Telemetry (Center Stage)**
-   - Smooth non-convex loss bowl $L(w) = \frac{1}{2}w^2 + 0.3\cos(2.5w)$ with translucent area fill (`opacity=0.12`).
-   - Dynamic tangent line (`#FF9BC0`) tracking local slope.
-   - Negative gradient descent vector (`#FFC43D`) pointing in the step direction.
-   - Monospace telemetry HUD (`JetBrains Mono NL`) updating live each frame:
-     `step: 04  |  w: +0.81  |  L(w): 0.207  |  ∇L: +0.25  |  step: -0.05`
-3. **Zone 3: Synchronized Editorial Captions (Bottom Zone)**
-   - Phrase-by-phrase captions centered at the bottom, highlighting key concepts (*best weights*, *loss landscape*, *step in reverse*, *converges*) in focal brand accents.
+1. **Landscape (0 to 4 s).** A loss surface fades in while the camera swings round it. It fades out and the camera goes side-on: what is left is one slice, a 2D curve.
+2. **Zoom and slope (4 to 13 s).** The camera dives onto a point of the curve. The curve is redrawn at constant stroke width, so it straightens against its tangent: the shaded gap falls from `593 px` to `1 px` while `zoom ×` climbs to 1600. A short label (`slope`) flashes and leaves. Then the point slides along the curve and the slope readout changes sign.
+3. **Step and the rule (13 to 22 s).** An arrow points against the slope. The update rule is built piece by piece, each term appearing as it is spoken, with a label under it: `w(t+1)` *new weight*, `w(t)` *old weight*, `lr` *learning rate* (yellow), `f′(w(t))` *slope* (blue). Then the point hops down the curve; the flatter the curve, the shorter the hop.
+4. **Learning rate (22 to 32 s).** Three runs from the same start: `lr = 0.04` crawls, `lr = 0.25` settles in a few hops, `lr = 1.5` bounces between +2.05 and −2.05 and never settles.
+5. **Two weights (32 to 46 s).** The old curve stays as a slice of a surface drawn as a mesh, seen from above in an isometric view. The figure then turns: the camera orbits it and closes in on the point, so the two tangent lines (one per weight) and the gradient arrow are seen from the side where they are not hidden. The arrow flips on the tangent plane while the view keeps rotating, and the camera follows the point down in 12 steps from yet another side, with live `loss` and `|∇L|`. The mesh fades toward the top edge so it never reaches the text.
+6. **Close (46 to 50 s).** `Billions of weights. One rule.` and the logo.
 
-## Sound Design (`earshot`)
+Nothing stays pinned to the top: each topic is introduced by a label that fades in, is read for two seconds and leaves; the rule leaves before the learning-rate section.
 
-10 strategic tactile sound cues mixed sample-accurately at -18 to -22 dBFS under the voice:
-- `fit/land.light/fingertip_book` on opening setup;
-- `fit/whoosh.short/bamboo_swish` on loss curve trace and descent sweep;
-- `fit/tick/domino` on discrete parameter updates;
-- `swipe/velvet` on tangent slope line adjustments;
-- `pluck/kalimba_soft` (pitch E5) on convergence lockup at the minimum.
+## Why it moves the way it does
 
-## How to reproduce
+- The zoom is done in screen space, not with the camera: the curve is recomputed each frame as `c + z·(x − x₀, f(x) − f(x₀))`. Strokes keep their width, and the `off straight` readout is measured on the same points.
+- The rule, the topic labels and the captions are alpha-driven animations on objects that are always in the scene. Captions use one animation (old caption out, new one in word by word). A `FadeIn` inside a `Succession` starts early in ManimGX and shows the words ahead of time.
+- Sounds are not placed by hand: the scene logs the start of every sentence (an invisible animation records `self.time`), and `make_cues.py` places ticks, hops and sweeps from those times plus each animation's known offsets.
+
+## How it was made
 
 ```bash
 . ~/.local/share/cutroom/env.sh
 
-# 1. Synthesize narration from script
-tts -f src/speech.txt -o work/narration.wav --voice narrator --pronounce src/pronounce.json
+# 1. Check the script, export speech and pronunciation
+cutroom script check src/SCRIPT.md
+cutroom script speech src/SCRIPT.md -o src/speech.txt --pronounce src/pronounce.json
 
-# 2. Render ManimGX scene
-manimgx render src/scene.py GradientDescent -o work/raw.mp4
+# 2. Render the scene (narration is synthesized per sentence and cached in src/voice/)
+(cd src && manimgx render scene.py GradientDescent -r 1080x1920 --fps 30 -o ../work/raw.mp4)
+cp work/raw.srt out/gradient-descent.srt
 
-# 3. Mix strategic earshot SFX cues
-cutroom edit sfx work/raw.mp4 --cues src/cues.json -o out/gradient-descent.mp4
+# 3. Cues from the logged events, mix, then normalize to -16 LUFS
+python3 src/make_cues.py
+cutroom edit sfx work/raw.mp4 --cues src/cues.json -o work/mixed.mp4
+cutroom edit loudnorm work/mixed.mp4 -o out/gradient-descent.mp4 --target -16
 
-# 4. Generate contact sheet and sound analysis
+# 4. Sheets and preview
 cutroom edit sheet out/gradient-descent.mp4 -o out/sheet.png
+cutroom edit gif out/gradient-descent.mp4 -o out/preview.gif --start 34 --duration 12 --fps 8 --width 240
 earshot sheet out/gradient-descent.mp4 --cues src/cues.json -o out/sound-sheet.png
 ```
+
+The style rules behind it are in [`skills/cutroom-math/references/style-and-nuances.md`](../../skills/cutroom-math/references/style-and-nuances.md), section 6.

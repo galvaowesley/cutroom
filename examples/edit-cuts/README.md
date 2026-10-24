@@ -3,9 +3,7 @@
 **Request:** "Demonstrate post-production editing recipes on existing video and audio assets: synthesize a music bed with ffmpeg aevalsrc, score video with ducking over narration and earshot SFX, normalize loudness, reframe to 9:16 with blur fill, burn subtitles, generate square audiogram, compress for email, make an animated GIF, and generate contact sheets."
 
 <p align="center">
-  <video src="out/intro-final.mp4" controls preload="metadata" poster="out/intro-sheet.png" width="760">
-    <a href="out/intro-final.mp4"><img src="out/intro.gif" width="720" alt="Watch intro-final.mp4 with narration, earshot SFX, and ducked music bed"></a>
-  </video>
+  <a href="out/intro-final.mp4"><img src="out/intro.gif" width="760" alt="Watch intro-final.mp4 with narration, earshot SFX, and ducked music bed"></a>
 </p>
 <p align="center">
   <a href="out/intro-final.mp4"><strong>▶ Watch &amp; listen: <code>out/intro-final.mp4</code> (29.0 s, 1080p, -14.2 LUFS)</strong></a> ·

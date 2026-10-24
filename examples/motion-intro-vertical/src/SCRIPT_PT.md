@@ -7,7 +7,7 @@
 | Goal | quem assiste vê cada capacidade de mídia em ação, sabe quais agentes são suportados e envia o link do repositório para o seu agente |
 | Key message | Cutroom traz 15 skills de mídia para 6 agentes coding com voz local e 252 efeitos sonoros procedurais configurados pelo link do repositório. |
 | Target duration | 28 s |
-| Voice | pm_alex (Kokoro pt-BR) |
+| Voice | pf_dora (Kokoro pt-BR, preset puro, sem referência de áudio) |
 | Brand | cutroom |
 
 ## Facts
@@ -25,7 +25,7 @@
 
 - **Goal:** abrir imediatamente mostrando o que o cutroom produz, com miniaturas animadas em formato vertical.
 - **On screen:** cutroom · 15 skills de mídia em código
-- **Speech:** [cutroom]. [Quinze skills] que transformam dados e documentos em [apresentações], [diagramas vivos] e [figuras isométricas].
+- **Speech:** [Cutroom]. (pausa) Um [canivete suíço], com [quinze skills] para criação de mídia.
 - **Visual:** cutroom-motion: 4 cards verticais de capacidades em Night Plum (barras subindo, nós de diagrama com pulso, gaveta 3D isométrica e extração laser de PDF).
 - **Facts:** F1
 
@@ -33,7 +33,7 @@
 
 - **Goal:** demonstrar curvas matemáticas, timeline de motion, paletas de marca, clonagem de voz local e earshot.
 - **On screen:** Matemática, motion, marcas, 23 idiomas e 252 sons
-- **Speech:** [Vídeos de matemática] e [motion], [sistemas de marca], clonagem de voz local em [vinte e três idiomas]... e efeitos sonoros com [earshot].
+- **Speech:** [Vídeos de matemática] e [motion], [marcas], voz local em [vinte e três idiomas], e efeitos sonoros com [earshot].
 - **Visual:** cutroom-motion: 4 widgets verticais em Blush Paper (curva cúbica com tangente animada, timeline multi-faixa GSAP, amostras de paleta de marca e espectrograma de 24 barras).
 - **Facts:** F2, F3
 
@@ -41,7 +41,7 @@
 
 - **Goal:** mostrar suporte aos 6 principais agentes coding e a arquitetura local/isolada/paralela em layout vertical.
 - **On screen:** Suporta 6 agentes coding · Local, versionado e em paralelo
-- **Speech:** Totalmente compatível com [seis agentes coding]: [Claude Code], [Cursor], [Codex], [Antigravity], [Gemini] e [Kiro]. [Local, versionado e em paralelo].
+- **Speech:** Totalmente compatível com [seis agentes coding]: [Claude Code], [Cursor], [Codex], [Antigravity], [Gemini] e [Kiro].
 - **Visual:** cutroom-motion: grid vertical com 6 cards de agentes coding (Claude Code, Cursor, Codex, Antigravity, Gemini, Kiro) e 3 pilares de execução (Local, Versionado, Paralelo).
 - **Facts:** F4
 
@@ -49,7 +49,7 @@
 
 - **Goal:** demonstrar como a instalação é simples: basta fornecer o link do repositório para o agente coding.
 - **On screen:** Envie o link do repositório para o seu agente coding
-- **Speech:** Para instalar, envie o [link do repositório] ao seu agente coding... e deixe ele [configurar o cutroom].
+- **Speech:** Para instalar, envie o [link do repositório] ao seu agente coding, e deixe ele [configurar o cutroom].
 - **Visual:** cutroom-motion: terminal de chat mobile digitando "Configure https://github.com/galvaowesley/cutroom" com badges de sucesso animados.
 
 ### 5. Encerramento · 0:26.5–0:28.0

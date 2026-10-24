@@ -94,3 +94,37 @@ Always ask the person whether they want strategic sound effects added to their m
      -o "$J/out/<slug>.mp4"
    ```
 4. Inspect the audio-visual alignment sheet with `earshot sheet "$J/out/<slug>.mp4" --cues "$J/src/cues.json" -o "$J/work/sound-sheet.png"` and view `$J/work/sound-sheet.png`.
+
+---
+
+## 6. Perspective, camera and zoom (the reference look)
+
+The reference videos this style comes from are vertical (9:16), one mechanism at a time, and built on motion that never stops: a camera that never cuts, captions that arrive word by word, and numbers that climb while the picture changes. `examples/math-gradient-descent/src/scene.py` is the worked example (a 3D surface sliced into a 2D curve, a zoom to a line, three learning rates, the curve swept back into a surface).
+
+1. **Default to 9:16 for explainers** (`-r 1080x1920`, frame 8 × 14.2 units): chapter tabs and captions top-left, live readouts under them, the mechanism in the middle. Landscape stays for slides and classes.
+2. **One `m.ThreeDScene` for the whole piece, even the flat parts.** A 2D view is the camera at `phi=90°`, `theta=-90°` looking at the x-z plane; the curve is a slice of the surface. Tilting the camera (`phi` 90 to 64, `theta` -90 to -58) turns the curve into a surface without a cut, and fading the surface out leaves the slice as the 2D curve.
+3. **Zoom in screen space, not with the camera.** For "a curve is a line up close", redraw the curve each frame as `c + z·(x − x₀, f(x) − f(x₀))` with a log-zoom `ValueTracker` (about 0.45 s per doubling, linear in the log), over a fixed tangent line and a shaded gap between them. Strokes keep their width, the gap visibly collapses, and a readout of the gap in pixels (`off straight 593 px` to `1 px`) proves it. A camera zoom would fatten strokes and fill the screen.
+4. **Show scale while zooming:** a faint fixed grid (opacity 0.07), the readout `zoom ×N` climbing, and the point pinned at one screen position.
+5. **Captions: word by word, top-left,** two lines, the keyword bold in the focal accent, the rest in a muted tint. Drive the whole caption with one `UpdateFromAlphaFunc` (old out, each new word in on its own alpha window), with the words in the scene at opacity 0. Do not put a `FadeIn` inside a `Succession` or a `LaggedStart`: ManimGX can start it early and the words show before the voice.
+6. **One bracketed span per sentence:** `self.say("[Sentence one.] [Sentence two.]", anim_one, anim_two)`. Each span carries its caption and the sentence's own animation. An invisible animation (`UpdateFromAlphaFunc` on a dummy dot) logs `self.time` when its span starts.
+7. **Readouts and chips:** a monospace readout per beat (`step`, `loss`, `|∇L|`, `lr`), swapped, never crossfaded in place. Re-anchor each `DecimalNumber` after `set_value` (`.next_to(label, RIGHT)`). A large chip at the bottom names each variant (`lr = 1.5 · overshoots`).
+8. **Compare variants on the same curve:** runs from the same start, one after another, each with its own trail color and its own tick sound (small taps for the slow one, ticks for the good one, knocks panned left and right for the one that bounces). Simulate them first and pick values that show the effect inside the plot (`lr = 1.5` ping-pongs at ±2.05).
+9. **A 3D scene must never hide the point.** Draw the surface as a mesh (about 10% fill, lines at 0.75 opacity) and look from above in an isometric view (`phi` 46 to 52°, `theta` about -45°, a long `focal_distance` of about 45 for weak perspective), small in the establishing shots. For the descent, glide the camera frame onto the point and follow it (`UpdateFromAlphaFunc` on `cam.frame`, zoom about ×1.6), with the point lifted above the surface (`+0.11`). A fixed viewpoint is not enough: even from above, part of the figure hides what sits behind a ridge. **Turn the figure** (orbit `theta` by 60 to 100° over the 3D section, in one move per beat) and close in (zoom ×1.5) on the point for the arrows and the flip, so every element is seen from a side where it is clear. Fade the mesh toward the top edge with a stack of background-colored strips, under the captions, so it never runs into the text.
+    - Introduce, do not pin: a topic is a label that fades in, is read for two seconds and leaves. Readouts are per beat; the rule leaves when the next topic starts.
+    - Explain an equation before using it: build it term by term as the words are spoken, each term with a short colored label under it (`new weight`, `old weight`, `learning rate`, `slope`).
+10. **Moves with meaning:** flip an arrow 180° about the plane's normal for "the opposite way"; hop a point step by step with an eased-per-step rate function and one tick per landing; keep a slow camera drift on still beats.
+11. **Keep it under the length you were given.** Kokoro speaks about 4 words per second at 0.95: write the sentences first, render a draft at `-r 540x960 --fps 24`, read the event times, and trim animations before words.
+12. **Sound from events, not by hand.** The scene writes `work/events.json`; a small `make_cues.py` turns sentence starts and animation offsets into `cues.json` (a soft pop per sentence, a tick per zoom doubling, a knock per hop, a swish per camera move, a kalimba note per arrival). For an explainer like this, 80 to 110 cues in 47 s is a dense, rhythmic mix at 12 to 22 dB under the voice, normalized to -16 LUFS afterwards.
+
+### The building blocks are in the harness
+
+`harness/cutroom_mathkit.py` (`import cutroom_mathkit as kit`; the `manimgx` shortcut already has the harness on `PYTHONPATH`) holds what this section describes, so a new scene does not rewrite it: `kit.caption` and `kit.cap_swap` (word-by-word captions), `kit.topic_label` and `kit.topic_anim` (introduce, do not pin), `kit.show_parts` (build an equation term by term), `kit.hop_rate` (ease every discrete step), `kit.EventLog` (log every beat for the sound cues), and, for 3D, `kit.iso_view`, `kit.glide` (follow a moving point), `kit.orbit` (swing round the figure and close in) and `kit.top_fade` (fade the mesh under the text).
+
+### Checklist before rendering any 3D beat
+
+1. Is the subject (the point, the arrow, the trail) visible from the camera's side, or does a ridge hide it? Look at the draft frames of that beat, not only the establishing shot.
+2. Mesh, not a solid: about 10% fill, lines at 0.75 opacity.
+3. Weak perspective (`focal_distance` about 45) and a view from above (`phi` 46 to 52°).
+4. One move per beat: `orbit` to a new `theta`, `glide` onto the point, close in (zoom ×1.5) for arrows and flips; total orbit 60 to 100° or more over the section.
+5. The point is lifted above the surface (`+0.11`) and arrows are thick enough to read at phone size.
+6. Nothing from the surface reaches the text: `top_fade` under the captions.

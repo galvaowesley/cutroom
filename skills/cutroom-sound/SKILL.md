@@ -113,6 +113,13 @@ Never guess where a sound's peak is. A whoosh starts softly and peaks `80–250 
 - `seed`: integer offset (`0, 1, 2...`) so repeated cues (e.g. a sequence of steps or ticks) render distinct micro-variations and never comb-filter.
 - `pitch` (`"C5"`, `"E5"`, `440`), `dur` (seconds), `apex` (seconds), `pan` (`-1.0` left to `+1.0` right).
 
+### Generating the cues from the scene (recommended for ManimGX)
+
+Placing 100+ cues by hand drifts. Have the scene log the time of every sentence and beat (`kit.EventLog` in
+`harness/cutroom_mathkit.py` writes `work/events.json`), then generate `cues.json` from those times plus each animation's
+known offsets with a small script: see `examples/math-gradient-descent/src/make_cues.py` (a soft pop per sentence, a tick per
+zoom doubling, a knock per hop, a swish per camera move, a note per arrival; 80 to 120 cues in 50 s, 12 to 22 dB under the voice).
+
 ### Mixing onto a video or audio track
 
 ```bash
