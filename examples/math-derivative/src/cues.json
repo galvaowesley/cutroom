@@ -1,0 +1,15 @@
+{
+  "cues": [
+    {"time": 0.45, "sound": "fit/whoosh.short/bamboo_swish", "align": "peak", "gain_db": -15, "note": "axes and cubic curve f(x) draw in"},
+    {"time": 1.65, "sound": "ui_pop/soft", "align": "onset", "gain_db": -13, "note": "base point P pops in at x = 1.5"},
+    {"time": 4.35, "sound": "fit/tick/domino", "align": "onset", "seed": 0, "gain_db": -14, "note": "second point x + h and h = 1.200 readout"},
+    {"time": 6.60, "sound": "knock/wood", "align": "onset", "gain_db": -14, "note": "secant line and slope = 3.53 lock in"},
+    {"time": 10.40, "sound": "swipe/velvet", "align": "peak", "gain_db": -15, "note": "h shrinks smoothly toward zero"},
+    {"time": 12.10, "sound": "pluck/kalimba_soft", "align": "onset", "pitch": "E5", "gain_db": -12, "note": "secant locks into tangent f'(1.5) = 1.25"},
+    {"time": 17.40, "sound": "ui_pop/step", "align": "onset", "gain_db": -15, "note": "title morphs to f'(x) = x^2 - 1"},
+    {"time": 19.60, "sound": "fit/tick/domino", "align": "onset", "seed": 1, "gain_db": -15, "note": "first flat tangent at x = -1 (slope 0)"},
+    {"time": 21.10, "sound": "fit/tick/domino", "align": "onset", "seed": 2, "gain_db": -15, "note": "second flat tangent at x = 1 (slope 0)"},
+    {"time": 22.30, "sound": "fit/whoosh.short/bamboo_swish", "align": "peak", "gain_db": -14, "note": "parabola f'(x) = x^2 - 1 completes trace"},
+    {"time": 26.80, "sound": "pluck/kalimba_ring", "align": "onset", "pitch": "C5", "gain_db": -12, "note": "closing verdict card and cutroom logo lockup"}
+  ]
+}

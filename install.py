@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Install cutroom's entry point for Claude Code, Codex, Antigravity and Kiro, on Linux, macOS or Windows.
+"""Install cutroom's entry point for Claude Code, Cursor, Codex, Antigravity and Kiro, on Linux, macOS or Windows.
 
 Nothing heavy is downloaded here: only the harness (a few MB, with the built-in brands) and the base skills
 (cutroom-init, cutroom-studio, cutroom-script, cutroom-brand). Everything else is chosen later, inside the agent,
 with the cutroom-init skill.
 
   python3 install.py                              detect agents, default home, default output folder
-  python3 install.py --agent claude,codex         choose agents (claude, codex, antigravity, kiro)
+  python3 install.py --agent claude,cursor,codex  choose agents (claude, cursor, codex, antigravity, kiro)
   python3 install.py --home ~/Documents/cutroom   keep the harness (envs, models, brands, voices) in that folder
   python3 install.py --output ~/Videos/pieces     where pieces are created (`cutroom job`)
   python3 install.py --language pt-BR             default content and narration language
@@ -33,12 +33,13 @@ def agent_dir(name):
     home = Path.home()
     dirs = {
         "claude": Path(os.environ.get("CLAUDE_CONFIG_DIR", home / ".claude")) / "skills",
+        "cursor": home / ".cursor" / "skills",                      # Cursor global skills
         "codex": home / ".agents" / "skills",                       # the Codex user skill folder
         "antigravity": home / ".gemini" / "antigravity" / "skills",
         "kiro": home / ".kiro" / "skills",                          # Kiro global skills (IDE and CLI)
     }
     if name not in dirs:
-        raise SystemExit(f"unknown agent: {name} (use claude, codex, antigravity or kiro)")
+        raise SystemExit(f"unknown agent: {name} (use claude, cursor, codex, antigravity or kiro)")
     return dirs[name]
 
 
@@ -47,6 +48,8 @@ def detect_agents():
     found = []
     if Path(os.environ.get("CLAUDE_CONFIG_DIR", home / ".claude")).is_dir() or shutil.which("claude"):
         found.append("claude")
+    if (home / ".cursor").is_dir() or shutil.which("cursor") or shutil.which("cursor-agent"):
+        found.append("cursor")
     if (home / ".codex").is_dir() or shutil.which("codex"):
         found.append("codex")
     if (home / ".gemini" / "antigravity").is_dir() or shutil.which("antigravity"):
@@ -56,12 +59,12 @@ def detect_agents():
     return found
 
 
-ALL_AGENTS = ["claude", "codex", "antigravity", "kiro"]
+ALL_AGENTS = ["claude", "cursor", "codex", "antigravity", "kiro"]
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--agent", help="comma-separated: claude,codex,antigravity,kiro (default: detect)")
+    ap.add_argument("--agent", help="comma-separated: claude,cursor,codex,antigravity,kiro (default: detect)")
     ap.add_argument("--home", help="folder for the harness, environments, models, brands and voices")
     ap.add_argument("--output", help="folder where pieces are created")
     ap.add_argument("--language", help="default content language (en, pt-BR, es...)")
@@ -95,7 +98,7 @@ def main():
 
     agents = [x.strip() for x in a.agent.split(",")] if a.agent else detect_agents()
     if not agents:
-        raise SystemExit("no agent found; use --agent claude,codex,antigravity,kiro")
+        raise SystemExit("no agent found; use --agent claude,cursor,codex,antigravity,kiro")
     dirs = [agent_dir(x) for x in agents]
 
     # Neutral engine: scripts, brands, conventions and locks, outside the agent folders.
@@ -133,7 +136,7 @@ def main():
     shell = (f'. "{home}\\env.ps1"' if cutroom_home.WINDOWS else f". {home}/env.sh")
     print(f"\nHome: {home}\nPieces: {cfg['output_dir']} · language {cfg['language']} · brand {cfg['brand']}")
     print("\nReady. In the agent, call the cutroom-init skill to see the catalog and choose what to install:")
-    print("  Claude Code and Kiro: /cutroom-init    Codex: $cutroom-init    Antigravity: ask \"use the cutroom-init skill\"")
+    print("  Claude Code, Cursor and Kiro: /cutroom-init    Codex: $cutroom-init    Antigravity: ask \"use the cutroom-init skill\"")
     print(f"Or in a terminal: {shell} ; cutroom catalog")
     return 0
 

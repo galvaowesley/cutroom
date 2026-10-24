@@ -3,7 +3,7 @@
 
 Nothing is installed without a choice. `catalog` shows each skill, the tool behind it and what it downloads;
 `setup <component>` without --yes only prints the plan; with --yes it downloads what the component needs and
-copies its skill into the skill folder of each agent chosen in install.py (Claude Code, Codex, Antigravity, Kiro).
+copies its skill into the skill folder of each agent chosen in install.py (Claude Code, Cursor, Codex, Antigravity, Kiro).
 
 Everything lives in the cutroom home, outside agent and project folders: ~/.local/share/cutroom on Linux and macOS,
 %LOCALAPPDATA%\\cutroom on Windows, or any folder chosen with `install.py --home <dir>` (see cutroom_home.py):
@@ -14,11 +14,11 @@ Everything lives in the cutroom home, outside agent and project folders: ~/.loca
   env.sh        defaults (PATH, Chrome, telemetry off, cloud keys unset); skills run `. env.sh`
   env.ps1       the same for Windows PowerShell (`. env.ps1`)
   bin/          shortcuts (.cmd on Windows): cutroom, tts, voice, deck, docling, docling-python, manimgx,
-                cutroom-python, hyperframes, archify, record-html
+                cutroom-python, hyperframes, archify, record-html, earshot
   envs/<name>   Python environments (uv), locked by harness/envs/<name>/uv.lock
   node/         HyperFrames CLI at the pinned version
   upstream/     official skills of each tool, cloned at the pinned tag (read by the cutroom-* skills)
-  models/       weights downloaded by the harness (Kokoro; Chatterbox under models/hf)
+  models/       weights downloaded by the harness (Kokoro; Chatterbox under models/hf; earshot under models/earshot)
   config.json   output folder, language, brand and default voice
   source        path of the repository clone (written by install.py), where skills are copied from
   agents        skill folders of the chosen agents, one per line (written by install.py)
@@ -37,7 +37,7 @@ Commands:
   deck ...                   build, check and preview slide decks (see `cutroom deck --help`)
   render ...                 HTML to PNG/JPG/PDF/SVG at platform sizes (see `cutroom render --help`)
   edit ...                   ffmpeg post-production recipes (see `cutroom edit --help`)
-  crew ...                   run parts of a piece in parallel on Claude, Codex, Antigravity, Gemini or Kiro CLIs
+  crew ...                   run parts of a piece in parallel on Claude, Cursor, Codex, Antigravity, Gemini or Kiro CLIs
   refresh                    regenerate env.sh and bin/ (install.py runs it)
 """
 import argparse
@@ -58,7 +58,7 @@ import cutroom_home  # noqa: E402
 HOME = str(cutroom_home.home())
 WINDOWS = cutroom_home.WINDOWS
 ENVS_SRC = os.path.join(HARNESS, "envs")
-PYTHON = {"extract": "3.13", "media": "3.13", "clone": "3.12"}
+PYTHON = {"extract": "3.13", "media": "3.13", "clone": "3.12", "sound": "3.13"}
 
 # Pinned versions. To upgrade: change them here (and the locks in envs/), test, open a PR.
 UPSTREAM = {
@@ -68,6 +68,7 @@ UPSTREAM = {
     "anatomy": ("wheresryan22/anatomy", "v1.1.0", None),
     "hairline": ("lucasmarkes/hairline", "v0.5.1", ["skills"]),
     "logo": ("kaankiziltug/logo-design-skill", "v1.4.5", ["skills/logo-design"]),
+    "earshot": ("Leonxlnx/earshot", "v0.4.0", ["skills", "docs"]),
 }
 HYPERFRAMES_NPM = "0.8.183"
 PLAYWRIGHT_NPM = "1.64.1"  # record-html and Hairline's checks; drives the system Chrome
@@ -94,6 +95,9 @@ SKILLS = {
                        "banners, infographics, certificates. HTML rendered to PNG, JPG, WebP or PDF at platform sizes.",
     "cutroom-logo": "Logo design from brief to production files: concepts, SVG craft, 16 px and one-color tests, "
                     "presentation boards and export variants, then installed into a cutroom brand.",
+    "cutroom-sound": "Sound effects and audio ears for coding agents: 252-sound procedural/fitted bank and film kits "
+                     "(sfx/kit), cue-timed video mixing, sound synthesis in code (forge/fit), and listening/sync "
+                     "critique for existing videos (timeline, sheet, critique, measure).",
     "cutroom-edit": "Post-production toolbox on ffmpeg: trim, concat, narration and music mix with ducking, loudness, "
                     "burned captions, reframe to 9:16 or 1:1, watermark, GIF, contact sheets, web compression.",
 }
@@ -167,6 +171,17 @@ COMPONENTS = {
         "skill": "cutroom-iso3d", "tool": "Anatomy 1.1 + Hairline 0.5.1 (MIT)",
         "downloads": "official skills and dependency-free Node kits + playwright-core (checks and GIF/video)",
         "size": "~30 MB", "needs": ["node", "chrome", "ffmpeg"],
+    },
+    "sound": {
+        "skill": "cutroom-sound", "tool": "earshot 0.4.0 (MIT, by Leon Lin)",
+        "downloads": "Python environment 'sound' with earshot (252 procedural/fitted sounds, 0 models needed for sfx/kit/measure; "
+                     "optional CLAP + AST listening models ~1.1 GB via `earshot doctor --fetch`)",
+        "size": "~1.5 GB (+ ~1.1 GB listening models on demand)", "needs": ["uv", "ffmpeg"],
+    },
+    "earshot-mcp": {
+        "skill": "cutroom-sound", "tool": "earshot MCP server 0.4.0 (MIT)", "optional": True,
+        "downloads": "nothing: registers the 'earshot' MCP server in Claude Code, using the sound environment",
+        "size": "0", "needs": ["claude"], "after": ["sound"],
     },
 }
 
@@ -319,6 +334,13 @@ def status(comp):
     if comp == "iso3d":
         ok = up_tag("anatomy") == UPSTREAM["anatomy"][1] and up_tag("hairline") == UPSTREAM["hairline"][1]
         return ok, f"anatomy {UPSTREAM['anatomy'][1]}, hairline {UPSTREAM['hairline'][1]}"
+    if comp == "sound":
+        ok = os.path.exists(env_bin("sound", "earshot")) and up_tag("earshot") == UPSTREAM["earshot"][1]
+        models = os.path.isdir(os.path.join(HOME, "models", "earshot", "clap"))
+        return ok, f"earshot {UPSTREAM['earshot'][1]}" + (" + listening models" if models else " (sfx/kit/measure ready)")
+    if comp == "earshot-mcp":
+        conf = out(["claude", "mcp", "get", "earshot"], timeout=30)
+        return bool(conf and "earshot" in conf), "MCP server 'earshot' (user scope)"
     raise KeyError(comp)
 
 
@@ -369,6 +391,7 @@ def write_generated():
 
 ENV_VARS = [  # (name, value relative to the home, comment)
     ("HF_HOME", "models/hf", "Chatterbox weights stay inside cutroom"),
+    ("EARSHOT_HOME", "models/earshot", "earshot CLAP and AST weights stay inside cutroom"),
     ("HAIRLINE_LOOK_CACHE", "cache/playwright", "Hairline and record-html share playwright-core"),
     ("ANATOMY_HOME", "upstream/anatomy", "figure build.mjs scripts import the kit from here"),
 ]
@@ -436,6 +459,7 @@ def shim_table():
         "hyperframes": ("motion", hf_bin, [hf_bin]),
         "archify": ("diagram", archify, ["node", archify]),
         "record-html": ("diagram", pw, ["node", os.path.join(lib, "record_html.mjs")]),
+        "earshot": ("sound", env_bin("sound", "earshot"), [env_bin("sound", "earshot")]),
     }
 
 
@@ -605,6 +629,15 @@ def install(comp):
         install_playwright()
     elif comp == "logo":
         fetch_upstream("logo")
+    elif comp == "sound":
+        uv_sync("sound")
+        fetch_upstream("earshot")
+        os.makedirs(os.path.join(HOME, "models", "earshot"), exist_ok=True)
+    elif comp == "earshot-mcp":
+        out(["claude", "mcp", "remove", "earshot", "-s", "user"])
+        run(["claude", "mcp", "add", "--scope", "user", "earshot", "-e",
+             f"EARSHOT_HOME={os.path.join(HOME, 'models', 'earshot')}", "--",
+             os.path.join(HOME, "bin", "earshot"), "mcp"])
     copy_skill(COMPONENTS[comp]["skill"])
 
 
@@ -650,6 +683,12 @@ def uninstall(comp):
             shutil.rmtree(d, ignore_errors=True)
     elif comp == "logo":
         shutil.rmtree(up_dir("logo"), ignore_errors=True)
+    elif comp == "sound":
+        shutil.rmtree(os.path.join(HOME, "envs", "sound"), ignore_errors=True)
+        shutil.rmtree(up_dir("earshot"), ignore_errors=True)
+        shutil.rmtree(os.path.join(HOME, "models", "earshot"), ignore_errors=True)
+    elif comp == "earshot-mcp":
+        run(["claude", "mcp", "remove", "earshot", "-s", "user"], check=False)
     if comp in ("diagram", "iso3d") and not status("iso3d" if comp == "diagram" else "diagram")[0]:
         shutil.rmtree(os.path.join(HOME, "cache", "playwright"), ignore_errors=True)
     drop_skill_if_unused(COMPONENTS[comp]["skill"], removing=comp)
@@ -787,6 +826,7 @@ def cmd_paths(a):
         "brand": str(cutroom_brand.find(cfg["brand"])), "brands_user": str(cutroom_brand.USER),
         "voices": os.path.join(HOME, "voices"), "agent_skill_dirs": agent_dirs(),
         "kokoro_models": os.path.join(HOME, "models", "kokoro"), "hf_models": os.path.join(HOME, "models", "hf"),
+        "earshot_models": os.path.join(HOME, "models", "earshot"),
         "upstream": {n: up_dir(n) for n in UPSTREAM},
     }
     if a.json:

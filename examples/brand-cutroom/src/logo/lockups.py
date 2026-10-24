@@ -12,20 +12,21 @@ def make(B, font, weight):
     fpath = str(B / "fonts" / font)
     d, end = word("cutroom", 150, 296, 186, -3, fpath)
     W = end + 24
-    lock = lambda mf, tf: svg(W, 256, f"<title>cutroom</title>{mark(mf)}<path d=\"{d}\" fill=\"{tf}\"/>")
+    OD = c.get("on_deep", OP)
+    dark_css = f"<style>@media (prefers-color-scheme: dark) {{ .word {{ fill: {OD}; }} }}</style>"
+    lock = lambda mf, tf, css="": svg(W, 256, f"<title>cutroom</title>{css}{mark(mf)}<path class=\"word\" d=\"{d}\" fill=\"{tf}\"/>")
     (B / "logos/symbol.svg").write_text(svg(256, 256, f"<title>cutroom</title>{mark(P)}"))
     (B / "logos/symbol-light.svg").write_text(svg(256, 256, f"<title>cutroom</title>{mark(OP)}"))
-    (B / "logos/wordmark.svg").write_text(lock(P, T))
+    (B / "logos/wordmark.svg").write_text(lock(P, T, dark_css))
     (B / "logos/wordmark-light.svg").write_text(lock(OP, OP))
     (B / "logos/mono.svg").write_text(lock(T, T))
-    OD = c.get("on_deep", OP)
     if OD != OP:  # bright primary: deep backgrounds get their own light version
         (B / "logos/wordmark-deep.svg").write_text(lock(P, OD))
         (B / "logos/symbol-deep.svg").write_text(svg(256, 256, f"<title>cutroom</title>{mark(P)}"))
     d2, end2 = word("cutroom", 120, 0, 0, -2.4, fpath)
     w = max(end2, 256)
-    (B / "logos/stacked.svg").write_text(svg(w, 416, f'<title>cutroom</title><g transform="translate({(w-256)/2} 0)">{mark(P)}</g>'
-        f'<g transform="translate({(w-end2)/2} 398)"><path d="{d2}" fill="{T}"/></g>'))
+    (B / "logos/stacked.svg").write_text(svg(w, 416, f'<title>cutroom</title>{dark_css}<g transform="translate({(w-256)/2} 0)">{mark(P)}</g>'
+        f'<g transform="translate({(w-end2)/2} 398)"><path class="word" d="{d2}" fill="{T}"/></g>'))
     (B / "logos/app-icon.svg").write_text(svg(256, 256, f'<title>cutroom</title><rect width="256" height="256" rx="56" fill="{P}"/>'
         f'<g transform="translate(128 128) scale(.74) translate(-128 -128)">{mark(OP)}</g>'))
 for name, font in (("electric", "InterTight-600.ttf"), ("hot", "BricolageGrotesque-700.ttf"), ("ultra", "SpaceGrotesk-700.ttf")):

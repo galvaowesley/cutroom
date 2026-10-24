@@ -1,12 +1,12 @@
-# cutroom in 30 seconds
+# cutroom in 28 seconds
 
 | Field | Value |
 |---|---|
 | Format | product video |
 | Audience | technical (developers who use coding agents) |
-| Goal | whoever watches knows what cutroom makes, where it runs and how to start |
-| Key message | cutroom gives coding agents 14 media skills that run on your machine, in your brand. |
-| Target duration | 25 to 32 s |
+| Goal | whoever watches sees each media capability in action, knows which coding agents are supported, and knows to paste the repo link into their agent to set it up |
+| Key message | cutroom gives 6 coding agents 15 media skills with local voice and 252 procedural sound effects, configured by handing the repository link to your agent. |
+| Target duration | 24 to 30 s |
 | Voice | narrator (af_heart@0.95) |
 | Brand | cutroom |
 
@@ -14,59 +14,47 @@
 
 | id | fact | value | source | period |
 |---|---|---|---|---|
-| F1 | agents supported | 5 agents | install.py (claude, codex, antigravity, kiro) and cutroom crew (gemini) | v2.0 |
-| F2 | skills in the repository | 14 skills | skills/ folder | v2.0 |
-| F3 | languages of cloned voices | 23 languages | harness/cutroom_voice.py, CLONE_LANGS | Chatterbox 0.1.7 |
+| F1 | skills in the repository | 15 skills | skills/ folder (4 base + 11 opt-in components) | v2.0 |
+| F2 | languages of cloned voices | 23 languages | harness/cutroom_voice.py, CLONE_LANGS | Chatterbox 0.1.7 |
+| F3 | procedural and fitted sound bank | 252 sounds | Leonxlnx/earshot v0.4.0 bank (forge_v2 + forge04 + fit + pluck) | earshot 0.4.0 |
+| F4 | coding agents supported | 6 agents | install.py (claude, cursor, codex, antigravity, kiro) and cutroom crew (gemini) | v2.0 |
 
 ## Scenes
 
-### 1. Title · 0:00–0:04
+### 1. Capabilities I: Decks, Diagrams, 3D and Extraction · 0:00–0:06
 
-- **Goal:** name the product and its promise.
-- **On screen:** cutroom · media for coding agents, made on your machine
-- **Speech:** cutroom. Media for coding agents, made on your machine.
-- **Visual:** cutroom-motion: the logo cuts in on hot pink; the tagline types in plum.
-
-### 2. Where it runs · 0:04–0:09
-
-- **Goal:** show the agents.
-- **On screen:** Runs in 5 agents
-- **Speech:** It works in Claude Code, Codex, Antigravity, Gemini and Kiro.
-- **Visual:** cutroom-motion: five agent chips stack in on night plum, one sunflower cue sweeping across.
+- **Goal:** open immediately on what cutroom produces, with animated visual representations of decks, diagrams, 3D figures and extraction.
+- **On screen:** cutroom · 15 media skills, cut in code
+- **Speech:** [cutroom]. [Fifteen skills] that turn data and docs into [decks], [live diagrams], and [isometric figures].
+- **Visual:** cutroom-motion: 4 animated capability cards on night plum (rising bar chart deck, pulsing node-graph diagram, sliding isometric 3D drawers, laser-scanned PDF-to-Markdown extraction).
 - **Facts:** F1
 
-### 3. What it makes · 0:09–0:17
+### 2. Capabilities II: Math, Motion, Brand, Voice and Sound · 0:06–0:14
 
-- **Goal:** show the range.
-- **On screen:** 14 skills, one folder per piece
-- **Speech:** Decks, diagrams, figures, math videos, motion, voice, graphics and edits. Fourteen skills, one folder per piece.
-- **Visual:** cutroom-motion: the brand icons pop into a grid with labels.
-- **Facts:** F2
+- **Goal:** show animated math curves, motion timelines, brand systems, local voice cloning and earshot sound design.
+- **On screen:** Math, motion, brand, 23-language voice, 252 sounds
+- **Speech:** [Scripted math] and [motion videos], [brand systems], local voice cloning in [twenty-three languages], and [earshot] sound design.
+- **Visual:** cutroom-motion: 4 live widgets on blush paper (cubic curve with moving tangent readout f'(x)=1.25, multi-track GSAP timeline playhead, morphing brand palette swatches, and 32-bar voice + earshot spectrum).
+- **Facts:** F2, F3
 
-### 4. Brand and voice · 0:17–0:22
+### 3. Compatible with the Major Coding Agents · 0:14–0:22
 
-- **Goal:** show that it adapts to the person.
-- **On screen:** Your brand. Your voice.
-- **Speech:** Bring your brand, or build one. Your voice too: with consent, it clones locally.
-- **Visual:** cutroom-motion: three palette swatches swap across a card; a waveform under it.
-- **Facts:** F3
+- **Goal:** show compatibility with the 6 major coding agents and the local/pinned/parallel architecture.
+- **On screen:** Runs in 6 coding agents · Local, pinned, parallel
+- **Speech:** Compatible with [six coding agents]: [Claude Code], [Cursor], [Codex], [Antigravity], [Gemini], and [Kiro]. [Local, pinned, and parallel].
+- **Visual:** cutroom-motion: central cutroom hub radiating animated connection pulses to 6 agent cards (Claude Code, Cursor, Codex, Antigravity, Gemini CLI, Kiro), with Local, Pinned and Parallel status badges lighting up below.
+- **Facts:** F4
 
-### 5. Local and parallel · 0:22–0:27
+### 4. Simplified Agent Setup · 0:22–0:28
 
-- **Goal:** state what stays local and the crew.
-- **On screen:** Local, pinned, parallel
-- **Speech:** Nothing leaves the machine, and every version is pinned. Agents can even work in parallel.
-- **Visual:** cutroom-motion: three rows (local, pinned, parallel) light one by one.
-
-### 6. Call to action · 0:27–0:31
-
-- **Goal:** say how to start.
-- **On screen:** python3 install.py → /cutroom-init
-- **Speech:** Start with install dot py. Then, cutroom init.
-- **Visual:** cutroom-motion: a terminal line types the command; end card with the logo on hot pink.
+- **Goal:** show how effortless installation is: just give the repository link to your coding agent.
+- **On screen:** Give the repository link to your coding agent
+- **Speech:** To start, just [give the repository link] to your coding agent, and [let it configure cutroom].
+- **Visual:** cutroom-motion: agent prompt window typing "Configure github.com/galvaowesley/cutroom", followed by animated setup checkmarks and an iris wipe to the Hot Signal cutroom end card.
 
 ## Pronunciation
 
 | written | spoken |
 |---|---|
 | Kiro | Kee-ro |
+| earshot | ear-shot |

@@ -11,9 +11,9 @@ with the same versions, in the chosen brand, without sending data out of the mac
 - Each shell call is a fresh shell. Start every command that uses a tool with
   `. ~/.local/share/cutroom/env.sh && ...` (Windows PowerShell: `. "<home>\env.ps1"; ...`). It puts the shortcuts
   on the PATH (`cutroom`, `tts`, `voice`, `deck`, `docling`, `manimgx`, `hyperframes`, `archify`, `record-html`,
-  `cutroom-python`), points at Chrome, turns telemetry off and unsets cloud API keys.
+  `earshot`, `cutroom-python`), points at Chrome, turns telemetry off and unsets cloud API keys.
 - `cutroom` is the entry point: `cutroom catalog | doctor | setup | job | paths | config | brand | voice | script |
-  deck | render | edit | crew`. It works the same in Claude Code, Codex, Antigravity, Gemini CLI and Kiro: nothing in
+  deck | render | edit | crew`. It works the same in Claude Code, Cursor, Codex, Antigravity, Gemini CLI and Kiro: nothing in
   the skills depends on one agent's folders.
 - Never use `pip install`, `uv tool install`, `uvx`, `npm i -g`, `npx <tool>@latest`, `npx skills add`,
   `hyperframes skills update` or `hyperframes upgrade`, even if an official skill says so: skip its installation
@@ -96,10 +96,10 @@ person names in the request wins over the active one. No brand fits: offer the `
 
 ## Agents
 
-The skills run in Claude Code, Codex, Antigravity, Gemini CLI and Kiro. When a step names one agent's tool, use your
+The skills run in Claude Code, Cursor, Codex, Antigravity, Gemini CLI and Kiro. When a step names one agent's tool, use your
 equivalent:
 
-| For | Claude Code | Codex / Antigravity / Gemini / Kiro |
+| For | Claude Code | Cursor / Codex / Antigravity / Gemini / Kiro |
 |---|---|---|
 | ask with options | `AskUserQuestion` (with `multiSelect` when it fits) | numbered list in the reply, then wait |
 | skill arguments | `$ARGUMENTS` | the text after the skill name (Kiro CLI: also `$ARGUMENTS`) |

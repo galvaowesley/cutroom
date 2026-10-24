@@ -1,6 +1,6 @@
 ---
 name: cutroom-studio
-description: "The Swiss army knife: orchestrates the cutroom-* skills to produce a complete piece of media in a brand, alone or with a crew of agents from different providers working in parallel (Claude Code, Codex, Antigravity, Gemini CLI, Kiro). Pieces: report or page from documents with diagrams and figures; narrated explainer video; product, release or PR video; deck; social posts, thumbnails and posters; podcast or audiogram; brand book; vertical cuts of a video. Picks the installed tools (Docling, Archify, Anatomy, Hairline, ManimGX, HyperFrames, Kokoro, Chatterbox, ffmpeg, Chrome), plans, chains and delivers in one folder, or as a published artifact when the agent can. Use when a request mixes media types, when it is unclear which tool to use, to make a report or artifact more visual, or to split the work across agents. Usage: cutroom-studio <what you want to deliver> [crew]"
+description: "The Swiss army knife: orchestrates the cutroom-* skills to produce a complete piece of media in a brand, alone or with a crew of agents from different providers working in parallel (Claude Code, Cursor, Codex, Antigravity, Gemini CLI, Kiro). Pieces: report or page from documents with diagrams and figures; narrated explainer video; product, release or PR video; deck; social posts, thumbnails and posters; podcast or audiogram; brand book; vertical cuts of a video. Picks the installed tools (Docling, Archify, Anatomy, Hairline, ManimGX, HyperFrames, Kokoro, Chatterbox, earshot, ffmpeg, Chrome), plans, chains and delivers in one folder, or as a published artifact when the agent can. Use when a request mixes media types, when it is unclear which tool to use, to make a report or artifact more visual, or to split the work across agents. Usage: cutroom-studio <what you want to deliver> [crew]"
 metadata:
   version: "2.0.0"
 ---
@@ -36,8 +36,9 @@ Run `cutroom job "<title>"` once and use that folder (`$J`) for every part.
 | deck or slides in PDF, report with charts | `cutroom-extract` (if documents) → `cutroom-script` → `cutroom-deck` |
 | report, summary or comparison from PDFs, sheets, slides, as a page | `cutroom-extract` → text → `cutroom-diagram` and/or `cutroom-iso3d` → page |
 | architecture or flow of a system or repository | `cutroom-diagram` (with `repo=`) |
-| explain a formula, algorithm, statistic or code in video | `cutroom-script` → `cutroom-math` (narrates with `cutroom-voice`) |
-| product, release, PR or report-summary video, reel, slides video | `cutroom-script` → `cutroom-voice` → `cutroom-motion` → `cutroom-edit` (music, captions) |
+| explain a formula, algorithm, statistic or code in video | `cutroom-script` → `cutroom-math` (narrates with `cutroom-voice`) → optional `cutroom-sound` (`earshot` SFX) |
+| product, release, PR or report-summary video, reel, slides video | `cutroom-script` → `cutroom-voice` → `cutroom-motion` → optional `cutroom-sound` (`earshot` SFX) → `cutroom-edit` (music, captions) |
+| sound effects, sound kit, or listening/sync audit of an existing video | `cutroom-sound` (`earshot`) |
 | vertical or square cuts of a video, captions, music, compression | `cutroom-edit` |
 | social posts, stories, thumbnails, OG images, posters, infographics, certificates | `cutroom-graphic` |
 | narration of a document, audiobook, podcast | `cutroom-extract` → `cutroom-script` → `cutroom-voice` → `cutroom-edit` (loudnorm, audiogram) |
@@ -66,7 +67,7 @@ Two ways, chosen by what the person has:
 
 - **Same agent:** your own subagents (in Claude Code, the `Agent` tool). Give each one `$J`, its part, the path of
   the `SKILL.md` to follow and the files it may write.
-- **Crew across providers:** `cutroom crew` runs each part on a headless agent CLI (Claude Code, Codex, Antigravity,
+- **Crew across providers:** `cutroom crew` runs each part on a headless agent CLI (Claude Code, Cursor, Codex, Antigravity,
   Gemini CLI, Kiro), each following a cutroom skill and writing only its own files. You stay the orchestrator.
   1. `cutroom crew runtimes`: which CLIs exist here and whether the cutroom skills are installed for them
      (`python3 install.py --agent ...` adds agents). Use only providers the person already uses (conventions,

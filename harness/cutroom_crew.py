@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Crew: run the parts of a piece in parallel on coding agents from different providers.
 
-One agent orchestrates (any of them: Claude Code, Codex, Antigravity, Gemini CLI, Kiro); `cutroom crew run` hands each
+One agent orchestrates (any of them: Claude Code, Cursor, Codex, Antigravity, Gemini CLI, Kiro); `cutroom crew run` hands each
 part to a headless agent CLI, each following a cutroom-* skill, each writing only to its own files. Example:
 Claude plans the video, Antigravity draws the diagram, Codex writes the deck, Claude narrates, all at once.
 
@@ -18,7 +18,7 @@ Batch (JSON, the paths relative to "root", by default the folder of the batch fi
               "writes": ["src/diagram/**", "out/architecture.*"],
               "timeout": 1800, "mode": "...", "skip_permissions": false}]}
 
-  runtime    claude | codex | agy (Antigravity CLI) | gemini (Gemini CLI) | kiro (Kiro CLI)
+  runtime    claude | cursor (Cursor CLI) | codex | agy (Antigravity CLI) | gemini (Gemini CLI) | kiro (Kiro CLI)
   skill      cutroom-* skill the agent must follow (its SKILL.md path is put in the prompt)
   model      exact model id; or `profile` (fast | balanced | quality, or your own) looked up in config.json
              crew.profiles.<profile>.<runtime>; no model = the CLI's default
@@ -46,17 +46,18 @@ import cutroom_home  # noqa: E402
 HOME = cutroom_home.home()
 SKILL_DIRS = {
     "claude": Path(os.environ.get("CLAUDE_CONFIG_DIR", Path.home() / ".claude")) / "skills",
+    "cursor": Path.home() / ".cursor" / "skills",
     "codex": Path.home() / ".agents" / "skills",
     "agy": Path.home() / ".gemini" / "antigravity" / "skills",
     "gemini": Path.home() / ".gemini" / "antigravity" / "skills",
     "kiro": Path.home() / ".kiro" / "skills",
 }
-BINARIES = {"claude": ["claude"], "codex": ["codex"], "agy": ["agy", "antigravity"], "gemini": ["gemini"],
-            "kiro": ["kiro-cli", "kiro"]}
+BINARIES = {"claude": ["claude"], "cursor": ["cursor-agent"], "codex": ["codex"], "agy": ["agy", "antigravity"],
+            "gemini": ["gemini"], "kiro": ["kiro-cli", "kiro"]}
 DEFAULT_PROFILES = {  # model ids change often: override in config.json crew.profiles
-    "fast": {"claude": "haiku", "agy": None, "gemini": None, "codex": None, "kiro": None},
-    "balanced": {"claude": "sonnet", "agy": None, "gemini": None, "codex": None, "kiro": None},
-    "quality": {"claude": "opus", "agy": None, "gemini": None, "codex": None, "kiro": None},
+    "fast": {"claude": "haiku", "cursor": None, "agy": None, "gemini": None, "codex": None, "kiro": None},
+    "balanced": {"claude": "sonnet", "cursor": None, "agy": None, "gemini": None, "codex": None, "kiro": None},
+    "quality": {"claude": "opus", "cursor": None, "agy": None, "gemini": None, "codex": None, "kiro": None},
 }
 
 EXAMPLE = {
@@ -134,6 +135,12 @@ def command(task, defaults, root):
             cmd += ["--model", model]
         if skip:
             cmd.append("--dangerously-skip-permissions")
+    elif rt == "cursor":
+        cmd = [exe, "-p", prompt, "--output-format", "text"]
+        if model:
+            cmd += ["--model", model]
+        if skip or task.get("mode") == "force":
+            cmd.append("--force")
     elif rt == "codex":
         cmd = [exe, "exec", "-C", str(root), "--skip-git-repo-check",
                "--dangerously-bypass-approvals-and-sandbox" if skip else "--full-auto"]
@@ -158,7 +165,7 @@ def command(task, defaults, root):
         if model:
             cmd[2:2] = ["--model", model]
     else:
-        raise SystemExit(f"unknown runtime in [{task['id']}]: {rt} (claude, codex, agy, gemini, kiro)")
+        raise SystemExit(f"unknown runtime in [{task['id']}]: {rt} (claude, cursor, codex, agy, gemini, kiro)")
     return cmd
 
 
@@ -221,6 +228,7 @@ def materialize(text, writes, root):
 
 def wrote_something(task, root, since):
     for pat in task.get("writes", []):
+        pat = pat + "/*" if pat.endswith("**") else pat  # pathlib: a trailing ** matches directories only
         for p in root.glob(pat):
             if p.is_file() and p.stat().st_mtime >= since:
                 return True

@@ -1,6 +1,6 @@
 ---
 name: cutroom-init
-description: "Entry point of the cutroom media skills (cutroom-*), for Claude Code, Codex, Antigravity, Gemini CLI and Kiro, on Linux, macOS and Windows. Shows the catalog (each skill, what it does, the tool behind it, what it downloads and how much) and installs only what the person chooses, in a pinned environment (uv + Python, Node 22, pinned versions). Tools: Docling, ManimGX, HyperFrames, Archify, Anatomy, Hairline, Kokoro, Chatterbox, the logo-design skill, Chrome and ffmpeg. Also diagnoses (doctor), removes components and changes settings (output folder, language, brand). Use to install, configure, check, update or remove the media skills, or when another cutroom-* skill says a component is missing. Usage: cutroom-init [doctor | remove <component...> | <component...> | config]"
+description: "Entry point of the cutroom media skills (cutroom-*), for Claude Code, Cursor, Codex, Antigravity, Gemini CLI and Kiro, on Linux, macOS and Windows. Shows the catalog (each skill, what it does, the tool behind it, what it downloads and how much) and installs only what the person chooses, in a pinned environment (uv + Python, Node 22, pinned versions). Tools: Docling, ManimGX, HyperFrames, Archify, Anatomy, Hairline, Kokoro, Chatterbox, earshot, the logo-design skill, Chrome and ffmpeg. Also diagnoses (doctor), removes components and changes settings (output folder, language, brand). Use to install, configure, check, update or remove the media skills, or when another cutroom-* skill says a component is missing. Usage: cutroom-init [doctor | remove <component...> | <component...> | config]"
 metadata:
   version: "2.0.0"
 ---
@@ -41,8 +41,8 @@ Ask which to install, multiple choice, listing only components not yet installed
 the agent limits the number of options:
 
 - Documents, decks and graphics: `extract`, `deck`, `graphic`, `diagram`, `iso3d`
-- Video, voice and editing: `math`, `motion`, `voice`, `edit`
-- Brand and optional: `logo`, `voice-clone`, `docling-mcp`
+- Video, voice, sound and editing: `math`, `motion`, `voice`, `sound`, `edit`
+- Brand and optional: `logo`, `voice-clone`, `docling-mcp`, `earshot-mcp`
 
 If nothing is chosen, stop and say how to come back (the `cutroom-init` skill again).
 
@@ -90,11 +90,12 @@ with `$T` a temporary folder:
 | `deck` | `deck --help` |
 | `graphic` | `cutroom render new social $T/g && cutroom render $T/g/social.html -o $T/g.png --size og` |
 | `edit` | `cutroom edit probe $T/t.mp4` (after the record-html test) or `ffmpeg -version` |
+| `sound` | `earshot sfx render ui_pop/soft -o $T/pop.wav && earshot measure $T/pop.wav` |
 | `logo` | `python3 ~/.local/share/cutroom/upstream/logo/skills/logo-design/scripts/search_library.py --summary --industry developer-tools` |
 
 Summarize:
 
-- the skills that are ready and how to call them: `/cutroom-diagram` in Claude Code and Kiro, `$cutroom-diagram` in
+- the skills that are ready and how to call them: `/cutroom-diagram` in Claude Code, Cursor and Kiro, `$cutroom-diagram` in
   Codex, by name in Antigravity and Gemini CLI;
 - if a new skill does not show up, open a new agent session;
 - where pieces go (`cutroom paths` → `output_dir`), the active brand (`cutroom brand list`) and the default voice
@@ -117,7 +118,7 @@ user brands are kept (remove them with `voice remove` and `cutroom brand remove`
 | default brand | `cutroom brand use <name>` (list: `cutroom brand list`; new: the `cutroom-brand` skill) |
 | default voice | `voice default <profile or preset>` (see `cutroom-voice`) |
 | where the harness lives | rerun `python3 install.py --home <folder>` from the clone (e.g. to keep it in Documents); components installed in the old home are not moved |
-| agents | rerun `python3 install.py --agent claude,codex,antigravity,kiro` |
+| agents | rerun `python3 install.py --agent claude,cursor,codex,antigravity,kiro` |
 
 ## The default environment
 

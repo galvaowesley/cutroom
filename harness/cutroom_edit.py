@@ -10,6 +10,8 @@ Commands (also `cutroom edit ...`). Every command prints the ffmpeg line it runs
                                                 narration over music; --duck lowers the music while the voice speaks
   score <video> -o out.mp4 [--voice narration.wav] [--music bed.mp3] [--duck] [--music-db -20] [--offset 0]
                                                 put narration and/or music under a video (video length wins)
+  sfx <in> --cues cues.json -o out.mp4 [--stem sfx.wav] [--master-db 0]
+                                                render earshot sound-effect cues sample-accurately on visual beats and mix
   loudnorm <in> -o out [--target -16]           loudness: -16 LUFS podcasts and voice, -14 LUFS social video
   captions <video> <subs.srt> -o out.mp4 [--brand NAME] [--size 46] [--position bottom|top]
                                                 burn captions in the brand's text font and colors
@@ -291,15 +293,20 @@ def cmd_score(a):
         raise SystemExit("give --voice and/or --music")
     total = info(a.video)["duration"]
     inputs, f, idx = ["-i", a.video], [], 1
+    has_v = False
     if a.voice:
         inputs += ["-i", a.voice]
         f.append(f"[{idx}:a]aresample=48000,aformat=channel_layouts=stereo,adelay={int(a.offset * 1000)}:all=1,"
                  f"apad,atrim=duration={total}[v]")
         idx += 1
+        has_v = True
+    elif has_audio(a.video):
+        f.append(f"[0:a]aresample=48000,aformat=channel_layouts=stereo,apad,atrim=duration={total}[v]")
+        has_v = True
     if a.music:
         inputs += ["-stream_loop", "-1", "-i", a.music]
         f.append(f"[{idx}:a]aresample=48000,aformat=channel_layouts=stereo,atrim=duration={total}[mus]")
-    if a.voice and a.music:
+    if has_v and a.music:
         more, out = duck_chain("[v]", "[mus]", a.music_db, a.duck, a.fade, total)
         f += more
     elif a.music:
@@ -543,6 +550,138 @@ def cmd_extract_audio(a):
     ff(["-i", a.input, "-vn"] + audio_codec(a.output) + [a.output])
 
 
+SFX_RENDER_PY = r"""
+import json, math, os, sys
+import numpy as np
+import soundfile as sf
+from earshot.forge import bank
+
+cfg = json.loads(sys.argv[1])
+cues_doc = json.load(open(cfg["cues"], encoding="utf-8"))
+cues = cues_doc["cues"] if isinstance(cues_doc, dict) and "cues" in cues_doc else cues_doc
+sr = 48000
+dur = float(cfg["duration"])
+master_db = float(cfg.get("master_db", 0.0))
+buf = np.zeros((max(1, int(round(dur * sr))), 2), dtype=np.float64)
+PEAK_CATS = {"whoosh_fast", "whoosh_big", "pro_whoosh_big", "swish", "swipe", "reverse_swell", "pro_zip"}
+END_CATS = {"riser", "pro_riser", "pro_glitch"}
+rows = []
+
+for idx, c in enumerate(cues):
+    t_raw = c.get("time", c.get("t", 0.0))
+    if isinstance(t_raw, str):
+        parts = [float(p) for p in t_raw.split(":")]
+        t = sum(p * (60 ** i) for i, p in enumerate(reversed(parts)))
+    else:
+        t = float(t_raw)
+    sid = c.get("sound") or c.get("id")
+    if not sid:
+        continue
+    seed_off = c.get("seed")
+    if os.path.isfile(str(sid)):
+        y, file_sr = sf.read(str(sid), always_2d=False)
+        if file_sr != sr:
+            import soxr
+            y = soxr.resample(np.asarray(y, np.float32), file_sr, sr)
+        y = bank.normalize(np.asarray(y, np.float32), -6.0).astype(np.float32)
+        meta = {"id": sid, **bank.measure(y, sr), "category": "file", "checks": {"ok": True, "warnings": []}}
+    else:
+        e = bank.get(sid)
+        seed = (int(e["seed"]) + int(seed_off)) if seed_off is not None else None
+        y, meta = bank.render(
+            e,
+            seed=seed,
+            dur=c.get("dur"),
+            apex=c.get("apex"),
+            pitch=c.get("pitch"),
+            peak_db=-6.0,
+            sr=sr,
+            checks=True,
+        )
+        meta["category"] = e.get("category", "")
+    align = c.get("align")
+    if not align:
+        cat = meta.get("category", "")
+        align = "peak" if cat in PEAK_CATS else ("end" if cat in END_CATS else "onset")
+    anchor_s = (
+        meta["peak_s"] if align == "peak"
+        else meta["end_s"] if align == "end"
+        else meta["onset_s"] if align == "onset"
+        else 0.0
+    )
+    gain_db = float(c.get("gain_db", -12.0)) + master_db
+    if "peak_db" in c:
+        gain_db = (float(c["peak_db"]) - (-6.0)) + master_db
+    gain = 10.0 ** (gain_db / 20.0)
+    arr = np.asarray(y, dtype=np.float64) * gain
+    if arr.ndim == 1:
+        pan = max(-1.0, min(1.0, float(c.get("pan", 0.0))))
+        angle = (pan + 1.0) * (math.pi / 4.0)
+        arr = np.column_stack([arr * math.cos(angle), arr * math.sin(angle)])
+    start = int(round((t - anchor_s) * sr))
+    s0 = max(0, start)
+    a0 = max(0, -start)
+    n = min(len(buf) - s0, len(arr) - a0)
+    if n > 0:
+        buf[s0:s0 + n] += arr[a0:a0 + n]
+    warns = [w["code"] for w in (meta.get("checks") or {}).get("warnings", [])]
+    rows.append({
+        "index": idx + 1,
+        "time": round(t, 3),
+        "sound": sid,
+        "align": align,
+        "anchor_ms": round(anchor_s * 1000, 1),
+        "dur_s": meta["dur_s"],
+        "peak_dbfs": round(-6.0 + gain_db, 1),
+        "warnings": warns,
+        "note": c.get("note") or c.get("label") or "",
+    })
+
+peak = float(np.abs(buf).max()) if len(buf) else 0.0
+limit = 10.0 ** (-1.0 / 20.0)
+if peak > limit:
+    buf = np.tanh(buf / limit) * limit
+sf.write(cfg["stem"], buf.astype(np.float32), sr, subtype="PCM_24")
+for r in rows:
+    w = f" !{','.join(r['warnings'])}" if r["warnings"] else ""
+    note = f"  ({r['note']})" if r["note"] else ""
+    print(f"  {r['time']:6.2f}s  {r['sound']:<30} align={r['align']:<5} ({r['anchor_ms']:5.1f}ms)  {r['peak_dbfs']:+5.1f} dBFS{w}{note}")
+print(f"✓ rendered {len(rows)} cues → {cfg['stem']} ({dur:.2f}s, peak {20*math.log10(max(peak, 1e-9)):.1f} dBFS)")
+"""
+
+
+def cmd_sfx(a):
+    import cutroom_home
+    home = cutroom_home.home()
+    sound_py = str(cutroom_home.env_bin(home, "sound", "python"))
+    if not os.path.exists(sound_py):
+        raise SystemExit("sound component is not installed: run `cutroom setup sound --yes`")
+    dur = float(a.duration) if a.duration else info(a.input)["duration"]
+    with tempfile.TemporaryDirectory() as t:
+        stem = str(Path(a.stem).resolve()) if a.stem else str(Path(t) / "sfx-stem.wav")
+        Path(stem).parent.mkdir(parents=True, exist_ok=True)
+        cfg = json.dumps({"cues": str(Path(a.cues).resolve()), "duration": dur, "stem": stem, "master_db": a.master_db})
+        print(f"$ earshot render cues ({a.cues})", flush=True)
+        if not DRY:
+            r = subprocess.run([sound_py, "-c", SFX_RENDER_PY, cfg], text=True)
+            if r.returncode != 0:
+                raise SystemExit(f"sfx cue render failed ({r.returncode})")
+        if a.stem_only:
+            if not a.stem:
+                shutil.copy2(stem, a.output)
+            return
+        if is_audio_only(a.input):
+            fc = "[0:a]aresample=48000,aformat=channel_layouts=stereo[base];[1:a]aresample=48000,aformat=channel_layouts=stereo[sfx];[base][sfx]amix=inputs=2:duration=first:dropout_transition=0:normalize=0,alimiter=limit=0.891:level=disabled[out]"
+            ff(["-i", a.input, "-i", stem, "-filter_complex", fc, "-map", "[out]"] + audio_codec(a.output) + [a.output])
+        elif has_audio(a.input):
+            fc = "[0:a]aresample=48000,aformat=channel_layouts=stereo[base];[1:a]aresample=48000,aformat=channel_layouts=stereo[sfx];[base][sfx]amix=inputs=2:duration=first:dropout_transition=0:normalize=0,alimiter=limit=0.891:level=disabled[out]"
+            ff(["-i", a.input, "-i", stem, "-filter_complex", fc, "-map", "0:v", "-map", "[out]", "-c:v", "copy",
+                "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", a.output])
+        else:
+            ff(["-i", a.input, "-i", stem, "-map", "0:v", "-map", "1:a", "-c:v", "copy",
+                "-c:a", "aac", "-b:a", "192k", "-shortest", "-movflags", "+faststart", a.output])
+
+
 def main(argv=None):
     global DRY
     ap = argparse.ArgumentParser(prog="cutroom edit", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -567,6 +706,11 @@ def main(argv=None):
     s = p("score", cmd_score, "video"); s.add_argument("-o", "--output", required=True); s.add_argument("--voice")
     s.add_argument("--music"); s.add_argument("--duck", action="store_true"); s.add_argument("--music-db", type=float, default=-20)
     s.add_argument("--fade", type=float, default=1.5); s.add_argument("--offset", type=float, default=0)
+    s = p("sfx", cmd_sfx, "input"); s.add_argument("--cues", required=True, help="JSON file of timed earshot cues")
+    s.add_argument("-o", "--output", required=True); s.add_argument("--stem", help="also save the rendered stereo SFX stem WAV")
+    s.add_argument("--stem-only", action="store_true", help="only write the SFX stem WAV without muxing")
+    s.add_argument("--duration", type=float, help="override duration in seconds (for --stem-only)")
+    s.add_argument("--master-db", type=float, default=0.0, help="master gain offset in dB for all cues")
     s = p("loudnorm", cmd_loudnorm, "input"); s.add_argument("-o", "--output", required=True)
     s.add_argument("--target", type=float, default=-16)
     s = p("captions", cmd_captions, "video", "subs"); s.add_argument("-o", "--output", required=True)

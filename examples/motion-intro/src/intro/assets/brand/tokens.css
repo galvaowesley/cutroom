@@ -1,5 +1,6 @@
 /* Generated from brand.json by `cutroom brand build`. Edit brand.json, not this file. */
 :root {
+  color-scheme: light;
   --primary: #FF2D6F;
   --deep: #16072B;
   --accent: #FFC43D;
