@@ -80,7 +80,15 @@ rm -f "$J/src/<slug>/CLAUDE.md" "$J/src/<slug>/AGENTS.md"  # they ask to run ski
   - Word-level captions: `hyperframes transcribe assets/narration.m4a --model small --language <lang>`. Without
     `--model` it uses `small.en`, which translates to English silently. The first run compiles whisper.cpp and
     downloads ~466 MB: warn first.
-- **Music:** keep the composition's audio to the narration and add music after the render with ducking:
+- **Sound effects (`cutroom-sound` / `earshot`):** always ask the person during planning whether they want strategic
+  sound effects added (`cutroom-sound`, component `sound`). When chosen:
+  - Write `$J/src/cues.json` mapping only strategic visual moments (scene cuts, key card/badge entrances, discrete
+    counters/ticks, typing runs, curve sweeps, closing brand lockup — never every word or minor fade) to `earshot`
+    bank sounds (`ui_pop/soft`, `fit/tick/domino`, `fit/whoosh.short/bamboo_swish`, `pluck/kalimba_soft`,
+    `fit/key/thock`, `cut_hit/sub`, `notify/m0`...).
+  - Either pre-render the stereo SFX stem into the composition (`cutroom edit sfx "$J/work/narration.wav" --cues "$J/src/cues.json" --stem "$J/src/<slug>/assets/sfx.wav" --stem-only -o "$J/src/<slug>/assets/sfx.wav"`) and add `<audio src="assets/sfx.wav" data-start="0"></audio>`, or mix onto the rendered video (`cutroom edit sfx "$J/out/<slug>.mp4" --cues "$J/src/cues.json" -o "$J/out/<slug>-sfx.mp4"`).
+  - Verify the audio mix and cue alignment with `earshot measure "$J/out/<slug>.mp4"` and `earshot sheet "$J/out/<slug>.mp4" --cues "$J/src/cues.json" -o "$J/work/sound-sheet.png"` (open `sound-sheet.png` to inspect).
+- **Music:** keep the composition's audio to the narration (and optional SFX stem) and add music after the render with ducking:
   `cutroom edit score "$J/out/<slug>.mp4" --music bed.mp3 --duck -o "$J/out/<slug>-music.mp4"`. Music must be
   licensed for the use; do not download music from the web without the person providing or approving it.
 

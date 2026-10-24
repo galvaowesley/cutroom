@@ -17,15 +17,25 @@ Run `cutroom doctor --json`. The video needs `math` (~400 MB); narration also ne
 is missing, give the size and offer `cutroom-init <component>`. Without `voice`, make the video without narration.
 Never use ManimGX's default voice (Step 2).
 
-## Step 1: rules and script
+## Step 1: rules, style and script
 
 1. Run `cutroom job "<title>"` and keep the path as `$J`.
-2. Read `U/SKILL.md`: it is the authoring rule (scene, `inspect`, draft, final render). Skip its installation part
+2. Read `references/style-and-nuances.md` in this skill's folder (`skills/cutroom-math/references/style-and-nuances.md`):
+   it defines the **default editorial style, three-zone spatial hierarchy, live telemetry readouts, narration pacing,
+   continuous-stage transitions, and strategic `earshot` sound design**. Follow these defaults unless the person asks
+   for a different style, aspect ratio (`16:9`, `9:16`, `1:1`), or palette.
+3. **Ask about sound effects (`cutroom-sound`) and format** when planning (unless already stated):
+   - Aspect ratio & canvas: `16:9` landscape or `9:16` vertical; **Dark Editorial Stage** (brand `deep` / `#0B0B10`) or
+     **Warm Paper Editorial** (`#FAF8F5`).
+   - Sound effects (`cutroom-sound` / `earshot`): ask whether the person wants **strategic tactile SFX** added on key
+     mathematical transitions, steps, curve morphs, and theorem reveals (recommended when `sound` is installed, or offer
+     `cutroom-init sound`), or narration-only.
+4. Read `U/SKILL.md`: it is the authoring rule (scene, `inspect`, draft, final render). Skip its installation part
    (`uv tool install`, `uvx`): the `manimgx` shortcut is on the PATH. For a feature you do not know, read the guide in
    the primer `https://manimgx.academa.ai/llms.txt`. The full reference (`llms-full.txt`, 2.4 MB) goes to `$J/work/`:
    download it once and `grep` it, never read it whole.
-3. Write `$J/src/SCRIPT.md` with `cutroom-script` (scenes, what appears, the speech of each). Over ~30 s, confirm
-   with the person before animating.
+5. Write `$J/src/SCRIPT.md` with `cutroom-script` (scenes, what appears, the speech of each, and optional SFX cues).
+   Over ~30 s, confirm with the person before animating.
 
 ## Step 2: scene
 
@@ -79,6 +89,15 @@ class Explainer(m.Scene):
   object appears from the start of the speech: split into two `say`, or use `FadeIn`/`Create`, which wait their turn.
 - Layout with `VGroup`, `next_to`, `arrange` and `to_edge`, so labels follow objects. Changing values: `ValueTracker`
   with `always_redraw`.
+- **Editorial hierarchy & nuances (`references/style-and-nuances.md`):**
+  - **Three zones:** top-left context breadcrumb + active formula (coloring only the focal symbol in `accent`); center
+    geometric/3D mechanism with a live monospace readout (`ValueTracker` + `always_redraw`) proving the claim in real
+    time; bottom 2-line captions with 1–2 keywords accented.
+  - **Restraint:** thin muted grey (`1–1.5 px`, opacity `0.35`) for grids and reference lines; bold `4–6 px` accent
+    stroke for the single active curve or vector; `0.12–0.22` opacity for area/volume fills.
+  - **Pacing & transitions:** open with a concrete hook or paradox in the first 3 s; show geometry first, perturb it
+    second, and lock in the symbolic formula third with a `0.35–0.45 s` micro-pause (`self.wait(0.4)`). Morph or
+    dissolve between scenes on a continuous stage rather than hard-clearing the screen.
 
 ## Step 3: verify
 
@@ -107,6 +126,12 @@ class Explainer(m.Scene):
   that need constant rate: `ffmpeg -i in.mp4 -fps_mode cfr -r 30 -c:a copy out.mp4`.
 - Captions burned in for social: `cutroom edit captions "$J/out/<slug>.mp4" "$J/out/<slug>.srt" -o "$J/out/<slug>-captions.mp4"`;
   vertical cut: `cutroom edit reframe ... --aspect 9:16`.
-- Deliver `$J/out/<slug>.mp4`, the `.srt` and the scene in `$J/src/scene.py`.
+- **Strategic sound effects (`cutroom-sound` / `earshot`):** when the person chose SFX, write `$J/src/cues.json` with
+  tactile cues aligned to the scene's visual beats (`ui_pop/soft` on section headers, `fit/tick/domino` with
+  incrementing `seed` on discrete steps, `fit/whoosh.short/bamboo_swish` with `align: "peak"` on curve sweeps,
+  `pluck/kalimba_soft` on the theorem lockup, at `gain_db: -13` to `-18`), mix onto the rendered video with
+  `cutroom edit sfx "$J/out/<slug>.mp4" --cues "$J/src/cues.json" --stem "$J/work/sfx-stem.wav" -o "$J/out/<slug>-sfx.mp4"`,
+  and inspect the alignment with `earshot sheet "$J/out/<slug>-sfx.mp4" --cues "$J/src/cues.json" -o "$J/work/sound-sheet.png"`.
+- Deliver `$J/out/<slug>.mp4`, the `.srt` (and `src/cues.json` when SFX are used) and the scene in `$J/src/scene.py`.
 - For slides: `manimgx present scene.py` opens the sections in the browser (`self.next_section()` marks each slide),
   and `--pdf` makes the handout.

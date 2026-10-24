@@ -273,7 +273,9 @@ def derive(primary, accent=None, background="#FFFFFF"):
 def tokens_css(m):
     c = m["colors"]
     f = m.get("fonts", {})
-    lines = [f"/* Generated from brand.json by `cutroom brand build`. Edit brand.json, not this file. */", ":root {"]
+    scheme = "dark" if luminance(c.get("background", "#FFFFFF")) < 0.2 else "light"
+    lines = ["/* Generated from brand.json by `cutroom brand build`. Edit brand.json, not this file. */",
+             ":root {", f"  color-scheme: {scheme};"]
     for k in COLOR_KEYS + ["on_deep"]:
         if k in c:
             lines.append(f"  --{k.replace('_', '-')}: {c[k]};")

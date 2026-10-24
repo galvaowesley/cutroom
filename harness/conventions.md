@@ -11,13 +11,13 @@ with the same versions, in the chosen brand, without sending data out of the mac
 - Each shell call is a fresh shell. Start every command that uses a tool with
   `. ~/.local/share/cutroom/env.sh && ...` (Windows PowerShell: `. "<home>\env.ps1"; ...`). It puts the shortcuts
   on the PATH (`cutroom`, `tts`, `voice`, `deck`, `docling`, `manimgx`, `hyperframes`, `archify`, `record-html`,
-  `cutroom-python`), points at Chrome, turns telemetry off and unsets cloud API keys.
+  `earshot`, `cutroom-python`), points at Chrome, turns telemetry off and unsets cloud API keys.
 - `cutroom` is the entry point: `cutroom catalog | doctor | setup | job | paths | config | brand | voice | script |
-  deck | render | edit | crew`. It works the same in Claude Code, Codex, Antigravity, Gemini CLI and Kiro: nothing in
+  deck | render | edit | crew | updates`. It works the same in Claude Code, Cursor, Codex, Antigravity, Gemini CLI and Kiro: nothing in
   the skills depends on one agent's folders.
 - Never use `pip install`, `uv tool install`, `uvx`, `npm i -g`, `npx <tool>@latest`, `npx skills add`,
   `hyperframes skills update` or `hyperframes upgrade`, even if an official skill says so: skip its installation
-  section, the shortcuts are already on the PATH. Versions are pinned in `harness/cutroom.py` and change by pull request.
+  section, the shortcuts are already on the PATH. Versions are pinned in `harness/cutroom.py` by default, or updated through `cutroom updates` when approved.
 - Missing component: say which, how much it downloads (`cutroom catalog`) and offer the `cutroom-init` skill. Do not
   install without the person choosing.
 
@@ -94,12 +94,36 @@ person names in the request wins over the active one. No brand fits: offer the `
 - Without publishing, deliver the files and say how to open them (`open` on macOS, `xdg-open` on Linux, `start` on
   Windows).
 
+## Upstream skill updates (`cutroom updates`)
+
+`cutroom updates` listens to the upstream repositories behind the skills (`manimgx`, `archify`, `hyperframes`,
+`anatomy`, `hairline`, `logo`, `earshot`, `docling`, `docling-mcp`, `kokoro-onnx`, `chatterbox`, and `cutroom` itself),
+caches the state in `<cutroom home>/updates.json`, and supports two approval modes stored in `config.json`
+(`updates.mode`):
+
+- **`ask` (manual approval, default):** when a newer upstream tag/commit is detected, the agent informs the user
+  (`<source>: <installed> → <latest>`) and asks with options whether to update locally
+  (`cutroom updates apply <source> --yes`), pre-approve automatic updates for that source
+  (`cutroom updates policy --approve <source>`), or skip.
+- **`auto` (pre-approved automatic updates):** when the user sets `cutroom updates policy --mode auto` (or pre-approves
+  specific repos with `cutroom updates policy --approve earshot,archify`), `cutroom updates check --apply-auto` and
+  `cutroom updates watch` automatically fetch and update the local upstream skill/tool and sync the agent skill folders
+  without interrupting the user.
+
+```bash
+cutroom updates check                                 # check all upstream skill/tool repos in parallel
+cutroom updates apply earshot --yes                   # manually approve and apply an update locally
+cutroom updates policy --mode auto                    # pre-approve automatic updates for all upstream repos
+cutroom updates policy --mode ask --approve earshot   # auto-update earshot, ask for the rest
+cutroom updates watch --interval 60 --apply-auto      # background listener (or --once on session start)
+```
+
 ## Agents
 
-The skills run in Claude Code, Codex, Antigravity, Gemini CLI and Kiro. When a step names one agent's tool, use your
+The skills run in Claude Code, Cursor, Codex, Antigravity, Gemini CLI and Kiro. When a step names one agent's tool, use your
 equivalent:
 
-| For | Claude Code | Codex / Antigravity / Gemini / Kiro |
+| For | Claude Code | Cursor / Codex / Antigravity / Gemini / Kiro |
 |---|---|---|
 | ask with options | `AskUserQuestion` (with `multiSelect` when it fits) | numbered list in the reply, then wait |
 | skill arguments | `$ARGUMENTS` | the text after the skill name (Kiro CLI: also `$ARGUMENTS`) |

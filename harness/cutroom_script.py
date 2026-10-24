@@ -23,6 +23,7 @@ filling less than half of it); total duration off target by more than 15%.
 Speech is estimated as words / wpm x 60, counting words as written. The total duration is the larger of the end
 of the last window and the sum of speech. For speed other than 1.0, use --wpm 155 x speed.
 """
+from __future__ import annotations
 import argparse
 import json
 import re

@@ -1,0 +1,23 @@
+{
+  "cues": [
+    {"time": 0.15, "sound": "ui_pop/soft", "align": "onset", "gain_db": -14, "note": "cutroom header and 15 skills badge enter"},
+    {"time": 0.85, "sound": "fit/whoosh.short/bamboo_swish", "align": "peak", "gain_db": -15, "note": "4 capability cards glide onto stage"},
+    {"time": 1.95, "sound": "fit/tick/domino", "align": "onset", "seed": 0, "gain_db": -15, "note": "Deck card bars rise and KPI counter locks"},
+    {"time": 3.15, "sound": "ui_pop/step", "align": "onset", "gain_db": -15, "note": "Live Diagram card routes signal pulse"},
+    {"time": 4.55, "sound": "knock/wood", "align": "onset", "gain_db": -14, "note": "Isometric 3D drawers slide out and Docling laser scans"},
+    {"time": 6.45, "sound": "cut_hit/sub", "align": "onset", "gain_db": -13, "note": "scene cut to Capabilities II (Math, Motion, Brand, Sound)"},
+    {"time": 6.95, "sound": "swipe/velvet", "align": "peak", "gain_db": -15, "note": "Math curve traces tangent and Motion playhead sweeps"},
+    {"time": 9.45, "sound": "ui_pop/soft", "align": "onset", "seed": 1, "gain_db": -14, "note": "Brand palette swatches morph across card"},
+    {"time": 11.40, "sound": "pluck/kalimba_soft", "align": "onset", "pitch": "E5", "gain_db": -12, "note": "Voice + earshot 252-sound spectrum analyzer activates"},
+    {"time": 13.32, "sound": "cut_hit/sub", "align": "onset", "gain_db": -13, "note": "scene cut to 6 Coding Agents constellation"},
+    {"time": 15.55, "sound": "fit/tick/domino", "align": "onset", "seed": 1, "gain_db": -16, "note": "Claude Code and Cursor nodes connect"},
+    {"time": 17.20, "sound": "fit/tick/domino", "align": "onset", "seed": 2, "gain_db": -16, "note": "Codex and Antigravity nodes connect"},
+    {"time": 18.85, "sound": "fit/tick/domino", "align": "onset", "seed": 3, "gain_db": -16, "note": "Gemini CLI and Kiro nodes connect"},
+    {"time": 20.05, "sound": "notify/mid_tine", "align": "onset", "gain_db": -14, "note": "Local, Pinned, Parallel architecture badges light up"},
+    {"time": 22.21, "sound": "fit/whoosh.short/bamboo_swish", "align": "peak", "gain_db": -14, "note": "transition to One-Step Agent Setup window"},
+    {"time": 23.15, "sound": "fit/key/thock", "align": "onset", "seed": 0, "gain_db": -15, "note": "typing repository link into coding agent prompt"},
+    {"time": 23.85, "sound": "fit/key.space/thock_space", "align": "onset", "gain_db": -15, "note": "prompt submitted to coding agent"},
+    {"time": 25.95, "sound": "ui_pop/soft", "align": "onset", "seed": 2, "gain_db": -13, "note": "agent configuration checkmarks appear"},
+    {"time": 27.35, "sound": "pluck/kalimba_ring", "align": "onset", "pitch": "C5", "gain_db": -11, "note": "iris wipe to Hot Signal cutroom end card"}
+  ]
+}

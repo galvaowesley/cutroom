@@ -1,0 +1,20 @@
+[project]
+name = "cutroom-sound"
+version = "1.0.0"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "earshot[mcp,llm] @ git+https://github.com/Leonxlnx/earshot.git@v0.4.0",
+    # Direct dep so the index below applies: on Linux it comes from the CPU build (no CUDA).
+    "torch",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true

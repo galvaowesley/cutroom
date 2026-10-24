@@ -32,6 +32,7 @@ overwrite an input.
 | clips in a row | `concat a.mp4 b.mp4 c.mp4 -o all.mp4 [--size 1920x1080 --fps 30]` (different sizes are fitted and padded; silent clips get silence); audio files work too |
 | narration over music | `mix --voice narration.wav --music bed.mp3 --duck -o mix.m4a [--music-db -20 --fade 1.5 --tail 1]` |
 | narration and/or music under a video | `score video.mp4 --voice narration.wav --music bed.mp3 --duck -o out.mp4 [--offset 0.5]` |
+| sample-accurate sound effects (`earshot`) | `sfx video.mp4 --cues src/cues.json -o out.mp4 [--stem work/sfx.wav --master-db 0]` (aligns each cue's measured `onset_s`, `peak_s` or `end_s` to the visual beat; see `cutroom-sound`) |
 | loudness | `loudnorm in -o out --target -16` (podcast, voice-over, YouTube); `-14` for social video |
 | burned captions | `captions video.mp4 subs.srt -o out.mp4 [--size 46 --position bottom]` (brand text font, white on a translucent deep box) |
 | vertical or square | `reframe in.mp4 -o out.mp4 --aspect 9:16 [--mode blur\|crop\|pad]` (blur fills; crop keeps the center; pad uses `deep`) |

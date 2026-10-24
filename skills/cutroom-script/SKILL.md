@@ -33,6 +33,7 @@ Take what the request gives. Ask only what is missing, with options, all at once
 - **Sources:** documents, sheets, queries, PRs, repository, the person's text. No source, no number.
 - **Brand:** the active one (`cutroom brand list`) or the one requested. Read its `VOICE.md`: it shapes the speech.
 - **Voice**, for video and narration: the default (`voice list`) unless another is asked (`cutroom-voice`).
+- **Sound effects (`cutroom-sound`):** for motion and math videos, ask whether the person wants strategic `earshot` sound effects added (`Strategic editorial SFX`, `Launch-film SFX`, or `Narration only`) and note the key SFX cues in `$J/src/cues.json` or in each scene's **Sync** line.
 - **Language:** `cutroom config language` unless the request says otherwise.
 
 ## Step 2: facts
