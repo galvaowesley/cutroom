@@ -1,0 +1,11 @@
+How does a model learn? It rolls downhill. Start with one weight.
+
+Zoom into any point, and the curve turns into a line. Its slope is the gradient.
+
+Step against the slope. The new weight is the old weight, minus the learning rate times the slope. The flatter the curve, the smaller the step.
+
+Now, change the learning rate. Too small, and it crawls. Just right, and it settles. Too big, and it overshoots.
+
+Add a second weight, and the curve becomes a surface. Now there are two slopes, one per weight. Together, they are the gradient. Step against it: the same rule works in any dimension.
+
+Billions of weights. One rule.

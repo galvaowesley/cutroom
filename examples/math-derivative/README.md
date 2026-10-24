@@ -3,9 +3,7 @@
 **Request:** "30 s ManimGX explainer of the derivative of x^3/3 - x with narration by the narrator profile (af_heart@0.95) and strategic earshot sound effects. Show the secant approaching the tangent, the limit h -> 0, and trace f'(x) = x^2 - 1."
 
 <p align="center">
-  <video src="out/derivative.mp4" controls preload="metadata" poster="out/sheet.png" width="800">
-    <a href="out/derivative.mp4"><img src="out/preview.gif" width="800" alt="Watch derivative.mp4 with narration and earshot sound effects"></a>
-  </video>
+  <a href="out/derivative.mp4"><img src="out/preview.gif" width="800" alt="Watch derivative.mp4 with narration and earshot sound effects"></a>
 </p>
 <p align="center">
   <a href="out/derivative.mp4"><strong>▶ Watch &amp; listen with audio (<code>out/derivative.mp4</code> · 29.93 s · 1080p)</strong></a>

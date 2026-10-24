@@ -1,0 +1,961 @@
+{
+ "cues": [
+  {
+   "time": 0.08,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption a1",
+   "seed": 0
+  },
+  {
+   "time": 0.94,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -16,
+   "note": "surface fades in, camera swings"
+  },
+  {
+   "time": 1.362,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption a2",
+   "seed": 1
+  },
+  {
+   "time": 1.572,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -15,
+   "note": "the weight lands on the surface",
+   "seed": 0
+  },
+  {
+   "time": 2.022,
+   "sound": "swipe/velvet",
+   "align": "peak",
+   "gain_db": -17,
+   "note": "the slice curve lights up"
+  },
+  {
+   "time": 2.422,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption a3",
+   "seed": 2
+  },
+  {
+   "time": 3.082,
+   "sound": "fit/whoosh.short/bamboo_swish",
+   "align": "peak",
+   "gain_db": -14,
+   "note": "camera goes side-on, the surface fades"
+  },
+  {
+   "time": 3.882,
+   "sound": "cut_hit/sub",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "the 2D view locks"
+  },
+  {
+   "time": 4.082,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "tabs enter"
+  },
+  {
+   "time": 4.32,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption b1",
+   "seed": 3
+  },
+  {
+   "time": 4.38,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "tangent and readouts enter",
+   "seed": 1
+  },
+  {
+   "time": 4.84,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -16.75,
+   "note": "zoom x2",
+   "seed": 1
+  },
+  {
+   "time": 5.25,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -16.5,
+   "note": "zoom x4",
+   "seed": 2
+  },
+  {
+   "time": 5.66,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -16.25,
+   "note": "zoom x8",
+   "seed": 3
+  },
+  {
+   "time": 6.07,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -16.0,
+   "note": "zoom x16",
+   "seed": 4
+  },
+  {
+   "time": 6.48,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -15.75,
+   "note": "zoom x32",
+   "seed": 5
+  },
+  {
+   "time": 6.68,
+   "sound": "whoosh_fast/crisp",
+   "align": "peak",
+   "gain_db": -17,
+   "note": "the zoom accelerates"
+  },
+  {
+   "time": 6.89,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -15.5,
+   "note": "zoom x64",
+   "seed": 6
+  },
+  {
+   "time": 7.3,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -15.25,
+   "note": "zoom x128",
+   "seed": 7
+  },
+  {
+   "time": 7.501,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption b2",
+   "seed": 4
+  },
+  {
+   "time": 7.71,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -15.0,
+   "note": "zoom x256",
+   "seed": 8
+  },
+  {
+   "time": 7.961,
+   "sound": "notify/mid_tine",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "slope readout"
+  },
+  {
+   "time": 8.12,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -14.75,
+   "note": "zoom x512",
+   "seed": 9
+  },
+  {
+   "time": 8.53,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -14.5,
+   "note": "zoom x1024",
+   "seed": 10
+  },
+  {
+   "time": 9.182,
+   "sound": "pluck/kalimba_soft",
+   "align": "onset",
+   "gain_db": -12,
+   "note": "zoom locks: a straight line",
+   "pitch": "B5"
+  },
+  {
+   "time": 9.232,
+   "sound": "fit/whoosh.short/bamboo_swish",
+   "align": "peak",
+   "gain_db": -16,
+   "note": "zoom back out"
+  },
+  {
+   "time": 11.032,
+   "sound": "swipe/velvet",
+   "align": "peak",
+   "gain_db": -16,
+   "note": "the point slides, the slope changes sign"
+  },
+  {
+   "time": 11.832,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "slope crosses zero",
+   "seed": 9
+  },
+  {
+   "time": 12.902,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption c1",
+   "seed": 0
+  },
+  {
+   "time": 12.932,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "topic: step",
+   "seed": 2
+  },
+  {
+   "time": 13.162,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "step arrow",
+   "seed": 3
+  },
+  {
+   "time": 14.34,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption r1",
+   "seed": 1
+  },
+  {
+   "time": 14.35,
+   "sound": "fit/land.light/fingertip_book",
+   "align": "onset",
+   "gain_db": -15,
+   "note": "w(t+1) =  (new weight)"
+  },
+  {
+   "time": 15.1,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "w(t)  (old weight)",
+   "seed": 1
+  },
+  {
+   "time": 16.124,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption r2",
+   "seed": 2
+  },
+  {
+   "time": 16.184,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "minus",
+   "seed": 2
+  },
+  {
+   "time": 16.584,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -15,
+   "note": "eta  (learning rate)",
+   "seed": 4
+  },
+  {
+   "time": 17.284,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -15,
+   "note": "f'(w)  (slope)",
+   "seed": 5
+  },
+  {
+   "time": 17.784,
+   "sound": "notify/mid_tine",
+   "align": "onset",
+   "gain_db": -15,
+   "note": "the rule is complete"
+  },
+  {
+   "time": 18.404,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption c2",
+   "seed": 3
+  },
+  {
+   "time": 18.739,
+   "sound": "knock/wood",
+   "align": "onset",
+   "gain_db": -15.0,
+   "note": "hop 1",
+   "seed": 0
+  },
+  {
+   "time": 19.164,
+   "sound": "knock/wood",
+   "align": "onset",
+   "gain_db": -15.6,
+   "note": "hop 2",
+   "seed": 1
+  },
+  {
+   "time": 19.589,
+   "sound": "knock/wood",
+   "align": "onset",
+   "gain_db": -16.2,
+   "note": "hop 3",
+   "seed": 2
+  },
+  {
+   "time": 20.014,
+   "sound": "knock/wood",
+   "align": "onset",
+   "gain_db": -16.8,
+   "note": "hop 4",
+   "seed": 3
+  },
+  {
+   "time": 20.439,
+   "sound": "knock/wood",
+   "align": "onset",
+   "gain_db": -17.4,
+   "note": "hop 5",
+   "seed": 4
+  },
+  {
+   "time": 20.864,
+   "sound": "knock/wood",
+   "align": "onset",
+   "gain_db": -18.0,
+   "note": "hop 6",
+   "seed": 5
+  },
+  {
+   "time": 21.289,
+   "sound": "knock/wood",
+   "align": "onset",
+   "gain_db": -18.6,
+   "note": "hop 7",
+   "seed": 6
+  },
+  {
+   "time": 21.714,
+   "sound": "knock/wood",
+   "align": "onset",
+   "gain_db": -19.2,
+   "note": "hop 8",
+   "seed": 7
+  },
+  {
+   "time": 21.814,
+   "sound": "pluck/kalimba_soft",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "near the bottom",
+   "pitch": "E5"
+  },
+  {
+   "time": 22.284,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption d1",
+   "seed": 4
+  },
+  {
+   "time": 22.344,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "tab: rate",
+   "seed": 4
+  },
+  {
+   "time": 22.744,
+   "sound": "fit/land.light/fingertip_book",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "rate readouts"
+  },
+  {
+   "time": 24.324,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption d2",
+   "seed": 0
+  },
+  {
+   "time": 24.344,
+   "sound": "pro_pop_in/round",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "crawl label"
+  },
+  {
+   "time": 24.524,
+   "sound": "tap/knuckle",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "crawl hop 1",
+   "seed": 0
+  },
+  {
+   "time": 24.754,
+   "sound": "tap/knuckle",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "crawl hop 2",
+   "seed": 1
+  },
+  {
+   "time": 24.984,
+   "sound": "tap/knuckle",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "crawl hop 3",
+   "seed": 2
+  },
+  {
+   "time": 25.214,
+   "sound": "tap/knuckle",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "crawl hop 4",
+   "seed": 3
+  },
+  {
+   "time": 25.444,
+   "sound": "tap/knuckle",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "crawl hop 5",
+   "seed": 4
+  },
+  {
+   "time": 25.674,
+   "sound": "tap/knuckle",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "crawl hop 6",
+   "seed": 5
+  },
+  {
+   "time": 25.904,
+   "sound": "tap/knuckle",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "crawl hop 7",
+   "seed": 6
+  },
+  {
+   "time": 26.134,
+   "sound": "tap/knuckle",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "crawl hop 8",
+   "seed": 7
+  },
+  {
+   "time": 26.364,
+   "sound": "tap/knuckle",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "crawl hop 9",
+   "seed": 8
+  },
+  {
+   "time": 26.594,
+   "sound": "tap/knuckle",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "crawl hop 10",
+   "seed": 9
+  },
+  {
+   "time": 26.934,
+   "sound": "pro_pop_in/round",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "good label"
+  },
+  {
+   "time": 26.944,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption d3",
+   "seed": 1
+  },
+  {
+   "time": 27.184,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "good hop 1",
+   "seed": 0
+  },
+  {
+   "time": 27.484,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "good hop 2",
+   "seed": 1
+  },
+  {
+   "time": 27.784,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "good hop 3",
+   "seed": 2
+  },
+  {
+   "time": 28.084,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "good hop 4",
+   "seed": 3
+  },
+  {
+   "time": 28.384,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "good hop 5",
+   "seed": 4
+  },
+  {
+   "time": 28.684,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "good hop 6",
+   "seed": 5
+  },
+  {
+   "time": 28.734,
+   "sound": "pluck/kalimba_soft",
+   "align": "onset",
+   "gain_db": -12,
+   "note": "it settles",
+   "pitch": "G5"
+  },
+  {
+   "time": 29.034,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption d4",
+   "seed": 2
+  },
+  {
+   "time": 29.054,
+   "sound": "pro_pop_in/round",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "bounce label"
+  },
+  {
+   "time": 29.254,
+   "sound": "knock/desk",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "bounce hop 1",
+   "seed": 0,
+   "pan": -0.55
+  },
+  {
+   "time": 29.354,
+   "sound": "cut_hit/kick",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "the first jump across the valley"
+  },
+  {
+   "time": 29.504,
+   "sound": "knock/desk",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "bounce hop 2",
+   "seed": 1,
+   "pan": 0.55
+  },
+  {
+   "time": 29.754,
+   "sound": "knock/desk",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "bounce hop 3",
+   "seed": 2,
+   "pan": -0.55
+  },
+  {
+   "time": 30.004,
+   "sound": "knock/desk",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "bounce hop 4",
+   "seed": 3,
+   "pan": 0.55
+  },
+  {
+   "time": 30.254,
+   "sound": "knock/desk",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "bounce hop 5",
+   "seed": 4,
+   "pan": -0.55
+  },
+  {
+   "time": 30.504,
+   "sound": "knock/desk",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "bounce hop 6",
+   "seed": 5,
+   "pan": 0.55
+  },
+  {
+   "time": 30.754,
+   "sound": "knock/desk",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "bounce hop 7",
+   "seed": 6,
+   "pan": -0.55
+  },
+  {
+   "time": 31.004,
+   "sound": "knock/desk",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "bounce hop 8",
+   "seed": 7,
+   "pan": 0.55
+  },
+  {
+   "time": 31.254,
+   "sound": "knock/desk",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "bounce hop 9",
+   "seed": 8,
+   "pan": -0.55
+  },
+  {
+   "time": 31.504,
+   "sound": "knock/desk",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "bounce hop 10",
+   "seed": 9,
+   "pan": 0.55
+  },
+  {
+   "time": 31.594,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "tab: 3D",
+   "seed": 5
+  },
+  {
+   "time": 32.364,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption e1",
+   "seed": 3
+  },
+  {
+   "time": 33.324,
+   "sound": "whoosh_big/thump_airy",
+   "align": "peak",
+   "gain_db": -15,
+   "note": "the curve sweeps into a surface"
+  },
+  {
+   "time": 34.324,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -17,
+   "note": "camera tilts"
+  },
+  {
+   "time": 35.414,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption e2",
+   "seed": 4
+  },
+  {
+   "time": 35.874,
+   "sound": "swipe/velvet",
+   "align": "peak",
+   "gain_db": -16,
+   "note": "second weight: the point slides along y"
+  },
+  {
+   "time": 36.274,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "slope along x",
+   "seed": 6
+  },
+  {
+   "time": 36.474,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "slope along y",
+   "seed": 7
+  },
+  {
+   "time": 36.474,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -17,
+   "note": "the camera orbits and closes in"
+  },
+  {
+   "time": 38.054,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption e3",
+   "seed": 0
+  },
+  {
+   "time": 38.214,
+   "sound": "fit/land.light/fingertip_book",
+   "align": "onset",
+   "gain_db": -15,
+   "note": "the rule becomes the gradient"
+  },
+  {
+   "time": 38.314,
+   "sound": "notify/mid_tine",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "gradient arrow"
+  },
+  {
+   "time": 38.514,
+   "sound": "whoosh_fast/crisp",
+   "align": "peak",
+   "gain_db": -17,
+   "note": "close-up on the point"
+  },
+  {
+   "time": 39.994,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption e4",
+   "seed": 1
+  },
+  {
+   "time": 40.404,
+   "sound": "swipe/velvet",
+   "align": "peak",
+   "gain_db": -15,
+   "note": "the arrow flips"
+  },
+  {
+   "time": 41.354,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -18,
+   "note": "guides fade"
+  },
+  {
+   "time": 42.154,
+   "sound": "swipe/velvet",
+   "align": "peak",
+   "gain_db": -16,
+   "note": "the figure turns to show the descent"
+  },
+  {
+   "time": 43.136,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "3D readouts"
+  },
+  {
+   "time": 43.361,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16.0,
+   "note": "3D hop 1",
+   "seed": 10
+  },
+  {
+   "time": 43.636,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16.2,
+   "note": "3D hop 2",
+   "seed": 11
+  },
+  {
+   "time": 43.911,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16.4,
+   "note": "3D hop 3",
+   "seed": 12
+  },
+  {
+   "time": 44.186,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16.6,
+   "note": "3D hop 4",
+   "seed": 13
+  },
+  {
+   "time": 44.336,
+   "sound": "whoosh_fast/crisp",
+   "align": "peak",
+   "gain_db": -18,
+   "note": "orbit while following"
+  },
+  {
+   "time": 44.461,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -16.8,
+   "note": "3D hop 5",
+   "seed": 14
+  },
+  {
+   "time": 44.736,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -17.0,
+   "note": "3D hop 6",
+   "seed": 15
+  },
+  {
+   "time": 45.011,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -17.2,
+   "note": "3D hop 7",
+   "seed": 16
+  },
+  {
+   "time": 45.286,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -17.4,
+   "note": "3D hop 8",
+   "seed": 17
+  },
+  {
+   "time": 45.561,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -17.6,
+   "note": "3D hop 9",
+   "seed": 18
+  },
+  {
+   "time": 45.836,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -17.8,
+   "note": "3D hop 10",
+   "seed": 19
+  },
+  {
+   "time": 46.111,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -18.0,
+   "note": "3D hop 11",
+   "seed": 20
+  },
+  {
+   "time": 46.336,
+   "sound": "pluck/kalimba_soft",
+   "align": "onset",
+   "gain_db": -12,
+   "note": "the minimum",
+   "pitch": "C6"
+  },
+  {
+   "time": 46.386,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -18.2,
+   "note": "3D hop 12",
+   "seed": 21
+  },
+  {
+   "time": 46.586,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "caption f1",
+   "seed": 2
+  },
+  {
+   "time": 47.046,
+   "sound": "mallet/celesta",
+   "align": "onset",
+   "gain_db": -15,
+   "note": "one rule",
+   "pitch": "E5"
+  },
+  {
+   "time": 48.946,
+   "sound": "pluck/kalimba_ring",
+   "align": "onset",
+   "gain_db": -12,
+   "note": "logo",
+   "pitch": "C5"
+  },
+  {
+   "time": 48.996,
+   "sound": "shimmer/m0",
+   "align": "onset",
+   "gain_db": -18,
+   "note": "logo shimmer"
+  }
+ ]
+}

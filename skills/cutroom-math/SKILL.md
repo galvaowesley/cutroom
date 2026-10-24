@@ -24,6 +24,11 @@ Never use ManimGX's default voice (Step 2).
    it defines the **default editorial style, three-zone spatial hierarchy, live telemetry readouts, narration pacing,
    continuous-stage transitions, and strategic `earshot` sound design**. Follow these defaults unless the person asks
    for a different style, aspect ratio (`16:9`, `9:16`, `1:1`), or palette.
+   The reusable pieces of that style (captions, topic labels, equation reveal, orbit and follow camera, event log) are in
+   `harness/cutroom_mathkit.py`: `import cutroom_mathkit as kit` in the scene.
+   When the subject has depth (a surface, landscape, field or space), read section 6 too: perspective, a camera that
+   never cuts, and zooming until the surface is a plane (worked example: `examples/math-gradient-descent`). Prefer `9:16`
+   (`-r 1080x1920`) for explainers unless the person asks otherwise.
 3. **Ask about sound effects (`cutroom-sound`) and format** when planning (unless already stated):
    - Aspect ratio & canvas: `16:9` landscape or `9:16` vertical; **Dark Editorial Stage** (brand `deep` / `#0B0B10`) or
      **Warm Paper Editorial** (`#FAF8F5`).
@@ -83,7 +88,7 @@ class Explainer(m.Scene):
 - Formulas with `m.MathTex(r"...")`. Code with `m.Code(code_string=..., language="python")`. `m.Code` only has the
   "vim" style: a `#000080` comment vanishes on a dark background. Recolor glyph by glyph (map the "vim" colors to brand
   colors) and use your own panel, with `background_config={"fill_opacity": 0, "stroke_width": 0}`; highlight the
-  running line with `set_z_index`. `examples/math-derivative/src/scene.py` shows the brand, live readouts
+  running line with `set_z_index`. `examples/math-gradient-descent/src/scene.py` (the official math example) shows the brand, live readouts
   (`always_redraw`, `ValueTracker`) and a traced graph.
 - `.animate` (or `Transform`) inside a `say` only on an object already on screen. If it enters in the same `say`, the
   object appears from the start of the speech: split into two `say`, or use `FadeIn`/`Create`, which wait their turn.

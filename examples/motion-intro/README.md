@@ -3,9 +3,7 @@
 **Request:** "29 s HyperFrames video with narration and strategic earshot sound effects presenting cutroom: animated visual representations of all 8 core capabilities, compatibility with 6 coding agents (Claude Code, Cursor, Codex, Antigravity, Gemini CLI, Kiro), local/pinned/parallel execution, and 1-step setup by handing the repository link to your coding agent."
 
 <p align="center">
-  <video src="out/intro.mp4" controls preload="metadata" poster="out/sheet.png" width="800">
-    <a href="out/intro.mp4"><img src="../edit-cuts/out/intro.gif" width="800" alt="Watch intro.mp4 with narration and earshot sound effects"></a>
-  </video>
+  <a href="out/intro.mp4"><img src="out/preview.gif" width="800" alt="Watch intro.mp4 with narration and earshot sound effects"></a>
 </p>
 <p align="center">
   <a href="out/intro.mp4"><strong>▶ Watch &amp; listen with audio (<code>out/intro.mp4</code> · 29.0 s · 1080p)</strong></a>

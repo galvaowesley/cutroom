@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="pt-BR" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>cutroom — capacidades, agentes e instalação vertical</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand/tokens.css" />
+    <link rel="stylesheet" href="assets/brand/fonts.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #16072b; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Inter", sans-serif; }
+      .scene { position: absolute; inset: 0; overflow: hidden; }
+      .pad { position: absolute; inset: 0; padding: 110px 72px 90px 72px; display: flex; flex-direction: column; justify-content: space-between; }
+      .top-row, .cap-head { display: flex; align-items: center; justify-content: space-between; }
+      .eyebrow { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 24px; letter-spacing: 0.12em; text-transform: uppercase; }
+      .pill-tag { font-family: "JetBrains Mono NL", monospace; font-size: 20px; padding: 8px 20px; border-radius: 999px; font-weight: 600; }
+      .headline { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 64px; line-height: 1.08; letter-spacing: -0.025em; margin-top: 20px; }
+      .stack4 { display: flex; flex-direction: column; gap: 24px; height: 1320px; margin-top: 36px; }
+      .cap-card { border-radius: 26px; padding: 26px 32px; display: flex; flex-direction: column; justify-content: space-between; flex: 1; position: relative; overflow: hidden; }
+      .cap-title { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 34px; letter-spacing: -0.01em; }
+      .cap-skill { font-family: "JetBrains Mono NL", monospace; font-size: 20px; opacity: 0.75; }
+      .cap-stage { position: relative; width: 100%; height: 170px; display: flex; align-items: center; justify-content: space-between; overflow: hidden; }
+
+      /* Scene 1: Night Plum */
+      #s1 { background: #16072b; color: #fff7fa; }
+      #s1 .eyebrow { color: #ff9bc0; }
+      #s1 .pill-tag { background: #281048; color: #ffc43d; border: 1px solid #482178; }
+      #s1 .headline span { color: #ff2d6f; }
+      #s1 .cap-card { background: #210c3d; border: 1px solid #3d1b6a; box-shadow: 0 16px 40px rgba(0,0,0,0.35); }
+      #s1 .cap-title { color: #ffffff; }
+      #s1 .cap-skill { color: #ff9bc0; }
+
+      /* Deck bars */
+      .bars-wrap { display: flex; align-items: flex-end; gap: 18px; height: 130px; }
+      .bars-wrap i { width: 44px; background: #ff2d6f; border-radius: 8px 8px 0 0; transform-origin: bottom; }
+      .kpi-chip { font-family: "JetBrains Mono NL", monospace; font-size: 36px; font-weight: 700; color: #ffc43d; background: #2c1250; padding: 14px 26px; border-radius: 14px; border: 1px solid #55278c; }
+
+      /* Extraction */
+      .ext-wrap { display: flex; gap: 24px; align-items: center; width: 100%; }
+      .pdf-doc { width: 150px; height: 140px; background: #2c1250; border-radius: 12px; border: 1px solid #ff9bc0; position: relative; padding: 14px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+      .pdf-doc i { display: block; height: 9px; background: #6f5b8a; border-radius: 4px; }
+      #laser { position: absolute; left: 0; right: 0; height: 4px; background: #ff2d6f; box-shadow: 0 0 12px #ff2d6f; top: 0; }
+      .md-out { flex: 1; font-family: "JetBrains Mono NL", monospace; font-size: 20px; line-height: 1.45; color: #d4c7d6; background: #16072b; padding: 16px 20px; border-radius: 12px; border: 1px solid #482178; }
+      .md-out b { color: #ffc43d; }
+
+      /* Scene 2: Blush Paper */
+      #s2 { background: #fff7fa; color: #16072b; }
+      #s2 .eyebrow { color: #c91453; }
+      #s2 .pill-tag { background: #ffe9f0; color: #ff2d6f; border: 1px solid #ffd0e0; }
+      #s2 .headline span { color: #ff2d6f; }
+      #s2 .cap-card { background: #ffffff; border: 1px solid #f2dde6; box-shadow: 0 16px 40px rgba(130,20,60,0.06); }
+      #s2 .cap-title { color: #16072b; }
+      #s2 .cap-skill { color: #7e7088; }
+
+      .tl-tracks { display: flex; flex-direction: column; gap: 12px; width: 100%; position: relative; }
+      .tl-row { display: flex; align-items: center; gap: 16px; }
+      .tl-lbl { font-family: "JetBrains Mono NL", monospace; font-size: 18px; width: 70px; color: #7e7088; font-weight: 600; }
+      .tl-bar { flex: 1; height: 26px; background: #ffe9f0; border-radius: 6px; position: relative; overflow: hidden; }
+      .tl-clip { position: absolute; top: 0; bottom: 0; border-radius: 6px; }
+      #playhead { position: absolute; top: -6px; bottom: -6px; width: 3px; background: #16072b; left: 0; }
+      .swatches { display: flex; gap: 16px; align-items: center; }
+      .swatches span { width: 52px; height: 52px; border-radius: 14px; border: 2px solid rgba(0,0,0,0.08); }
+      .spectrum-bars { display: flex; align-items: flex-end; gap: 8px; height: 110px; width: 100%; }
+      .spectrum-bars i { flex: 1; background: #ff2d6f; border-radius: 4px 4px 0 0; }
+
+      /* Scene 3: Constellation */
+      #s3 { background: #16072b; color: #fff7fa; }
+      #s3 .eyebrow { color: #ff9bc0; }
+      #s3 .pill-tag { background: #281048; color: #ffc43d; border: 1px solid #482178; }
+      #s3 .headline span { color: #ff2d6f; }
+      .agents-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 40px; }
+      .ag-card { background: #210c3d; border: 2px solid #482178; border-radius: 22px; padding: 28px 24px; display: flex; flex-direction: column; gap: 10px; }
+      .ag-name { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 32px; color: #ffffff; }
+      .ag-meta { font-family: "JetBrains Mono NL", monospace; font-size: 18px; color: #ffc43d; }
+      .ag-sub { font-size: 18px; color: #d4c7d6; }
+      .pillars-row { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+      .pillar-pill { background: #281048; border: 1px solid #5b2896; border-radius: 16px; padding: 20px 28px; display: flex; align-items: center; gap: 18px; font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 26px; color: #fff7fa; }
+      .pillar-pill b { color: #ffc43d; font-family: "JetBrains Mono NL", monospace; font-size: 24px; }
+
+      /* Scene 4: Chat */
+      #s4 { background: #16072b; color: #fff7fa; }
+      #s4 .eyebrow { color: #ff9bc0; }
+      #s4 .pill-tag { background: #281048; color: #ffc43d; border: 1px solid #482178; }
+      #s4 .headline span { color: #ff2d6f; }
+      .chat-window { background: #210c3d; border: 2px solid #482178; border-radius: 28px; padding: 40px; margin-top: 60px; display: flex; flex-direction: column; gap: 32px; box-shadow: 0 24px 60px rgba(0,0,0,0.5); }
+      .chat-dots { display: flex; gap: 12px; }
+      .chat-dots i { width: 16px; height: 16px; border-radius: 50%; display: block; }
+      .prompt-box { background: #16072b; border: 1.5px solid #ff2d6f; border-radius: 18px; padding: 28px 32px; font-family: "JetBrains Mono NL", monospace; font-size: 26px; color: #ffffff; min-height: 120px; line-height: 1.45; word-break: break-all; }
+      .prompt-box span { color: #ff9bc0; }
+      .agent-reply { display: flex; flex-direction: column; gap: 18px; font-family: "Inter", sans-serif; font-size: 24px; color: #d4c7d6; padding-left: 12px; }
+      .agent-reply div { display: flex; align-items: center; gap: 14px; }
+      .agent-reply b { color: #ffc43d; font-family: "JetBrains Mono NL", monospace; font-size: 26px; }
+
+      /* Scene 5: Outro */
+      #s5 { background: #ff2d6f; color: #16072b; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 80px; }
+      .end-logo { width: 360px; height: auto; margin-bottom: 20px; }
+      .end-tagline { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 54px; color: #16072b; margin-top: 36px; line-height: 1.15; }
+      .end-url { font-family: "JetBrains Mono NL", monospace; font-size: 32px; font-weight: 700; color: #ffffff; background: #16072b; padding: 18px 40px; border-radius: 999px; margin-top: 48px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-width="1080" data-height="1920">
+      <audio id="narr" src="assets/narration.m4a" data-start="0" data-duration="27.0" preload="auto"></audio>
+
+      <!-- SCENE 1: Capacidades I (0:00 - 6.00) -->
+      <div id="s1" class="scene clip" data-start="0.0" data-duration="6.0" data-track-index="0">
+        <div class="pad">
+          <div>
+            <div class="top-row"><span class="eyebrow">CUTROOM · 15 SKILLS DE MÍDIA</span><span class="pill-tag">CÓDIGO LOCAL</span></div>
+            <p class="headline">Decks, diagramas e <span>figuras 3D</span></p>
+          </div>
+          <div class="stack4">
+            <div class="cap-card" id="c1">
+              <div class="cap-head"><span class="cap-title">Apresentações PDF</span><span class="cap-skill">cutroom-deck</span></div>
+              <div class="cap-stage">
+                <div class="bars-wrap"><i id="b1" style="height:45%"></i><i id="b2" style="height:70%"></i><i id="b3" style="height:95%"></i><i id="b4" style="height:60%"></i></div>
+                <div class="kpi-chip" id="kpi">+142% ROI</div>
+              </div>
+            </div>
+            <div class="cap-card" id="c2">
+              <div class="cap-head"><span class="cap-title">Diagramas Vivos</span><span class="cap-skill">cutroom-diagram</span></div>
+              <div class="cap-stage">
+                <svg width="420" height="150" viewBox="0 0 420 150">
+                  <line x1="60" y1="75" x2="210" y2="75" stroke="#482178" stroke-width="4" /><line x1="210" y1="75" x2="360" y2="75" stroke="#482178" stroke-width="4" />
+                  <circle cx="60" cy="75" r="32" fill="#2c1250" stroke="#ff2d6f" stroke-width="4" /><text x="60" y="82" fill="#fff" font-family="'JetBrains Mono NL'" font-size="16" text-anchor="middle">API</text>
+                  <circle cx="210" cy="75" r="36" fill="#ff2d6f" /><text x="210" y="82" fill="#fff" font-family="'JetBrains Mono NL'" font-size="16" font-weight="bold" text-anchor="middle">FLOW</text>
+                  <circle cx="360" cy="75" r="32" fill="#2c1250" stroke="#ffc43d" stroke-width="4" /><text x="360" y="82" fill="#fff" font-family="'JetBrains Mono NL'" font-size="16" text-anchor="middle">EDGE</text>
+                  <circle id="sig-pulse" cx="60" cy="75" r="10" fill="#ffc43d" />
+                </svg>
+              </div>
+            </div>
+            <div class="cap-card" id="c3">
+              <div class="cap-head"><span class="cap-title">Figuras 3D Isométricas</span><span class="cap-skill">cutroom-iso3d</span></div>
+              <div class="cap-stage">
+                <svg width="220" height="150" viewBox="0 0 220 150">
+                  <g transform="translate(30,10)">
+                    <polygon points="80,10 160,46 80,82 0,46" fill="#4d1b77" stroke="#ff9bc0" stroke-width="2.5" />
+                    <polygon points="0,46 80,82 80,142 0,106" fill="#210c3d" stroke="#ff9bc0" stroke-width="2.5" />
+                    <polygon points="160,46 80,82 80,142 160,106" fill="#381963" stroke="#ff9bc0" stroke-width="2.5" />
+                    <g id="iso-drawer">
+                      <polygon points="80,34 152,66 80,98 8,66" fill="#ff2d6f" stroke="#ffc43d" stroke-width="3" />
+                      <polygon points="8,66 80,98 80,124 8,92" fill="#c91453" stroke="#ffc43d" stroke-width="2.5" />
+                      <polygon points="152,66 80,98 80,124 152,92" fill="#ff5c8d" stroke="#ffc43d" stroke-width="2.5" />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </div>
+            <div class="cap-card" id="c4">
+              <div class="cap-head"><span class="cap-title">Extração de Documentos</span><span class="cap-skill">cutroom-extract</span></div>
+              <div class="cap-stage">
+                <div class="ext-wrap">
+                  <div class="pdf-doc"><i></i><i></i><i></i><i></i><span id="laser"></span></div>
+                  <div class="md-out"><div><b># Catálogo</b> · Tabela</div><div>| SKU | Latência |</div><div>| <b>R-40</b> | <b>1.2 ms</b> |</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 2: Capacidades II (6.00 - 13.50) -->
+      <div id="s2" class="scene clip" data-start="6.0" data-duration="7.5" data-track-index="1">
+        <div class="pad">
+          <div>
+            <div class="top-row"><span class="eyebrow">VÍDEOS · VOZ · DESIGN DE SOM</span><span class="pill-tag">23 IDIOMAS · 252 SONS</span></div>
+            <p class="headline">Matemática, motion e <span>áudio procedural</span></p>
+          </div>
+          <div class="stack4">
+            <div class="cap-card" id="m1">
+              <div class="cap-head"><span class="cap-title">Vídeos Matemáticos</span><span class="cap-skill">cutroom-math</span></div>
+              <div class="cap-stage">
+                <svg width="480" height="150" viewBox="0 0 480 150">
+                  <line x1="20" y1="125" x2="440" y2="125" stroke="#e0d0e6" stroke-width="2" /><line x1="60" y1="20" x2="60" y2="140" stroke="#e0d0e6" stroke-width="2" />
+                  <path d="M 40 120 Q 180 130, 260 65 T 420 20" stroke="#ff2d6f" stroke-width="5" fill="none" />
+                  <line id="tan-line" x1="165" y1="122" x2="355" y2="18" stroke="#ffc43d" stroke-width="4" /><circle cx="260" cy="65" r="8" fill="#ffc43d" />
+                </svg>
+                <div style="font-family:'JetBrains Mono NL',monospace;font-size:24px;color:#c91453;padding-right:20px"><div style="color:#7e7088;font-size:16px">inclinação tangente</div><b>f'(x) = 1.25</b></div>
+              </div>
+            </div>
+            <div class="cap-card" id="m2">
+              <div class="cap-head"><span class="cap-title">Motion e Pós-Produção</span><span class="cap-skill">cutroom-motion · edit</span></div>
+              <div class="cap-stage">
+                <div class="tl-tracks">
+                  <div class="tl-row"><span class="tl-lbl">GSAP</span><div class="tl-bar"><span class="tl-clip" style="left:4%;width:82%;background:#ff2d6f"></span></div></div>
+                  <div class="tl-row"><span class="tl-lbl">VOZ</span><div class="tl-bar"><span class="tl-clip" style="left:8%;width:74%;background:#9b5de5"></span></div></div>
+                  <div class="tl-row"><span class="tl-lbl">SFX</span><div class="tl-bar"><span class="tl-clip" style="left:14%;width:18%;background:#ffc43d"></span><span class="tl-clip" style="left:46%;width:18%;background:#ffc43d"></span><span class="tl-clip" style="left:74%;width:14%;background:#ffc43d"></span></div></div>
+                  <span id="playhead"></span>
+                </div>
+              </div>
+            </div>
+            <div class="cap-card" id="m3">
+              <div class="cap-head"><span class="cap-title">Sistemas de Marca e Logos</span><span class="cap-skill">cutroom-logo · brand</span></div>
+              <div class="cap-stage">
+                <div class="swatches"><span style="background:#ff2d6f"></span><span style="background:#16072b"></span><span style="background:#ffc43d"></span><span style="background:#ff9bc0"></span><span style="background:#fff7fa;border:2px solid #ff2d6f"></span></div>
+                <img src="assets/brand/logos/stacked.svg" alt="cutroom brand" style="height:64px" />
+              </div>
+            </div>
+            <div class="cap-card" id="m4">
+              <div class="cap-head"><span class="cap-title">Voz Local e Efeitos Sonoros</span><span class="cap-skill">cutroom-voice · sound</span></div>
+              <div class="cap-stage">
+                <div class="spectrum-bars" id="spec-wave"></div>
+                <div style="font-family:'JetBrains Mono NL',monospace;font-size:24px;color:#c91453;padding-right:20px"><b>earshot</b><div style="font-size:16px;color:#7e7088">252 sons procedurais</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 3: 6 Coding Agents (13.50 - 20.50) -->
+      <div id="s3" class="scene clip" data-start="13.5" data-duration="7.0" data-track-index="2">
+        <div class="pad">
+          <div>
+            <div class="top-row"><span class="eyebrow">COMPATIBILIDADE TOTAL</span><span class="pill-tag">6 AGENTES CODING</span></div>
+            <p class="headline">Seu agente favorito, <span>potencializado</span></p>
+          </div>
+          <div class="agents-grid">
+            <div class="ag-card" id="ag1"><div class="ag-name">Claude Code</div><div class="ag-meta">Anthropic</div><div class="ag-sub">CLI headless</div></div>
+            <div class="ag-card" id="ag2"><div class="ag-name">Cursor</div><div class="ag-meta">Anysphere</div><div class="ag-sub">IDE nativa</div></div>
+            <div class="ag-card" id="ag3"><div class="ag-name">Codex</div><div class="ag-meta">OpenAI</div><div class="ag-sub">Execução cloud</div></div>
+            <div class="ag-card" id="ag4"><div class="ag-name">Antigravity</div><div class="ag-meta">DeepMind</div><div class="ag-sub">CLI avançada</div></div>
+            <div class="ag-card" id="ag5"><div class="ag-name">Gemini CLI</div><div class="ag-meta">Google</div><div class="ag-sub">Terminal headless</div></div>
+            <div class="ag-card" id="ag6"><div class="ag-name">Kiro</div><div class="ag-meta">AWS</div><div class="ag-sub">IDE &amp; terminal</div></div>
+          </div>
+          <div class="pillars-row">
+            <div class="pillar-pill" id="pl1"><b>[✓]</b> Execução 100% Local na Sua Máquina</div>
+            <div class="pillar-pill" id="pl2"><b>[✓]</b> Ambientes Isolados e Pinos Travados</div>
+            <div class="pillar-pill" id="pl3"><b>[✓]</b> Orquestração de Equipes em Paralelo</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCENE 4: Instalação Descomplicada (20.50 - 26.50) -->
+      <div id="s4" class="scene clip" data-start="20.5" data-duration="6.0" data-track-index="3">
+        <div class="pad">
+          <div>
+            <div class="top-row"><span class="eyebrow">INSTALAÇÃO EM UM PASSO</span><span class="pill-tag">ZERO ATRITO</span></div>
+            <p class="headline">Basta passar o link para <span>o seu agente</span></p>
+          </div>
+          <div class="chat-window">
+            <div class="chat-dots"><i style="background:#ff5f56"></i><i style="background:#ffbd2e"></i><i style="background:#27c93f"></i></div>
+            <div class="prompt-box"><span>&gt; </span><b id="prompt-txt"></b><span class="cursor">_</span></div>
+            <div class="agent-reply">
+              <div id="rep1"><b>✓</b> Analisando repositório e pré-requisitos...</div>
+              <div id="rep2"><b>✓</b> 15 skills cutroom instaladas com sucesso!</div>
+            </div>
+          </div>
+          <div style="text-align:center;font-family:'Bricolage Grotesque';font-size:26px;color:#ff9bc0;margin-top:20px">Claude · Cursor · Codex · Antigravity · Gemini · Kiro</div>
+        </div>
+      </div>
+
+      <!-- SCENE 5: Encerramento (26.50 - 28.00) -->
+      <div id="s5" class="scene clip" data-start="26.5" data-duration="1.5" data-track-index="4">
+        <img id="s5-logo" src="assets/brand/logos/stacked-contrast.svg" alt="cutroom" class="end-logo" />
+        <p id="s5-tag" class="end-tagline">Toda peça gerada<br/>na sua própria máquina.</p>
+        <div id="s5-url" class="end-url">github.com/galvaowesley/cutroom</div>
+      </div>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      (() => {
+        const tl = gsap.timeline({ paused: true });
+        const E = "power3.out";
+
+        const up = (sel, at, dur = 0.45, y = 30) => {
+          tl.fromTo(sel, { opacity: 0, y }, { opacity: 1, y: 0, duration: dur, ease: E }, at);
+        };
+
+        // SCENE 1 (0:00 - 6.00)
+        up("#c1", 0.35); up("#c2", 0.65); up("#c3", 0.95); up("#c4", 1.25);
+        tl.fromTo("#b1", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: E }, 1.4);
+        tl.fromTo("#b2", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: E }, 1.55);
+        tl.fromTo("#b3", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: E }, 1.7);
+        tl.fromTo("#b4", { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: E }, 1.85);
+        up("#kpi", 1.95, 0.4, 15);
+        tl.fromTo("#sig-pulse", { cx: 60 }, { cx: 360, duration: 1.6, repeat: 2, ease: "none" }, 2.5);
+        tl.fromTo("#iso-drawer", { x: 0, y: 0 }, { x: 30, y: 15, duration: 0.9, yoyo: true, repeat: 1, ease: "power2.inOut" }, 3.8);
+        tl.fromTo("#laser", { y: 0 }, { y: 120, duration: 1.1, ease: "none", yoyo: true, repeat: 1 }, 4.5);
+
+        // SCENE 2 (6.00 - 13.50)
+        const s2 = 6.0;
+        up("#m1", s2 + 0.35); up("#m2", s2 + 0.65); up("#m3", s2 + 0.95); up("#m4", s2 + 1.25);
+        tl.fromTo("#tan-line", { attr: { x1: 210, y1: 95, x2: 310, y2: 35 } }, { attr: { x1: 145, y1: 135, x2: 375, y2: 5 }, duration: 2.2, ease: "power2.inOut" }, s2 + 1.4);
+        tl.fromTo("#playhead", { x: 0 }, { x: 480, duration: 4.8, ease: "none" }, s2 + 1.2);
+
+        // Spectrum bars
+        const wave = document.querySelector("#spec-wave");
+        const bars = [];
+        for (let i = 0; i < 24; i++) {
+          const b = document.createElement("i");
+          wave.appendChild(b);
+          bars.push(b);
+        }
+        const w = { p: 0 };
+        tl.to(w, { p: 1, duration: 5.5, ease: "none", onUpdate: () => {
+          bars.forEach((b, i) => {
+            const val = Math.abs(Math.sin(i * 0.5 + w.p * 18)) * Math.abs(Math.cos(i * 0.3 + w.p * 12));
+            b.style.height = (12 + val * 85).toFixed(1) + "px";
+            b.style.background = i % 4 === 0 ? "#ffc43d" : "#ff2d6f";
+          });
+        } }, s2 + 1.0);
+
+        // SCENE 3 (13.50 - 20.50)
+        const s3 = 13.5;
+        [0.3, 0.9, 1.5, 2.1, 2.7, 3.3].forEach((t, i) => {
+          up(`#ag${i + 1}`, s3 + t, 0.4, 20);
+          tl.fromTo(`#ag${i + 1}`, { borderColor: "#482178" }, { borderColor: "#ffc43d", duration: 0.4, ease: E }, s3 + t + 0.2);
+        });
+        [4.2, 4.8, 5.4].forEach((t, i) => up(`#pl${i + 1}`, s3 + t, 0.4, 15));
+
+        // SCENE 4 (20.50 - 26.50)
+        const s4 = 20.5;
+        const promptText = "Configure https://github.com/galvaowesley/cutroom";
+        const pEl = document.querySelector("#prompt-txt"), pState = { n: 0 };
+        tl.to(pState, { n: promptText.length, duration: 2.2, ease: "none", onUpdate: () => {
+          pEl.textContent = promptText.slice(0, Math.round(pState.n));
+        } }, s4 + 0.5);
+        up("#rep1", s4 + 3.0, 0.4, 15);
+        up("#rep2", s4 + 3.8, 0.4, 15);
+
+        // SCENE 5 (26.50 - 28.00)
+        const s5 = 26.5;
+        up("#s5-logo", s5 + 0.1, 0.4, 20);
+        up("#s5-tag", s5 + 0.25, 0.4, 20);
+        up("#s5-url", s5 + 0.4, 0.4, 20);
+
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>
