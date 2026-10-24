@@ -22,3 +22,6 @@ harness/brands/*/specimen.*
 .env
 .env.*
 /wesley.m4a
+
+# generated sound-effects stem (rebuilt from src/cues*.json with `cutroom edit sfx --stem-only`)
+examples/*/src/*/assets/sfx.wav

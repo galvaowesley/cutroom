@@ -92,6 +92,16 @@ Then:
 - **Pronunciation:** names, versions and acronyms read badly get a `{"written": "spoken"}` entry, which changes the
   audio only. Check a word before: `voice test narrator "ManimGX 0.1.1"`. For Kokoro, phonemes:
   `cutroom-python -c 'from kokoro_onnx.tokenizer import Tokenizer; print(Tokenizer().phonemize("text", "en-us"))'`.
+  Write each respelling for the language the voice speaks and check it with that language's phonemes (`"pt-br"` for
+  `pf_dora` and `pm_alex`, not `"en-us"`): an English-style respelling such as "esquíls" for "skills" sounds right to
+  the English phonemizer and wrong in Portuguese, where "iskíus" gives the Brazilian reading. A preset voice always
+  speaks its own language (the first letter of its name); only `--lang` overrides it. Foreign names and English
+  terms inside a Portuguese text are where a Brazilian ear hears a foreign accent first: respell them, then listen.
+- **Word times for the picture:** Kokoro gives none. Measure each sentence (`cutroom edit silences`, or the energy
+  envelope), place the sentences on the timeline with natural pauses (0.45 to 0.85 s), and spread the words of a
+  sentence between its measured silences in proportion to their phoneme counts (phonemes of the voice's own language).
+  `harness/cutroom_timing.py` does this (`build(sentences, work_dir, voice=..., pronounce=...)` or the command line),
+  and a composition built from its `timing.json` (`examples/motion-intro-vertical`) cannot drift from the voice.
 - **Cue points** to time scenes: `cutroom edit silences "$J/work/narration.wav"` lists the pauses.
 - **Finishing:** loudness for podcasts and voice-over `cutroom edit loudnorm in.wav -o out.m4a --target -16`; music
   under the voice with ducking `cutroom edit mix --voice narration.wav --music bed.mp3 --duck -o mix.m4a`; a
