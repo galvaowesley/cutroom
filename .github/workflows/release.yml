@@ -1,0 +1,78 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - 'v*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag to release (e.g. v2.0.0)'
+        required: true
+        type: string
+      title:
+        description: 'Release title (defaults to version tag)'
+        required: false
+        type: string
+      prerelease:
+        description: 'Mark as prerelease'
+        required: false
+        type: boolean
+        default: false
+      draft:
+        description: 'Create as draft'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine tag and release title
+        id: vars
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ github.event.inputs.version }}"
+            # Ensure tag starts with v
+            if [[ ! "$TAG" =~ ^v ]]; then
+              TAG="v$TAG"
+            fi
+            TITLE="${{ github.event.inputs.title }}"
+            if [ -z "$TITLE" ]; then
+              TITLE="$TAG"
+            fi
+            # Create tag if it doesn't exist yet
+            if ! git rev-parse "$TAG" >/dev/null 2>&1; then
+              git config user.name "github-actions[bot]"
+              git config user.email "github-actions[bot]@users.noreply.github.com"
+              git tag -a "$TAG" -m "Release $TAG"
+              git push origin "$TAG"
+            fi
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+            TITLE="$TAG"
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "title=$TITLE" >> $GITHUB_OUTPUT
+
+      - name: Generate Release and Notes
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.vars.outputs.tag }}
+          name: ${{ steps.vars.outputs.title }}
+          draft: ${{ github.event.inputs.draft || false }}
+          prerelease: ${{ github.event.inputs.prerelease || false }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
