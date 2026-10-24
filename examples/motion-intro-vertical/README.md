@@ -1,61 +1,42 @@
-# Exemplo: Apresentação Vertical em Português com Narradora Feminina e Logo de Alto Contraste (cutroom-motion / HyperFrames + Kokoro + earshot)
+# Exemplo: Apresentação Vertical em Português do Brasil (cutroom-motion / HyperFrames + Kokoro + earshot)
 
-**Solicitação:** "Segunda versão do vídeo de apresentação na resolução pra celular (9:16 vertical, 1080×1920) em português brasileiro, com cards adaptados para mobile, narração feminina em português (`pf_dora`, preset puro do Kokoro, sem áudio de referência), pronúncia técnica calibrada (incluindo `côuding`), símbolo do logo cutroom visível no último frame e 19 efeitos sonoros procedurais via earshot."
+**Solicitação:** "deixar a fala do vídeo de apresentação na vertical com uma fala mais natural, sem pausas na animação, transições interessantes e modernas, zooms e outros recursos, com cadência; o último frame no ar por mais um tempinho", e depois: "é um português com sotaque americano, eu preciso do português brasileiro".
 
 <p align="center">
-  <a href="out/intro-vertical-pt.mp4"><img src="out/preview.gif" width="450" alt="Assistir intro-vertical-pt.mp4 com narração feminina e efeitos sonoros"></a>
+  <a href="out/intro-vertical-pt.mp4"><img src="out/preview.gif" width="300" alt="Assistir intro-vertical-pt.mp4 com narração e efeitos sonoros"></a>
 </p>
 <p align="center">
-  <a href="out/intro-vertical-pt.mp4"><strong>▶ Assistir &amp; ouvir com áudio (<code>out/intro-vertical-pt.mp4</code> · 27.30 s · 1080×1920 vertical · Narradora pf_dora)</strong></a>
+  <a href="out/intro-vertical-pt.mp4"><strong>▶ Assistir &amp; ouvir com áudio (<code>out/intro-vertical-pt.mp4</code> · 34,4 s · 1080×1920 vertical · pf_dora)</strong></a>
 </p>
 
-[`out/intro-vertical-pt.mp4`](out/intro-vertical-pt.mp4) (27.30 s, 1080x1920 @ 30.0 fps, H.264 + AAC stereo, 2.18 MB) · [`out/sheet.png`](out/sheet.png) (contact sheet vertical) · [`out/sound-sheet.png`](out/sound-sheet.png) (folha de áudio earshot) · [`out/last-frame.png`](out/last-frame.png) (frame final com logo corrigida) · [`out/intro-vertical-pt.srt`](out/intro-vertical-pt.srt) (legendas sincronizadas) · [`src/cues_pt.json`](src/cues_pt.json) (19 cues SFX procedurais) · fonte em [`src/intro/`](src/intro)
+[`out/intro-vertical-pt.mp4`](out/intro-vertical-pt.mp4) (34.4 s, 1080x1920 @ 30 fps, H.264 + AAC, 4.7 MB, -15 LUFS) · [`out/sheet.png`](out/sheet.png) (folha de contato) · [`out/sound-sheet.png`](out/sound-sheet.png) (folha de áudio do earshot) · [`out/last-frame.png`](out/last-frame.png) · [`out/intro-vertical-pt.srt`](out/intro-vertical-pt.srt) · [`src/cues_pt.json`](src/cues_pt.json) (96 cues, gerados por [`src/make_cues_pt.py`](src/make_cues_pt.py)) · [`src/SCRIPT_PT.md`](src/SCRIPT_PT.md) · composição em [`src/intro/`](src/intro)
 
-| Arquivo | Descrição |
-|---|---|
-| [`out/intro-vertical-pt.mp4`](out/intro-vertical-pt.mp4) | Entregável: vídeo vertical de 27.30 s narrado com a **voz feminina `pf_dora`** (preset puro, sem clonagem e sem esticar o áudio), pronúncia fonética calibrada, logo empilhado corrigido e 19 efeitos sonoros do `earshot` (2.18 MB) |
-| [`out/last-frame.png`](out/last-frame.png) | Frame final da Cena 5 demonstrando o **símbolo icônico dos dois arcos** e o wordmark perfeitamente visíveis em Deep Plum (`#16072B`) sobre Hot Signal (`#FF2D6F`) |
-| [`out/preview.gif`](out/preview.gif) | GIF animado de demonstração para visualização rápida no GitHub (280 KB) |
-| [`out/sheet.png`](out/sheet.png) | Folha de contato 4×3 com 12 keyframes verticais ao longo das 5 cenas |
-| [`out/sound-sheet.png`](out/sound-sheet.png) | Espectrograma e curva de sincronia audiovisual gerados via `earshot sheet` |
-| [`out/intro-vertical-pt.srt`](out/intro-vertical-pt.srt) | Legendas em português sincronizadas cena a cena |
-| [`src/SCRIPT_PT.md`](src/SCRIPT_PT.md) | Roteiro oficial de produção em português brasileiro com tabela fonética |
-| [`src/speech_pt.txt`](src/speech_pt.txt) | Texto da fala extraído para síntese local |
-| [`src/pronounce_pt.json`](src/pronounce_pt.json) | Dicionário fonético calibrado para português (incluindo `côuding`, `Câtrum`, `esquíls`, etc.) |
-| [`src/cues_pt.json`](src/cues_pt.json) | 19 marcações de efeitos sonoros calibrados |
-| [`src/intro/index.html`](src/intro/index.html) | Composição HyperFrames 1080×1920 adaptada com stack vertical e animações GSAP |
+## O que mudou nesta versão
 
-## Estrutura Vertical (1080×1920) para Mobile
+- **Português do Brasil de verdade.** O sotaque americano vinha de um erro do harness: um preset como `pf_dora` herdava o idioma da configuração (`en`) e o texto em português passava pelo fonetizador do inglês. Agora o preset fala o idioma da própria voz (`pt-br`), e o dicionário de pronúncia foi reescrito para esse fonetizador (`skills` → "iskíus", `slides` → "eslaides", `motion` → "môuchon", `Cursor` → "Quérsor"). As grafias antigas ("esquíls", "Câtrum") só faziam sentido para o fonetizador do inglês.
+- **Cadência natural.** Sete frases curtas na velocidade nativa (1.0), cada uma sintetizada de uma vez, com os respiros da pontuação dentro da frase e pausas de 0,45 a 0,85 s entre elas (0,75 s depois de "cutroom"). Nada passa por *time-stretch*. Falado como se diz: "pra", "pro", "três dê".
+- **A imagem segue a voz.** Os tempos de cada palavra saem do áudio (`src/timing.py`: silêncios medidos e palavras distribuídas pelo número de fonemas) e a composição é gerada a partir deles (`src/build.py` + `src/intro.template.html`). Se a fala mudar, `timing.py`, `build.py` e `make_cues_pt.py` refazem tempos, animação e sons juntos.
+- **A animação não para.** Cenas sobrepostas, grade deslizando, feed de cartões que sobe sem parar, câmera que aproxima de cada agente, empurrão lento no chat e na tela final. As pausas da voz são cobertas pela imagem.
+- **Transições**: zoom através do anel de ícones e máscara circular (1→2), whip-pan com desfoque (2→3), push vertical com desfoque (3→4), máscara circular rosa (4→5).
+- **Último quadro no ar**: a fala termina em 30,9 s e o vídeo segue até 34,4 s (3,5 s) com aproximação lenta, brilho na URL e o logo em tela.
+- **Mote**: "Toda peça gerada na sua máquina." (sem vírgula, na fala e na tela).
 
-1. **Cena 1: Decks, Diagramas, 3D e Extração (0:00 - 6.00s)**
-   - Stack vertical com 4 cards de capacidades em Night Plum (`#16072B`): barras crescendo (`cutroom-deck`), pulso de sinal de arquitetura (`cutroom-diagram`), gaveta 3D isométrica (`cutroom-iso3d`) e scanner laser de PDF (`cutroom-extract`).
-   - Narração: *"Cutroom. (pausa) Um canivete suíço, com quinze skills para criação de mídia."* (início em 0.40s, pausa de ~0.8s após o nome, término em 5.45s).
-2. **Cena 2: Vídeos, Marcas, Voz e Som (6.00 - 13.50s)**
-   - Fundo Blush Paper (`#FFF7FA`): curva matemática com tangente e leitura viva $f'(x) = 1.25$, timeline multi-faixa GSAP, amostras de paleta de marca e espectrograma dinâmico de 24 barras com 252 sons do `earshot`.
-   - Narração: *"Vídeos de matemática e motion, marcas, voz local em vinte e três idiomas, e efeitos sonoros com earshot."* (início em 6.30s, término em 12.55s).
-3. **Cena 3: 6 Agentes Coding Suportados (13.50 - 20.50s)**
-   - Grid 2×3 com os 6 agentes de coding (Claude Code, Cursor, Codex, Antigravity, Gemini, Kiro) e os 3 pilares de execução: 100% Local, Pinos Travados e Equipes em Paralelo.
-   - Narração: *"Compatível com seis agentes coding: Claude Code, Cursor, Codex, Antigravity, Gemini e Kiro."* (pronúncia calibrada `côuding`, início em 13.80s, término em 19.60s).
-4. **Cena 4: Instalação Descomplicada (20.50 - 26.50s)**
-   - Terminal de chat mobile digitando `Configure https://github.com/galvaowesley/cutroom` com checagens automáticas de sucesso.
-   - Narração: *"Para instalar, envie o link do repositório ao seu agente coding, e deixe ele configurar o cutroom."* (início em 20.70s, término em 26.10s).
-5. **Cena 5: Encerramento de Alto Contraste (26.50 - 28.00s)**
-   - Tela cheia em Hot Signal (`#FF2D6F`) com **logo empilhado oficial (`stacked-contrast.svg`)**, destacando o símbolo dos dois arcos e o wordmark em Deep Plum (`#16072B`), slogan "Toda peça gerada na sua própria máquina" e URL do repositório, com kalimba final e sem sobreposição de fala.
+## Padrão de animação no harness
 
-## Calibração Fonética e Prosódia
+As peças do estilo (anel de ícones com zoom-through, feed de foco, câmera sobre uma grade, digitação, contador, máscara circular, whip-pan, push vertical) estão em [`harness/cutroom_motionkit.js`](../../harness/cutroom_motionkit.js) (cópia em `src/intro/assets/`), e a narração com pausas naturais e tempos por palavra em [`harness/cutroom_timing.py`](../../harness/cutroom_timing.py), para qualquer idioma. O catálogo de padrões, o fluxo e o checklist estão em [`skills/cutroom-motion/references/dynamic-style.md`](../../skills/cutroom-motion/references/dynamic-style.md). Esta composição usa o kit e o render é idêntico ao da versão anterior ao kit (PSNR infinito).
 
-| Termo | Fonética Aplicada | Justificativa |
-|---|---|---|
-| `coding` | `côuding` | Ditongo fechado padrão técnico ("côu-ding"), assertivo |
-| `cutroom` | `Câtrum` | Evita a leitura errônea da vogal "u" em português |
-| `skills` | `esquíls` | Evita o agrupamento consonantal "sk" estranho ao português |
-| `motion` | `mouchon` | Pronúncia natural com som de chiado [ʃ] e nasal [õw̃] |
-| `earshot` | `írchót` | Vogal aberta "ó" para manter a clareza de "shot" |
-| `Claude Code` | `Clóud Coud` | Dicção fluida sem o "de" mudo no final |
-| `Gemini` | `Djémini` | Africada inicial [dʒ] típica de nomes técnicos |
-| `Antigravity` | `Antigráviti` | Prosódia proparoxítona natural |
-| `Kiro` | `Quíro` | Fixação de som oclusivo [k] |
+## Como refazer
 
-## Como a narração foi gerada
+```bash
+cd examples/motion-intro-vertical
+# 1. uma frase por arquivo em work/v4/ (s1.txt ... s7.txt) a partir de src/speech_pt.txt, depois
+tts -f work/v4/s2.txt -o work/v4/v2.wav --voice pf_dora@1.0 --pronounce src/pronounce_pt.json   # e as demais
+python3 src/timing.py          # monta a narração com as pausas e mede os tempos das palavras
+python3 src/build.py           # gera src/intro/index.html
+python3 src/make_cues_pt.py    # cues de som nos mesmos tempos
+cutroom edit loudnorm work/v4/narr_raw.wav -o src/intro/assets/narration.m4a --target -16
+cutroom edit sfx work/v4/narr_raw.wav --cues src/cues_pt.json --stem src/intro/assets/sfx.wav --stem-only -o src/intro/assets/sfx.wav
+cd src/intro && hyperframes render --quality delivery --output ../../out/intro-vertical-pt.mp4
+```
 
-Cada bloco da fala é sintetizado separadamente com o preset `pf_dora` do Kokoro (`tts -f bloco.txt --voice pf_dora --speed 1.0 a 1.08`), sem perfil clonado e sem áudio de referência. Nenhum trecho passa por *time-stretch*: o ritmo vem da velocidade nativa do modelo (0,95 a 1,08) e de textos curtos o bastante para caber em cada cena. Os blocos entram nos tempos da cena com `adelay` (o nome "Cutroom" vem sozinho, com pausa de ~0,8 s antes do restante), são normalizados a -16 LUFS e misturados com o stem de efeitos do earshot.
+Conferência: `hyperframes snapshot`, `cutroom edit sheet` e `earshot sheet --cues` (94% dos cues a menos de 100 ms do evento). A pronúncia dos nomes em inglês segue o dicionário de [`src/pronounce_pt.json`](src/pronounce_pt.json) e foi verificada pelos fonemas, não de ouvido.

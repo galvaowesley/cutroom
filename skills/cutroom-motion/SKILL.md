@@ -73,10 +73,18 @@ rm -f "$J/src/<slug>/CLAUDE.md" "$J/src/<slug>/AGENTS.md"  # they ask to run ski
   - Link `assets/brand/tokens.css` and `assets/brand/fonts.css`. `fonts.css` declares local `@font-face` for every
     weight the brand ships (HyperFrames only embeds a few weights of common families; others would be synthetic).
   - Write `font-family` with the literal name (`'Inter Tight'`): the lint does not expand `var()`.
+- **Dynamic style** (default for explainers, intros, product pieces; skip only if the person wants a static or
+  minimal look): never still, scenes that overlap with a transition between them, one gesture per spoken
+  word, last frame held 3 to 3.5 s. Read `references/dynamic-style.md` in this skill's folder. The pieces are
+  `harness/cutroom_motionkit.js` (`cp ~/.local/share/cutroom/harness/cutroom_motionkit.js "$J/src/<slug>/assets/"`,
+  then `<script src="assets/cutroom_motionkit.js">` after GSAP) and `harness/cutroom_timing.py` (sentence clips with
+  natural pauses and word times, for any language). Worked example: `examples/motion-intro-vertical`.
 - **Narration** (`cutroom-voice`): the audio the composition plays is a source of it, in `$J/src/<slug>/assets/`.
   Generate in `work/` and convert there:
   `tts -f "$J/src/speech.txt" -o "$J/work/narration.wav" --voice narrator && cutroom edit loudnorm "$J/work/narration.wav" -o "$J/src/<slug>/assets/narration.m4a" --target -16`.
-  - Scene timing from the speech: `cutroom edit silences "$J/work/narration.wav"` lists the pauses.
+  - Scene timing from the speech: `cutroom edit silences "$J/work/narration.wav"` lists the pauses. For a piece whose
+    picture follows the voice, use `cutroom_timing.build(...)` instead: it places the sentences with natural pauses and
+    gives the time of every word (`work/timing.json`), which the composition and the sound cues are built from.
   - Word-level captions: `hyperframes transcribe assets/narration.m4a --model small --language <lang>`. Without
     `--model` it uses `small.en`, which translates to English silently. The first run compiles whisper.cpp and
     downloads ~466 MB: warn first.

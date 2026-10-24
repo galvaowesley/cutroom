@@ -1,75 +1,76 @@
-# cutroom em 28 segundos
+# cutroom em 34 segundos
 
 | Field | Value |
 |---|---|
 | Format | product video |
-| Audience | technical (desenvolvedores que usam agentes coding) |
-| Goal | quem assiste vê cada capacidade de mídia em ação, sabe quais agentes são suportados e envia o link do repositório para o seu agente |
-| Key message | Cutroom traz 15 skills de mídia para 6 agentes coding com voz local e 252 efeitos sonoros procedurais configurados pelo link do repositório. |
-| Target duration | 28 s |
-| Voice | pf_dora (Kokoro pt-BR, preset puro, sem referência de áudio) |
+| Audience | technical (desenvolvedores que usam agentes de código) |
+| Goal | quem assiste vê o que o cutroom produz, sabe quais agentes são suportados e manda o link do repositório para o seu agente |
+| Key message | Cutroom traz 15 skills de mídia para 6 agentes de código, com voz local e sons procedurais, instaladas a partir do link do repositório. |
+| Target duration | 34 s |
+| Voice | pf_dora (Kokoro pt-BR, preset puro, sem referência de áudio, velocidade 1.0, fonetizador pt-BR) |
 | Brand | cutroom |
 
 ## Facts
 
 | id | fact | value | source | period |
 |---|---|---|---|---|
-| F1 | skills no repositório | 15 skills | pasta skills/ (4 base + 11 componentes) | v2.0 |
+| F1 | skills no repositório | 15 skills | pasta skills/ | v2.0 |
 | F2 | idiomas de clonagem de voz | 23 idiomas | harness/cutroom_voice.py, CLONE_LANGS | Chatterbox 0.1.7 |
-| F3 | banco de sons procedurais e ajustados | 252 sons | earshot v0.4.0 (forge_v2 + forge04 + fit + pluck) | earshot 0.4.0 |
-| F4 | agentes coding suportados | 6 agentes | install.py (claude, cursor, codex, antigravity, kiro) e cutroom crew (gemini) | v2.0 |
+| F3 | banco de sons | 252 sons | earshot v0.4.0 | earshot 0.4.0 |
+| F4 | agentes de código suportados | 6 agentes | install.py e cutroom crew | v2.0 |
 
 ## Scenes
 
-### 1. Capacidades I: Slides, Diagramas, 3D e Extração · 0:00–0:06.0
+A câmera nunca para: as cenas se sobrepõem e cada troca é uma transição (zoom através dos ícones, máscara circular, whip-pan, push vertical, máscara circular rosa). A fala tem pausas naturais (respiro maior depois de "cutroom", 0,45 a 0,85 s entre frases); a animação segue em movimento durante elas.
 
-- **Goal:** abrir imediatamente mostrando o que o cutroom produz, com miniaturas animadas em formato vertical.
-- **On screen:** cutroom · 15 skills de mídia em código
-- **Speech:** [Cutroom]. (pausa) Um [canivete suíço], com [quinze skills] para criação de mídia.
-- **Visual:** cutroom-motion: 4 cards verticais de capacidades em Night Plum (barras subindo, nós de diagrama com pulso, gaveta 3D isométrica e extração laser de PDF).
+### 1. O nome, o canivete e as 15 skills · 0:00–0:05.9
+
+- **Goal:** apresentar o nome e a ideia de canivete suíço.
+- **On screen:** wordmark, anel de ícones de skills, contador 15, frase em palavras que sobem de uma máscara
+- **Speech:** cutroom. (pausa) Um canivete suíço, com quinze skills, para criação de mídia.
+- **Visual:** cutroom-motion: o wordmark se revela, sobe, os ícones explodem em anel e a câmera atravessa o anel (zoom through) para a cena seguinte.
 - **Facts:** F1
 
-### 2. Capacidades II: Matemática, Motion, Marcas, Voz e Som · 0:06.0–0:13.5
+### 2. O que ele faz · 0:05.0–0:16.7
 
-- **Goal:** demonstrar curvas matemáticas, timeline de motion, paletas de marca, clonagem de voz local e earshot.
-- **On screen:** Matemática, motion, marcas, 23 idiomas e 252 sons
-- **Speech:** [Vídeos de matemática] e [motion], [marcas], voz local em [vinte e três idiomas], e efeitos sonoros com [earshot].
-- **Visual:** cutroom-motion: 4 widgets verticais em Blush Paper (curva cúbica com tangente animada, timeline multi-faixa GSAP, amostras de paleta de marca e espectrograma de 24 barras).
+- **Goal:** mostrar cada capacidade no instante em que é dita.
+- **On screen:** feed vertical de cartões que sobe sem parar; o cartão da vez fica em foco
+- **Speech:** Slides, diagramas, figuras em três dê, e extração de documentos. Vídeos de matemática e motion, marcas, voz local em vinte e três idiomas, e efeitos sonoros.
+- **Visual:** barras e KPI, diagrama com pulso, gaveta isométrica, laser de PDF, tangente numa curva, timeline, paleta, idiomas (23), espectro (252), os nomes das 15 skills.
 - **Facts:** F2, F3
 
-### 3. Compatível com os Principais Agentes Coding · 0:13.5–0:20.5
+### 3. Seis agentes · 0:15.7–0:23.3
 
-- **Goal:** mostrar suporte aos 6 principais agentes coding e a arquitetura local/isolada/paralela em layout vertical.
-- **On screen:** Suporta 6 agentes coding · Local, versionado e em paralelo
-- **Speech:** Totalmente compatível com [seis agentes coding]: [Claude Code], [Cursor], [Codex], [Antigravity], [Gemini] e [Kiro].
-- **Visual:** cutroom-motion: grid vertical com 6 cards de agentes coding (Claude Code, Cursor, Codex, Antigravity, Gemini, Kiro) e 3 pilares de execução (Local, Versionado, Paralelo).
+- **Goal:** nomear os seis agentes com a câmera indo de um a outro.
+- **On screen:** 6 e "agentes de código", grade de seis cartões com a câmera aproximando de cada cartão e voltando à grade inteira
+- **Speech:** Funciona com seis agentes de código: Claude Code, Cursor, Codex, Antigravity, Gemini e Kiro.
+- **Visual:** whip-pan lateral na entrada, zoom da câmera em cada nome, recuo para a grade completa.
 - **Facts:** F4
 
-### 4. Instalação Descomplicada em Um Passo · 0:20.5–0:26.5
+### 4. Instalar · 0:22.2–0:29.0
 
-- **Goal:** demonstrar como a instalação é simples: basta fornecer o link do repositório para o agente coding.
-- **On screen:** Envie o link do repositório para o seu agente coding
-- **Speech:** Para instalar, envie o [link do repositório] ao seu agente coding, e deixe ele [configurar o cutroom].
-- **Visual:** cutroom-motion: terminal de chat mobile digitando "Configure https://github.com/galvaowesley/cutroom" com badges de sucesso animados.
+- **Goal:** mostrar que basta mandar o link.
+- **On screen:** "Só mande o link", janela de chat que se endireita, texto digitado, progresso e respostas
+- **Speech:** Pra instalar, é só mandar o link do repositório pro seu agente, e deixar ele configurar tudo.
+- **Visual:** push vertical na entrada, empurrão lento da câmera durante toda a cena.
 
-### 5. Encerramento · 0:26.5–0:28.0
+### 5. Encerramento · 0:28.1–0:34.4
 
-- **Goal:** fixar a URL do repositório e o posicionamento da marca com o card final de alto contraste.
-- **On screen:** github.com/galvaowesley/cutroom · Toda peça gerada na sua máquina
-- **Speech:** —
-- **Visual:** cutroom-motion: tela cheia Hot Signal (#FF2D6F) com wordmark cutroom, slogan e URL do repositório.
+- **Goal:** fixar a marca e a URL; o último quadro fica no ar por 3,5 s após a fala.
+- **On screen:** logo empilhado, "Toda peça gerada na sua máquina.", github.com/galvaowesley/cutroom
+- **Speech:** cutroom. Toda peça gerada na sua máquina.
+- **Visual:** máscara circular rosa, logo revelado de baixo para cima, brilho percorrendo a URL e aproximação lenta até o fim.
 
 ## Pronunciation
 
 | written | spoken |
 |---|---|
-| cutroom | Câtrum |
-| skills | esquíls |
-| motion | mouchon |
-| earshot | írchót |
-| coding | côuding |
-| Claude Code | Clóud Coud |
-| Cursor | Cúrsor |
+| cutroom | Cátrum |
+| skills | iskíus |
+| slides | eslaides |
+| motion | môuchon |
+| Claude Code | Clod Côud |
+| Cursor | Quérsor |
 | Codex | Côdex |
 | Antigravity | Antigráviti |
 | Gemini | Djémini |

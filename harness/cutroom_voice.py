@@ -16,6 +16,7 @@ Manage voices (shortcut `voice`, also `cutroom voice ...`):
             [--ref-text "what the sample says"] [--exaggeration 0.5] [--cfg 0.5] [--default]
                                            clone a voice from 10 to 20 s of clean speech (Chatterbox, local)
   voice test NAME|SPEC ["text"] [-o file]  speak a test sentence with a voice
+  voice phonemes NAME|SPEC "text" [--lang]  how the voice's own phonemizer reads each word (check a respelling)
   voice show NAME | voice default NAME [--lang pt-BR] | voice remove NAME
 
 Voice spec, accepted anywhere a voice is asked (--voice, the "Voice" row of SCRIPT.md, manimgx_voice(voice=...)):
@@ -232,7 +233,9 @@ def resolve(spec=None, lang=None, speed=None, pronounce=None):
     elif spec.startswith("clone:"):
         raise SystemExit(f"no cloned voice named {name!r}: create it with `voice clone {name} --ref ...`")
     else:
-        v, spec_speed = parse_spec(spec, lang)
+        # a preset speaks its own language (pf_dora is Brazilian Portuguese) unless --lang says otherwise; the config
+        # language only picks the default voice above, it must not turn a pt-BR voice into an English phonemizer
+        v, spec_speed = parse_spec(spec, explicit_lang)
         if spec_speed is None and cfg_voice.get("speed"):
             v.speed = cfg_voice["speed"]
     if speed:
@@ -270,6 +273,16 @@ def wav_bytes(samples, rate):
     return buf.getvalue()
 
 
+def kokoro_lang(v):
+    """The phonemizer language Kokoro uses for this voice (what `voice phonemes` shows)."""
+    return v.lang if v.lang in KOKORO_LANG.values() else {"en": "en-us", "pt": "pt-br", "fr": "fr-fr",
+                                                          "zh": "cmn"}.get(base_lang(v.lang), lang_key(v.lang))
+
+
+def describe_voice(v):
+    return v.describe().split(" (")[0]
+
+
 def kokoro_synth(v, text):
     k = kokoro()
     if isinstance(v.voice, str):
@@ -278,8 +291,11 @@ def kokoro_synth(v, text):
         import numpy as np
         total = sum(w for _, w in v.voice) or 1
         style = sum(k.get_voice_style(n) * (w / total) for n, w in v.voice).astype(np.float32)
-    lang = v.lang if v.lang in KOKORO_LANG.values() else {"en": "en-us", "pt": "pt-br", "fr": "fr-fr",
-                                                          "zh": "cmn"}.get(base_lang(v.lang), lang_key(v.lang))
+    lang = kokoro_lang(v)
+    own = KOKORO_LANG.get((v.voice if isinstance(v.voice, str) else v.voice[0][0])[0])
+    if own and own.split("-")[0] != lang.split("-")[0]:
+        print(f"! {describe_voice(v)} is a {own} voice but the text is read as {lang}: expect a foreign accent. "
+              f"Drop --lang, or pass --lang {own}", file=sys.stderr)
     samples, rate = k.create(text, voice=style, speed=v.speed, lang=lang)
     return wav_bytes(samples, rate)
 
@@ -496,6 +512,7 @@ def cmd_manage(argv):
     s.add_argument("--pronounce"); s.add_argument("--default", action="store_true")
     s = sub.add_parser("test"); s.add_argument("name"); s.add_argument("text", nargs="?"); s.add_argument("-o", "--output")
     s.add_argument("--lang")
+    s = sub.add_parser("phonemes"); s.add_argument("voice"); s.add_argument("text"); s.add_argument("--lang")
     s = sub.add_parser("show"); s.add_argument("name")
     s = sub.add_parser("default"); s.add_argument("name"); s.add_argument("--lang", help="default for this language only")
     s = sub.add_parser("remove"); s.add_argument("name")
@@ -575,6 +592,16 @@ def cmd_manage(argv):
         text = a.text or SAMPLE.get(base_lang(v.lang), SAMPLE["en"])
         out = write_audio(synth_voice(v, text), a.output or f"voice-test-{a.name.replace('*', 'x').replace('+', '_')}.wav")
         print(f"{out} · {duration(out):.2f} s · {v.describe()}")
+    elif a.cmd == "phonemes":
+        v = resolve(a.voice, a.lang)
+        if v.engine != "kokoro":
+            raise SystemExit("phonemes are shown for Kokoro voices; a cloned voice is not phonemized here")
+        from kokoro_onnx.tokenizer import Tokenizer
+        lang = kokoro_lang(v)
+        tk = Tokenizer()
+        print(f"{describe_voice(v)} · phonemizer {lang}")
+        for w in a.text.split():
+            print(f"  {w:<22} {tk.phonemize(w, lang)}")
     elif a.cmd == "show":
         p = load_profile(a.name)
         print(json.dumps(p, indent=2, ensure_ascii=False) if p else resolve(a.name).describe())
