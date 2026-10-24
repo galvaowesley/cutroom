@@ -1,0 +1,18 @@
+{
+  "engine": "chatterbox",
+  "reference": "reference.wav",
+  "reference_seconds": 9.56,
+  "reference_text": "Every piece of media starts with a script...",
+  "lang": "pt",
+  "speed": 1.0,
+  "exaggeration": 0.5,
+  "cfg_weight": 0.5,
+  "consent": {
+    "speaker": "Kokoro preset bm_george (synthetic voice, no real person)",
+    "statement": "synthetic reference generated locally for the cutroom example; no human speaker",
+    "recorded": "2026-10-23"
+  },
+  "note": "cloned from ref.wav",
+  "name": "george-synth",
+  "updated": "2026-10-23"
+}

@@ -1,0 +1,23 @@
+[project]
+name = "cutroom-extract"
+version = "1.0.0"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "docling==2.141.0",
+    "docling-mcp[local]==3.3.0",
+    # Direct deps only so the index below applies: on Linux they come from the CPU build (no CUDA).
+    "torch",
+    "torchvision",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+torchvision = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true

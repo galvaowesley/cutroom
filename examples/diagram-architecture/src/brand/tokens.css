@@ -1,0 +1,40 @@
+/* Generated from brand.json by `cutroom brand build`. Edit brand.json, not this file. */
+:root {
+  --primary: #FF2D6F;
+  --deep: #16072B;
+  --accent: #FFC43D;
+  --accent-soft: #FF9BC0;
+  --tint: #FFE9F0;
+  --background: #FFFFFF;
+  --surface: #FFF7FA;
+  --on-primary: #16072B;
+  --text: #16072B;
+  --text-muted: #55466B;
+  --border: #F2DDE6;
+  --success: #17784C;
+  --success-bg: #E3F4EB;
+  --warning: #7D5200;
+  --warning-bg: #FFF3D6;
+  --danger: #B42A36;
+  --danger-bg: #FBE5E7;
+  --info: #2563EB;
+  --on-deep: #FFFFFF;
+  --scale-0: #FFE9F0;
+  --scale-1: #FFC9DA;
+  --scale-2: #FF9BBC;
+  --scale-3: #FF6E9C;
+  --scale-4: #FF4A83;
+  --scale-5: #FF2D6F;
+  --n100: #F7F3F7;
+  --n200: #EDE4EC;
+  --n300: #D4C7D6;
+  --n500: #7E7088;
+  --n700: #433655;
+  --n900: #16072B;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-text: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono NL', monospace;
+  --radius: 16px;
+  --ease: cubic-bezier(.2,.8,.2,1);
+  --duration: 450ms;
+}

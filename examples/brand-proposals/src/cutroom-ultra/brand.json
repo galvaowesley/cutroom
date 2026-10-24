@@ -1,0 +1,245 @@
+{
+  "name": "cutroom-ultra",
+  "display_name": "cutroom",
+  "description": "Proposal C · Ultra Volt",
+  "language": "en",
+  "colors": {
+    "primary": "#1F4BFF",
+    "deep": "#050A1F",
+    "accent": "#FF6A13",
+    "accent_soft": "#8FA6FF",
+    "tint": "#E9EEFF",
+    "background": "#FFFFFF",
+    "surface": "#F6F8FF",
+    "on_primary": "#FFFFFF",
+    "text": "#050A1F",
+    "text_muted": "#475170",
+    "border": "#DEE4F5",
+    "success": "#17784C",
+    "success_bg": "#E3F4EB",
+    "warning": "#7D5200",
+    "warning_bg": "#FFF3D6",
+    "danger": "#B42A36",
+    "danger_bg": "#FBE5E7",
+    "info": "#2563EB",
+    "scale": [
+      "#E9EEFF",
+      "#C9D4FF",
+      "#9AAEFF",
+      "#6B87FF",
+      "#4366FF",
+      "#1F4BFF"
+    ],
+    "neutral": {
+      "100": "#F2F4F9",
+      "200": "#DEE4F5",
+      "300": "#C3CBE0",
+      "500": "#6F7894",
+      "700": "#363F5C",
+      "900": "#050A1F"
+    }
+  },
+  "fonts": {
+    "display": "Space Grotesk",
+    "text": "Inter",
+    "mono": "JetBrains Mono NL",
+    "files": [
+      {
+        "family": "Inter",
+        "weight": "400",
+        "style": "normal",
+        "file": "fonts/Inter-400.ttf"
+      },
+      {
+        "family": "Inter",
+        "weight": "600",
+        "style": "normal",
+        "file": "fonts/Inter-600.ttf"
+      },
+      {
+        "family": "JetBrains Mono NL",
+        "weight": "400",
+        "style": "normal",
+        "file": "fonts/JetBrainsMonoNL-Regular.ttf"
+      },
+      {
+        "family": "JetBrains Mono NL",
+        "weight": "700",
+        "style": "normal",
+        "file": "fonts/JetBrainsMonoNL-Bold.ttf"
+      },
+      {
+        "family": "Space Grotesk",
+        "weight": "300",
+        "style": "normal",
+        "file": "fonts/SpaceGrotesk-300.ttf"
+      },
+      {
+        "family": "Space Grotesk",
+        "weight": "500",
+        "style": "normal",
+        "file": "fonts/SpaceGrotesk-500.ttf"
+      },
+      {
+        "family": "Space Grotesk",
+        "weight": "700",
+        "style": "normal",
+        "file": "fonts/SpaceGrotesk-700.ttf"
+      }
+    ],
+    "licenses": [
+      "fonts/OFL-Inter.txt",
+      "fonts/OFL-JetBrainsMono.txt",
+      "fonts/OFL-SpaceGrotesk.txt"
+    ]
+  },
+  "logos": {
+    "on_primary": "logos/wordmark-light.svg",
+    "on_light": "logos/wordmark.svg",
+    "symbol_on_primary": "logos/symbol-light.svg",
+    "symbol_on_light": "logos/symbol.svg",
+    "stacked": "logos/stacked.svg",
+    "app_icon": "logos/app-icon.svg",
+    "mono": "logos/mono.svg"
+  },
+  "shape": {
+    "radius": 16
+  },
+  "motion": {
+    "ease": "cubic-bezier(.2,.8,.2,1)",
+    "duration_ms": 450
+  },
+  "cover": {
+    "glow": true
+  },
+  "narration": {
+    "en": "af_heart",
+    "pt-BR": "pf_dora"
+  },
+  "tagline": "Every piece, cut on your machine.",
+  "palette": [
+    {
+      "token": "deep",
+      "name": "Deep Space",
+      "use": "Code, verdicts, dark video",
+      "share": 0.4
+    },
+    {
+      "token": "primary",
+      "name": "Ultramarine",
+      "use": "The brand: marks, actions, big numbers",
+      "share": 0.22
+    },
+    {
+      "token": "accent",
+      "name": "Volt Orange",
+      "use": "The one highlight per frame",
+      "share": 0.06
+    },
+    {
+      "token": "surface",
+      "name": "Paper",
+      "use": "Pages and cards",
+      "share": 0.26
+    },
+    {
+      "token": "text_muted",
+      "name": "Slate",
+      "use": "Supporting text",
+      "share": 0.06
+    }
+  ],
+  "book": {
+    "version": "1.0",
+    "date": "October 2026",
+    "eyebrow": "Brand proposal C",
+    "headlines": {
+      "logo": "A c spliced like a take.",
+      "color": "Ultra Volt: young, loud, local.",
+      "icons": "Thin line, round joins, one bright cue.",
+      "applications": "The brand, day to day."
+    },
+    "icon_grid": "24 x 24 grid · 1.75 px stroke · coral cue dot"
+  },
+  "contact": {
+    "name": "cutroom",
+    "role": "Open-source media studio for coding agents",
+    "email": "github.com/galvaowesley/cutroom",
+    "phone": "MIT license",
+    "site": "install.py · /cutroom-init"
+  },
+  "icons": [
+    {
+      "name": "video",
+      "label": "Video",
+      "note": "Renders and cuts",
+      "file": "icons/video.svg"
+    },
+    {
+      "name": "voice",
+      "label": "Voice",
+      "note": "Narration and clones",
+      "file": "icons/voice.svg"
+    },
+    {
+      "name": "deck",
+      "label": "Decks",
+      "note": "16:9 PDF decks",
+      "file": "icons/deck.svg"
+    },
+    {
+      "name": "diagram",
+      "label": "Diagrams",
+      "note": "Architecture, flows",
+      "file": "icons/diagram.svg"
+    },
+    {
+      "name": "figure",
+      "label": "Figures",
+      "note": "Isometric explainers",
+      "file": "icons/figure.svg"
+    },
+    {
+      "name": "graphic",
+      "label": "Graphics",
+      "note": "Posts, posters, thumbnails",
+      "file": "icons/graphic.svg"
+    },
+    {
+      "name": "edit",
+      "label": "Editing",
+      "note": "Trim, mix, reframe",
+      "file": "icons/edit.svg"
+    },
+    {
+      "name": "brand",
+      "label": "Brand",
+      "note": "Design systems",
+      "file": "icons/brand.svg"
+    },
+    {
+      "name": "script",
+      "label": "Scripts",
+      "note": "Facts and scenes",
+      "file": "icons/script.svg"
+    },
+    {
+      "name": "extract",
+      "label": "Documents",
+      "note": "PDF to Markdown",
+      "file": "icons/extract.svg"
+    },
+    {
+      "name": "math",
+      "label": "Math",
+      "note": "Formulas in motion",
+      "file": "icons/math.svg"
+    },
+    {
+      "name": "motion",
+      "label": "Motion",
+      "note": "HTML to video",
+      "file": "icons/motion.svg"
+    }
+  ]
+}

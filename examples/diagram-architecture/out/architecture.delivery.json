@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "b8194e12-1b6b-44f7-b9bc-def615c51333",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/wesleygalvao/repositories/cutroom/examples/diagram-architecture/src/candidate.json",
+  "output": "/Users/wesleygalvao/repositories/cutroom/examples/diagram-architecture/out/architecture.html",
+  "specification": {
+    "sha256": "86f0176eab5b78d028db73c211b689b22d09d7533ff35e2c36f5633ddea60ea0",
+    "bytes": 11266
+  },
+  "artifact": {
+    "sha256": "e4cebc8dfa891241634332a37a4b89ae16fd7cc10aa08c0058a91a51622b2229",
+    "bytes": 875862
+  }
+}

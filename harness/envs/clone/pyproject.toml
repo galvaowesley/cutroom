@@ -1,0 +1,24 @@
+[project]
+name = "cutroom-clone"
+version = "1.0.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "chatterbox-tts==0.1.7",
+    "soundfile>=0.13",
+    "setuptools<81",  # resemble-perth (the watermark) imports pkg_resources
+    # Direct deps only so the index below applies: on Linux they come from the CPU build (no CUDA).
+    "torch",
+    "torchaudio",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+torch = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+torchaudio = [{ index = "pytorch-cpu", marker = "sys_platform == 'linux'" }]
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true

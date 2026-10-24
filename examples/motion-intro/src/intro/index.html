@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>cutroom in 30 seconds</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="assets/brand/tokens.css" />
+    <link rel="stylesheet" href="assets/brand/fonts.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #16072b; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: "Inter", sans-serif; }
+      .scene { position: absolute; inset: 0; overflow: hidden; }
+      .pad { position: absolute; inset: 0; padding: 120px 140px; display: flex; flex-direction: column; justify-content: center; }
+      .eyebrow { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 28px; letter-spacing: 0.12em; text-transform: uppercase; }
+      .big { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 128px; line-height: 0.98; letter-spacing: -0.03em; }
+      .mid { font-family: "Bricolage Grotesque"; font-weight: 600; font-size: 60px; line-height: 1.1; letter-spacing: -0.02em; }
+
+      /* 1 · title on hot pink, plum type */
+      #s1 { background: #ff2d6f; color: #16072b; }
+      #s1-logo { height: 210px; width: auto; display: block; }
+      #s1-tag { margin-top: 56px; display: flex; flex-wrap: wrap; gap: 0 18px; max-width: 1400px; }
+      #s1-tag span { display: inline-block; }
+      #s1-dot { position: absolute; right: 180px; bottom: 150px; width: 150px; height: 150px; border-radius: 50%; background: #ffc43d; }
+
+      /* 2 · agents on night plum */
+      #s2 { background: #16072b; color: #ffffff; }
+      #s2 .eyebrow { color: #ff9bc0; }
+      #s2-title span { color: #ff2d6f; }
+      #s2-chips { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 64px; }
+      .chip { font-family: "Bricolage Grotesque"; font-weight: 600; font-size: 46px; padding: 22px 38px; border-radius: 999px; border: 3px solid #ff9bc0; color: #ffffff; }
+      #s2-cue { position: absolute; left: 140px; bottom: 140px; width: 1640px; height: 10px; border-radius: 5px; background: #ffc43d; transform-origin: 0 50%; }
+
+      /* 3 · skills grid on blush */
+      #s3 { background: #fff7fa; color: #16072b; }
+      #s3 .eyebrow { color: #ff2d6f; }
+      #s3-title b { color: #ff2d6f; font-weight: 700; }
+      #s3-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; margin-top: 60px; }
+      .tile { background: #ffffff; border: 2px solid #f2dde6; border-radius: 22px; padding: 26px 30px; display: flex; align-items: center; gap: 24px; }
+      .tile .ic { width: 84px; height: 84px; border-radius: 18px; background: #ffe9f0; display: grid; place-items: center; }
+      .tile .ic img { width: 56px; height: 56px; }
+      .tile b { font-family: "Bricolage Grotesque"; font-weight: 600; font-size: 38px; }
+
+      /* 4 · brand and voice on night plum */
+      #s4 { background: #16072b; color: #ffffff; }
+      #s4-left { position: absolute; left: 140px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; gap: 28px; }
+      #s4-voice { color: #ffc43d; }
+      #s4-card { position: absolute; right: 140px; top: 210px; width: 760px; height: 420px; border-radius: 28px; overflow: hidden; box-shadow: 0 0 0 4px #ff9bc0; }
+      .pal { position: absolute; inset: 0; display: grid; grid-template-columns: 1.5fr 1fr 0.6fr 1.2fr; }
+      #s4-wave { position: absolute; right: 140px; bottom: 170px; width: 760px; height: 150px; display: flex; align-items: center; gap: 10px; }
+      #s4-wave i { flex: 1; height: 20px; border-radius: 8px; background: #ff9bc0; display: block; }
+
+      /* 5 · local, pinned, parallel on blush */
+      #s5 { background: #fff7fa; color: #16072b; }
+      .row { display: flex; align-items: baseline; gap: 40px; padding: 34px 0; border-top: 2px solid #f2dde6; }
+      .row:last-child { border-bottom: 2px solid #f2dde6; }
+      .row b { font-family: "Bricolage Grotesque"; font-weight: 700; font-size: 96px; letter-spacing: -0.03em; width: 560px; color: #16072b; }
+      .row span { font-size: 40px; color: #55466b; }
+
+      /* 6 · call to action on hot pink */
+      #s6 { background: #ff2d6f; color: #16072b; }
+      #s6-term { width: 1280px; background: #16072b; border-radius: 26px; padding: 54px 64px; font-family: "JetBrains Mono NL", monospace; font-size: 52px; line-height: 1.6; color: #ffffff; }
+      #s6-term .p { color: #ff9bc0; }
+      #s6-term .c { display: inline-block; width: 26px; height: 56px; background: #ffc43d; vertical-align: -10px; margin-left: 6px; }
+      #s6-end { position: absolute; inset: 0; background: #ff2d6f; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; }
+      #s6-end img { height: 190px; width: auto; }
+      #s6-end p { font-family: "Bricolage Grotesque"; font-weight: 600; font-size: 46px; color: #16072b; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="30" data-width="1920" data-height="1080">
+      <div id="s1" class="scene clip" data-start="0" data-duration="3.24" data-track-index="1">
+        <div class="pad">
+          <img id="s1-logo" src="assets/brand/logos/wordmark-light.svg" alt="cutroom" />
+          <div id="s1-tag" class="mid"><span>Media</span><span>for</span><span>coding</span><span>agents,</span><span>made</span><span>on</span><span>your</span><span>machine.</span></div>
+        </div>
+        <div id="s1-dot"></div>
+      </div>
+
+      <div id="s2" class="scene clip" data-start="3.24" data-duration="4.24" data-track-index="1">
+        <div class="pad">
+          <p class="eyebrow">Where it runs</p>
+          <p id="s2-title" class="big">Runs in <span>5</span> agents</p>
+          <div id="s2-chips"><span class="chip">Claude Code</span><span class="chip">Codex</span><span class="chip">Antigravity</span><span class="chip">Gemini CLI</span><span class="chip">Kiro</span></div>
+        </div>
+        <div id="s2-cue"></div>
+      </div>
+
+      <div id="s3" class="scene clip" data-start="7.48" data-duration="7.18" data-track-index="1">
+        <div class="pad">
+          <p class="eyebrow">What it makes</p>
+          <p id="s3-title" class="mid"><b>14 skills</b>, one folder per piece</p>
+          <div id="s3-grid">
+            <div class="tile"><span class="ic"><img src="assets/brand/icons/deck.svg" /></span><b>Decks</b></div>
+            <div class="tile"><span class="ic"><img src="assets/brand/icons/diagram.svg" /></span><b>Diagrams</b></div>
+            <div class="tile"><span class="ic"><img src="assets/brand/icons/figure.svg" /></span><b>Figures</b></div>
+            <div class="tile"><span class="ic"><img src="assets/brand/icons/math.svg" /></span><b>Math</b></div>
+            <div class="tile"><span class="ic"><img src="assets/brand/icons/motion.svg" /></span><b>Motion</b></div>
+            <div class="tile"><span class="ic"><img src="assets/brand/icons/voice.svg" /></span><b>Voice</b></div>
+            <div class="tile"><span class="ic"><img src="assets/brand/icons/graphic.svg" /></span><b>Graphics</b></div>
+            <div class="tile"><span class="ic"><img src="assets/brand/icons/edit.svg" /></span><b>Edits</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="s4" class="scene clip" data-start="14.66" data-duration="4.74" data-track-index="1">
+        <div id="s4-left">
+          <p class="big" id="s4-brand">Your brand.</p>
+          <p class="big" id="s4-voice">Your voice.</p>
+        </div>
+        <div id="s4-card">
+          <div class="pal" id="pal-a"><i style="background:#16072b"></i><i style="background:#ff2d6f"></i><i style="background:#ffc43d"></i><i style="background:#fff7fa"></i></div>
+          <div class="pal" id="pal-b"><i style="background:#0c0a1d"></i><i style="background:#5b2eff"></i><i style="background:#c5ff3d"></i><i style="background:#f7f5ff"></i></div>
+          <div class="pal" id="pal-c"><i style="background:#050a1f"></i><i style="background:#1f4bff"></i><i style="background:#ff6a13"></i><i style="background:#f6f8ff"></i></div>
+        </div>
+        <div id="s4-wave"></div>
+      </div>
+
+      <div id="s5" class="scene clip" data-start="19.4" data-duration="5.25" data-track-index="1">
+        <div class="pad">
+          <div class="row" id="r1"><b>Local</b><span>nothing leaves the machine</span></div>
+          <div class="row" id="r2"><b>Pinned</b><span>every version locked</span></div>
+          <div class="row" id="r3"><b>Parallel</b><span>agents from different providers, at once</span></div>
+        </div>
+      </div>
+
+      <div id="s6" class="scene clip" data-start="24.65" data-duration="5.35" data-track-index="1">
+        <div class="pad" style="align-items: center">
+          <div id="s6-term">
+            <div><span class="p">$ </span><span id="t1"></span></div>
+            <div><span class="p">› </span><span id="t2"></span><span class="c" id="caret"></span></div>
+          </div>
+        </div>
+        <div id="s6-end">
+          <img src="assets/brand/logos/wordmark-light.svg" alt="cutroom" />
+          <p>github.com/galvaowesley/cutroom</p>
+        </div>
+      </div>
+
+      <audio id="narration" src="assets/narration.m4a" data-start="0" data-track-index="10" data-volume="1"></audio>
+    </div>
+
+    <script>
+      (function () {
+        // Brand easing cubic-bezier(.2,.8,.2,1), solved deterministically.
+        function bezier(p1x, p1y, p2x, p2y) {
+          const cx = 3 * p1x, bx = 3 * (p2x - p1x) - cx, ax = 1 - cx - bx;
+          const cy = 3 * p1y, by = 3 * (p2y - p1y) - cy, ay = 1 - cy - by;
+          const sx = (t) => ((ax * t + bx) * t + cx) * t, sy = (t) => ((ay * t + by) * t + cy) * t;
+          return (x) => {
+            if (x <= 0) return 0;
+            if (x >= 1) return 1;
+            let lo = 0, hi = 1, t = x;
+            for (let i = 0; i < 40; i++) { if (sx(t) < x) lo = t; else hi = t; t = (lo + hi) / 2; }
+            return sy(t);
+          };
+        }
+        const E = bezier(0.2, 0.8, 0.2, 1);
+        const tl = gsap.timeline({ paused: true });
+        const up = (el, at, d = 0.45, y = 28) => tl.fromTo(el, { opacity: 0, y }, { opacity: 1, y: 0, duration: d, ease: E }, at);
+
+        // 1 · "cutroom. Media for coding agents, made on your machine."
+        tl.fromTo("#s1-logo", { clipPath: "inset(0 100% 0 0)" }, { clipPath: "inset(0 0% 0 0)", duration: 0.55, ease: E }, 0.05);
+        gsap.utils.toArray("#s1-tag span").forEach((el, i) => up(el, 0.75 + i * 0.22, 0.35, 18));
+        tl.fromTo("#s1-dot", { scale: 0 }, { scale: 1, duration: 0.45, ease: E }, 1.1);
+
+        // 2 · "It works in Claude Code, Codex, Antigravity, Gemini and Kiro."
+        const s2 = 3.24;
+        up("#s2 .eyebrow", s2 + 0.05);
+        up("#s2-title", s2 + 0.15, 0.5, 40);
+        [0.75, 1.55, 2.05, 2.8, 3.45].forEach((t, i) => up(`#s2-chips .chip:nth-child(${i + 1})`, s2 + t, 0.35, 22));
+        tl.fromTo("#s2-cue", { scaleX: 0 }, { scaleX: 1, duration: 3.6, ease: "none" }, s2 + 0.3);
+
+        // 3 · "Decks, diagrams, figures, math videos, motion, voice, graphics and edits. Fourteen skills, one folder per piece."
+        const s3 = 7.48;
+        up("#s3 .eyebrow", s3 + 0.05);
+        up("#s3-title", s3 + 0.1, 0.5, 30);
+        [0.2, 0.75, 1.3, 1.85, 2.55, 3.0, 3.5, 4.15].forEach((t, i) => up(`#s3-grid .tile:nth-child(${i + 1})`, s3 + t, 0.4, 30));
+        tl.fromTo("#s3-title b", { scale: 1 }, { scale: 1.06, duration: 0.25, ease: E, yoyo: true, repeat: 1, transformOrigin: "0 50%" }, s3 + 5.05);
+
+        // 4 · "Bring your brand, or build one. Your voice too: with consent, it clones locally."
+        const s4 = 14.66;
+        up("#s4-brand", s4 + 0.05, 0.5, 40);
+        tl.fromTo("#s4-card", { opacity: 0, x: 60 }, { opacity: 1, x: 0, duration: 0.5, ease: E }, s4 + 0.15);
+        tl.set("#pal-b", { opacity: 0 }, s4).set("#pal-c", { opacity: 0 }, s4);
+        tl.fromTo("#pal-b", { clipPath: "inset(0 0 0 100%)", opacity: 1 }, { clipPath: "inset(0 0 0 0%)", duration: 0.35, ease: E }, s4 + 0.9);
+        tl.fromTo("#pal-c", { clipPath: "inset(0 0 0 100%)", opacity: 1 }, { clipPath: "inset(0 0 0 0%)", duration: 0.35, ease: E }, s4 + 1.4);
+        tl.fromTo("#pal-c", { clipPath: "inset(0 0 0 0%)" }, { clipPath: "inset(0 100% 0 0)", duration: 0.35, ease: E }, s4 + 1.95);
+        tl.fromTo("#pal-b", { clipPath: "inset(0 0 0 0%)" }, { clipPath: "inset(0 100% 0 0)", duration: 0.35, ease: E }, s4 + 2.15);
+        up("#s4-voice", s4 + 1.9, 0.5, 40);
+        const wave = document.querySelector("#s4-wave");
+        const bars = [];
+        for (let i = 0; i < 36; i++) { const b = document.createElement("i"); wave.appendChild(b); bars.push(b); }
+        tl.fromTo("#s4-wave", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: E }, s4 + 1.95);
+        const w = { p: 0 };
+        tl.to(w, { p: 1, duration: 2.7, ease: "none", onUpdate: () => {
+          bars.forEach((b, i) => {
+            const v = Math.abs(Math.sin(i * 0.55 + w.p * 18)) * Math.abs(Math.sin(i * 0.17 + w.p * 7));
+            b.style.height = (18 + v * 130).toFixed(1) + "px";
+            b.style.background = i === Math.floor(w.p * 36) ? "#ffc43d" : "#ff9bc0";
+          });
+        } }, s4 + 1.95);
+
+        // 5 · "Nothing leaves the machine, and every version is pinned. Agents can even work in parallel."
+        const s5 = 19.4;
+        [0.1, 1.6, 3.35].forEach((t, i) => up(`#r${i + 1}`, s5 + t, 0.45, 26));
+        [0.1, 1.6, 3.35].forEach((t, i) => tl.fromTo(`#r${i + 1} b`, { color: "#16072b" }, { color: "#ff2d6f", duration: 0.3, ease: E }, s5 + t + 0.35));
+
+        // 6 · "Start with install dot py. Then, cutroom init."
+        const s6 = 24.65;
+        tl.fromTo("#s6-term", { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.45, ease: E }, s6 + 0.05);
+        const type = (sel, text, at, cps = 16) => {
+          const el = document.querySelector(sel), st = { n: 0 };
+          tl.to(st, { n: text.length, duration: text.length / cps, ease: "none", onUpdate: () => { el.textContent = text.slice(0, Math.round(st.n)); } }, at);
+        };
+        type("#t1", "python3 install.py", s6 + 0.4);
+        type("#t2", "/cutroom-init", s6 + 2.35);
+        tl.fromTo("#s6-end", { clipPath: "circle(0% at 50% 50%)" }, { clipPath: "circle(75% at 50% 50%)", duration: 0.6, ease: E }, s6 + 3.85);
+
+        window.__timelines["main"] = tl;
+      })();
+    </script>
+  </body>
+</html>
