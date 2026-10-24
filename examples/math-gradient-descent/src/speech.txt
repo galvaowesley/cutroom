@@ -1,0 +1,7 @@
+How does AI find the best weights out of billions? It slides down a loss landscape.
+
+At any point, the tangent slope gives the gradient. It points steepest uphill, so we step in reverse.
+
+Scaled by the learning rate eta, each gradient step descends toward the minimum.
+
+Where the curve flattens, the gradient vanishes to zero. The descent converges, locking into optimal weights.

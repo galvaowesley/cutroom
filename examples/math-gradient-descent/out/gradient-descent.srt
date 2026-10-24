@@ -1,0 +1,52 @@
+1
+00:00:00,050 --> 00:00:02,200
+How does AI find the best weights out of
+
+2
+00:00:02,200 --> 00:00:02,672
+billions?
+
+3
+00:00:02,987 --> 00:00:04,665
+It slides down a loss landscape.
+
+4
+00:00:05,117 --> 00:00:07,450
+At any point, the tangent slope gives the
+
+5
+00:00:07,450 --> 00:00:07,927
+gradient.
+
+6
+00:00:08,245 --> 00:00:10,525
+It points steepest uphill, so we step in
+
+7
+00:00:10,525 --> 00:00:10,949
+reverse.
+
+8
+00:00:11,379 --> 00:00:13,452
+Scaled by the learning rate eta, each
+
+9
+00:00:13,452 --> 00:00:15,628
+gradient step descends toward the minimum.
+
+10
+00:00:17,838 --> 00:00:20,099
+Where the curve flattens, the gradient
+
+11
+00:00:20,099 --> 00:00:21,037
+vanishes to zero.
+
+12
+00:00:21,368 --> 00:00:23,464
+The descent converges, locking into
+
+13
+00:00:23,464 --> 00:00:24,347
+optimal weights.
+

@@ -1,0 +1,14 @@
+{
+  "cues": [
+    {"time": 0.15, "sound": "fit/land.light/fingertip_book", "align": "onset", "gain_db": -14, "note": "Zone 1 eyebrow and gradient descent formula enter"},
+    {"time": 1.15, "sound": "fit/whoosh.short/bamboo_swish", "align": "peak", "gain_db": -15, "note": "axes and loss curve draw across canvas"},
+    {"time": 2.95, "sound": "fit/tick/domino", "align": "onset", "seed": 0, "gain_db": -14, "note": "parameter point lands on loss curve and telemetry activates"},
+    {"time": 5.25, "sound": "swipe/velvet", "align": "peak", "gain_db": -15, "note": "tangent line draws through active weight"},
+    {"time": 8.35, "sound": "fit/tick/domino", "align": "onset", "seed": 1, "gain_db": -14, "note": "negative gradient step arrow points downhill"},
+    {"time": 11.45, "sound": "fit/whoosh.short/bamboo_swish", "align": "peak", "gain_db": -16, "note": "descent trajectory initiates"},
+    {"time": 12.85, "sound": "fit/tick/domino", "align": "onset", "seed": 2, "gain_db": -15, "note": "intermediate step 02 locks"},
+    {"time": 14.65, "sound": "fit/tick/domino", "align": "onset", "seed": 3, "gain_db": -15, "note": "intermediate step 03 locks"},
+    {"time": 17.85, "sound": "swipe/velvet", "align": "peak", "gain_db": -15, "note": "slope flattens as gradient approaches zero"},
+    {"time": 21.45, "sound": "pluck/kalimba_soft", "align": "onset", "pitch": "E5", "gain_db": -12, "note": "convergence lockup at minimum and logo reveals"}
+  ]
+}

@@ -1,0 +1,7 @@
+cutroom. Quinze skills que transformam dados e documentos em apresentações, diagramas vivos e figuras isométricas.
+
+Vídeos de matemática e motion, sistemas de marca, clonagem de voz local em vinte e três idiomas e efeitos sonoros com earshot.
+
+Compatível com seis agentes coding: Claude Code, Cursor, Codex, Antigravity, Gemini e Kiro. Local, versionado e em paralelo.
+
+Para instalar, envie o link do repositório ao seu agente coding, e deixe ele configurar o cutroom.
