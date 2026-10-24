@@ -1,0 +1,245 @@
+{
+  "name": "cutroom-electric",
+  "display_name": "cutroom",
+  "description": "Proposal A · Electric",
+  "language": "en",
+  "colors": {
+    "primary": "#5B2EFF",
+    "deep": "#0C0A1D",
+    "accent": "#C5FF3D",
+    "accent_soft": "#B3A4FF",
+    "tint": "#EFEAFF",
+    "background": "#FFFFFF",
+    "surface": "#F7F5FF",
+    "on_primary": "#FFFFFF",
+    "text": "#0C0A1D",
+    "text_muted": "#4B4766",
+    "border": "#E4E0F5",
+    "success": "#17784C",
+    "success_bg": "#E3F4EB",
+    "warning": "#7D5200",
+    "warning_bg": "#FFF3D6",
+    "danger": "#B42A36",
+    "danger_bg": "#FBE5E7",
+    "info": "#2563EB",
+    "scale": [
+      "#EFEAFF",
+      "#D9CEFF",
+      "#B3A4FF",
+      "#8E72FF",
+      "#7150FF",
+      "#5B2EFF"
+    ],
+    "neutral": {
+      "100": "#F3F2F8",
+      "200": "#E4E0F5",
+      "300": "#C9C4DE",
+      "500": "#76718F",
+      "700": "#3D3858",
+      "900": "#0C0A1D"
+    }
+  },
+  "fonts": {
+    "display": "Inter Tight",
+    "text": "Inter",
+    "mono": "JetBrains Mono NL",
+    "files": [
+      {
+        "family": "Inter Tight",
+        "weight": "300",
+        "style": "normal",
+        "file": "fonts/InterTight-300.ttf"
+      },
+      {
+        "family": "Inter Tight",
+        "weight": "600",
+        "style": "normal",
+        "file": "fonts/InterTight-600.ttf"
+      },
+      {
+        "family": "Inter Tight",
+        "weight": "800",
+        "style": "normal",
+        "file": "fonts/InterTight-800.ttf"
+      },
+      {
+        "family": "Inter",
+        "weight": "400",
+        "style": "normal",
+        "file": "fonts/Inter-400.ttf"
+      },
+      {
+        "family": "Inter",
+        "weight": "600",
+        "style": "normal",
+        "file": "fonts/Inter-600.ttf"
+      },
+      {
+        "family": "JetBrains Mono NL",
+        "weight": "400",
+        "style": "normal",
+        "file": "fonts/JetBrainsMonoNL-Regular.ttf"
+      },
+      {
+        "family": "JetBrains Mono NL",
+        "weight": "700",
+        "style": "normal",
+        "file": "fonts/JetBrainsMonoNL-Bold.ttf"
+      }
+    ],
+    "licenses": [
+      "fonts/OFL-InterTight.txt",
+      "fonts/OFL-Inter.txt",
+      "fonts/OFL-JetBrainsMono.txt"
+    ]
+  },
+  "logos": {
+    "on_primary": "logos/wordmark-light.svg",
+    "on_light": "logos/wordmark.svg",
+    "symbol_on_primary": "logos/symbol-light.svg",
+    "symbol_on_light": "logos/symbol.svg",
+    "stacked": "logos/stacked.svg",
+    "app_icon": "logos/app-icon.svg",
+    "mono": "logos/mono.svg"
+  },
+  "shape": {
+    "radius": 16
+  },
+  "motion": {
+    "ease": "cubic-bezier(.2,.8,.2,1)",
+    "duration_ms": 450
+  },
+  "cover": {
+    "glow": true
+  },
+  "narration": {
+    "en": "af_heart",
+    "pt-BR": "pf_dora"
+  },
+  "tagline": "Every piece, cut on your machine.",
+  "palette": [
+    {
+      "token": "deep",
+      "name": "Midnight",
+      "use": "Code, verdicts, dark video",
+      "share": 0.4
+    },
+    {
+      "token": "primary",
+      "name": "Electric Violet",
+      "use": "The brand: marks, actions, big numbers",
+      "share": 0.22
+    },
+    {
+      "token": "accent",
+      "name": "Acid Lime",
+      "use": "The one highlight per frame",
+      "share": 0.06
+    },
+    {
+      "token": "surface",
+      "name": "Paper",
+      "use": "Pages and cards",
+      "share": 0.26
+    },
+    {
+      "token": "text_muted",
+      "name": "Graphite",
+      "use": "Supporting text",
+      "share": 0.06
+    }
+  ],
+  "book": {
+    "version": "1.0",
+    "date": "October 2026",
+    "eyebrow": "Brand proposal A",
+    "headlines": {
+      "logo": "A c spliced like a take.",
+      "color": "Electric: young, loud, local.",
+      "icons": "Thin line, round joins, one bright cue.",
+      "applications": "The brand, day to day."
+    },
+    "icon_grid": "24 x 24 grid · 1.75 px stroke · coral cue dot"
+  },
+  "contact": {
+    "name": "cutroom",
+    "role": "Open-source media studio for coding agents",
+    "email": "github.com/galvaowesley/cutroom",
+    "phone": "MIT license",
+    "site": "install.py · /cutroom-init"
+  },
+  "icons": [
+    {
+      "name": "video",
+      "label": "Video",
+      "note": "Renders and cuts",
+      "file": "icons/video.svg"
+    },
+    {
+      "name": "voice",
+      "label": "Voice",
+      "note": "Narration and clones",
+      "file": "icons/voice.svg"
+    },
+    {
+      "name": "deck",
+      "label": "Decks",
+      "note": "16:9 PDF decks",
+      "file": "icons/deck.svg"
+    },
+    {
+      "name": "diagram",
+      "label": "Diagrams",
+      "note": "Architecture, flows",
+      "file": "icons/diagram.svg"
+    },
+    {
+      "name": "figure",
+      "label": "Figures",
+      "note": "Isometric explainers",
+      "file": "icons/figure.svg"
+    },
+    {
+      "name": "graphic",
+      "label": "Graphics",
+      "note": "Posts, posters, thumbnails",
+      "file": "icons/graphic.svg"
+    },
+    {
+      "name": "edit",
+      "label": "Editing",
+      "note": "Trim, mix, reframe",
+      "file": "icons/edit.svg"
+    },
+    {
+      "name": "brand",
+      "label": "Brand",
+      "note": "Design systems",
+      "file": "icons/brand.svg"
+    },
+    {
+      "name": "script",
+      "label": "Scripts",
+      "note": "Facts and scenes",
+      "file": "icons/script.svg"
+    },
+    {
+      "name": "extract",
+      "label": "Documents",
+      "note": "PDF to Markdown",
+      "file": "icons/extract.svg"
+    },
+    {
+      "name": "math",
+      "label": "Math",
+      "note": "Formulas in motion",
+      "file": "icons/math.svg"
+    },
+    {
+      "name": "motion",
+      "label": "Motion",
+      "note": "HTML to video",
+      "file": "icons/motion.svg"
+    }
+  ]
+}

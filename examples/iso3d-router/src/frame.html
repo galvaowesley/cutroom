@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tool router · frame</title>
+<!-- Brand frame in cutroom Hot Signal, used to record the PNG and GIF previews. The figure is ../out/hairline-router.html. -->
+<style>
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-weight: 600;
+  font-display: block;
+  src: url("fonts/BricolageGrotesque-600.subset.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-display: block;
+  src: url("fonts/Inter-400.subset.woff2") format("woff2");
+}
+:root {
+  --primary: #FF2D6F;
+  --deep: #16072B;
+  --accent: #FFC43D;
+  --text: #16072B;
+  --muted: #55466B;
+  --bg: #FFF7FA;
+  --border: #F2DDE6;
+  --shadow: 0 0 0 1px #F2DDE6, 0 6px 24px rgba(22, 7, 43, 0.06);
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+.frame {
+  position: relative;
+  width: 720px;
+  padding: 36px 40px 40px;
+}
+.eyebrow {
+  margin: 0 0 8px;
+  font: 600 12px/1 "Bricolage Grotesque", system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+h1 {
+  margin: 0 130px 8px 0;
+  font: 600 28px/1.15 "Bricolage Grotesque", system-ui, sans-serif;
+  letter-spacing: -0.02em;
+  color: var(--deep);
+  text-wrap: pretty;
+}
+.caption {
+  margin: 0 0 24px;
+  max-width: 58ch;
+  font: 400 16px/1.5 "Inter", system-ui, sans-serif;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.logo {
+  position: absolute;
+  top: 36px;
+  right: 40px;
+  height: 28px;
+}
+.window {
+  width: 638px;
+  height: 510px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: #ffffff;
+}
+.window iframe {
+  display: block;
+  width: 672px;
+  height: 540px;
+  margin: -25px 0 0 -17px;
+  border: 0;
+}
+</style>
+</head>
+<body>
+<main class="frame">
+  <p class="eyebrow">cutroom-iso3d example · Hairline</p>
+  <h1>Where your request goes</h1>
+  <p class="caption">You make a request: the bridge turns to the chosen tool's track, the other gates shut, and the wagon rolls to it.</p>
+  <div class="window"><iframe title="cutroom tool router" scrolling="no"></iframe></div>
+  <img class="logo" src="wordmark.svg" alt="cutroom">
+</main>
+<script>
+  // Forwards query to figure: defaults to tour (?play=1) in light theme.
+  const q = new URLSearchParams(location.search);
+  if (!q.has("at")) q.set("play", "1");
+  q.set("theme", "light");
+  document.querySelector("iframe").src = "../out/hairline-router.html?" + q;
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cutroom architecture</title>
+<link rel="stylesheet" href="brand/tokens.css">
+<link rel="stylesheet" href="brand/fonts.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body { margin: 0; background: var(--surface); display: flex; flex-direction: column; padding: 28px 40px 40px; }
+  header { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
+  .eyebrow { font: 700 13px/1 var(--font-display); letter-spacing: .12em; text-transform: uppercase; color: var(--primary); margin: 0 0 8px; }
+  h1 { font: 700 32px/1.1 var(--font-display); letter-spacing: -.02em; color: var(--text); margin: 0 0 6px; }
+  p { font: 400 16px/1.5 var(--font-text); color: var(--text-muted); margin: 0; }
+  .logo { height: 34px; width: auto; flex: none; }
+  iframe { flex: 1; width: 100%; border: 0; border-radius: 20px; box-shadow: 0 0 0 1px var(--border), 0 6px 24px rgba(22, 7, 43, .06); background: #fff; }
+</style>
+</head>
+<body>
+  <header>
+    <div>
+      <p class="eyebrow">cutroom-diagram example</p>
+      <h1>How cutroom installs, chooses and produces</h1>
+      <p>From install.py to five agents, from the catalog to each skill and its pinned tool, and where everything lives on disk.</p>
+    </div>
+    <img class="logo" src="brand/logos/wordmark.svg" alt="cutroom">
+  </header>
+  <iframe src="../out/architecture.html?theme=light" title="cutroom architecture diagram"></iframe>
+</body>
+</html>

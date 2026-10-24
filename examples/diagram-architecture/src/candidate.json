@@ -1,0 +1,738 @@
+{
+ "schema_version": 1,
+ "diagram_type": "architecture",
+ "meta": {
+  "title": "cutroom architecture",
+  "output": "architecture.html",
+  "locale": "en",
+  "quality_profile": "showcase",
+  "legend": {
+   "entries": {
+    "external": {
+     "label": "Agent"
+    },
+    "frontend": {
+     "label": "Skill"
+    },
+    "backend": {
+     "label": "Script or CLI"
+    },
+    "database": {
+     "label": "Data on disk"
+    }
+   }
+  }
+ },
+ "components": [
+  {
+   "id": "install",
+   "type": "backend",
+   "label": "install.py",
+   "sublabel": "base skills + harness",
+   "tag": "--home --agent",
+   "pos": [
+    40,
+    60
+   ],
+   "size": [
+    170,
+    76
+   ]
+  },
+  {
+   "id": "claude",
+   "type": "external",
+   "label": "Claude Code",
+   "sublabel": "~/.claude/skills",
+   "pos": [
+    300,
+    66
+   ],
+   "size": [
+    176,
+    64
+   ]
+  },
+  {
+   "id": "codex",
+   "type": "external",
+   "label": "Codex",
+   "sublabel": "~/.agents/skills",
+   "pos": [
+    510,
+    66
+   ],
+   "size": [
+    176,
+    64
+   ]
+  },
+  {
+   "id": "antigravity",
+   "type": "external",
+   "label": "Antigravity",
+   "sublabel": "~/.gemini/antigravity",
+   "pos": [
+    720,
+    66
+   ],
+   "size": [
+    176,
+    64
+   ]
+  },
+  {
+   "id": "gemini",
+   "type": "external",
+   "label": "Gemini CLI",
+   "sublabel": "headless, crew",
+   "pos": [
+    930,
+    66
+   ],
+   "size": [
+    176,
+    64
+   ]
+  },
+  {
+   "id": "kiro",
+   "type": "external",
+   "label": "Kiro",
+   "sublabel": "~/.kiro/skills",
+   "pos": [
+    1140,
+    66
+   ],
+   "size": [
+    176,
+    64
+   ]
+  },
+  {
+   "id": "init",
+   "type": "frontend",
+   "label": "cutroom-init",
+   "sublabel": "catalog, setup",
+   "pos": [
+    40,
+    190
+   ],
+   "size": [
+    160,
+    64
+   ]
+  },
+  {
+   "id": "catalog",
+   "type": "backend",
+   "label": "cutroom catalog",
+   "sublabel": "skills, sizes",
+   "pos": [
+    300,
+    190
+   ],
+   "size": [
+    170,
+    64
+   ]
+  },
+  {
+   "id": "setup",
+   "type": "backend",
+   "label": "cutroom setup",
+   "sublabel": "<component> --yes",
+   "tag": "downloads it",
+   "pos": [
+    580,
+    190
+   ],
+   "size": [
+    170,
+    64
+   ]
+  },
+  {
+   "id": "crew",
+   "type": "backend",
+   "label": "cutroom crew",
+   "sublabel": "parallel parts",
+   "tag": "claude · codex · agy · gemini · kiro",
+   "pos": [
+    1000,
+    190
+   ],
+   "size": [
+    200,
+    64
+   ]
+  },
+  {
+   "id": "studio",
+   "type": "frontend",
+   "label": "cutroom-studio",
+   "sublabel": "plans the piece, routes to the cutroom-* skills, assembles",
+   "pos": [
+    200,
+    310
+   ],
+   "size": [
+    1168,
+    56
+   ]
+  },
+  {
+   "id": "script",
+   "type": "frontend",
+   "label": "script",
+   "sublabel": "SCRIPT.md check",
+   "pos": [
+    200,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "brand",
+   "type": "frontend",
+   "label": "brand",
+   "sublabel": "brands, books",
+   "pos": [
+    298,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "logo",
+   "type": "frontend",
+   "label": "logo",
+   "sublabel": "logo-design 1.4.5",
+   "pos": [
+    396,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "deck",
+   "type": "frontend",
+   "label": "deck",
+   "sublabel": "PDF decks",
+   "pos": [
+    494,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "graphic",
+   "type": "frontend",
+   "label": "graphic",
+   "sublabel": "posts, posters",
+   "pos": [
+    592,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "extract",
+   "type": "frontend",
+   "label": "extract",
+   "sublabel": "Docling 2.141",
+   "pos": [
+    690,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "diagram",
+   "type": "frontend",
+   "label": "diagram",
+   "sublabel": "Archify 3.2",
+   "pos": [
+    788,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "iso3d",
+   "type": "frontend",
+   "label": "iso3d",
+   "sublabel": "Anatomy, Hairline",
+   "pos": [
+    886,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "math",
+   "type": "frontend",
+   "label": "math",
+   "sublabel": "ManimGX 0.1.1",
+   "pos": [
+    984,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "motion",
+   "type": "frontend",
+   "label": "motion",
+   "sublabel": "HyperFrames 0.8",
+   "pos": [
+    1082,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "voice",
+   "type": "frontend",
+   "label": "voice",
+   "sublabel": "Kokoro, Chatterbox",
+   "pos": [
+    1180,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "edit",
+   "type": "frontend",
+   "label": "edit",
+   "sublabel": "ffmpeg recipes",
+   "pos": [
+    1278,
+    410
+   ],
+   "size": [
+    90,
+    68
+   ]
+  },
+  {
+   "id": "harness",
+   "type": "database",
+   "label": "harness/",
+   "sublabel": "cutroom_*.py",
+   "pos": [
+    494,
+    560
+   ],
+   "size": [
+    90,
+    70
+   ],
+   "tag": "brands · conventions"
+  },
+  {
+   "id": "brands",
+   "type": "database",
+   "label": "brands/",
+   "sublabel": "your brands",
+   "pos": [
+    298,
+    560
+   ],
+   "size": [
+    90,
+    70
+   ]
+  },
+  {
+   "id": "voices",
+   "type": "database",
+   "label": "voices/",
+   "sublabel": "profiles, clones",
+   "pos": [
+    1180,
+    560
+   ],
+   "size": [
+    90,
+    70
+   ],
+   "tag": "consent kept"
+  },
+  {
+   "id": "envs_extract",
+   "type": "database",
+   "label": "envs/extract",
+   "sublabel": "docling, torch",
+   "pos": [
+    690,
+    560
+   ],
+   "size": [
+    90,
+    70
+   ],
+   "tag": "~2.3 GB"
+  },
+  {
+   "id": "envs_media",
+   "type": "database",
+   "label": "envs/media",
+   "sublabel": "manimgx, kokoro",
+   "pos": [
+    984,
+    560
+   ],
+   "size": [
+    90,
+    70
+   ],
+   "tag": "~740 MB"
+  },
+  {
+   "id": "envs_clone",
+   "type": "database",
+   "label": "envs/clone",
+   "sublabel": "chatterbox",
+   "pos": [
+    1278,
+    560
+   ],
+   "size": [
+    90,
+    70
+   ],
+   "tag": "~4.5 GB"
+  },
+  {
+   "id": "node",
+   "type": "database",
+   "label": "node/",
+   "sublabel": "HyperFrames CLI",
+   "pos": [
+    1082,
+    560
+   ],
+   "size": [
+    90,
+    70
+   ]
+  },
+  {
+   "id": "upstream",
+   "type": "database",
+   "label": "upstream/",
+   "sublabel": "official skills",
+   "pos": [
+    788,
+    560
+   ],
+   "size": [
+    90,
+    70
+   ],
+   "tag": "pinned tags"
+  },
+  {
+   "id": "playwright",
+   "type": "database",
+   "label": "playwright",
+   "sublabel": "record-html",
+   "pos": [
+    886,
+    560
+   ],
+   "size": [
+    90,
+    70
+   ]
+  },
+  {
+   "id": "output",
+   "type": "database",
+   "label": "Piece folder",
+   "sublabel": "~/Documents/cutroom",
+   "tag": "<date>-<slug>/{src,work,out}",
+   "pos": [
+    40,
+    690
+   ],
+   "size": [
+    170,
+    64
+   ]
+  }
+ ],
+ "boundaries": [
+  {
+   "kind": "region",
+   "label": "Components · the cutroom home",
+   "wraps": [
+    "harness",
+    "brands",
+    "voices",
+    "envs_extract",
+    "envs_media",
+    "envs_clone",
+    "node",
+    "upstream",
+    "playwright"
+   ]
+  }
+ ],
+ "connections": [
+  {
+   "id": "install-claude",
+   "from": "install",
+   "to": "claude",
+   "label": "copies skills to each agent"
+  },
+  {
+   "id": "install-harness",
+   "from": "install",
+   "to": "harness",
+   "label": "copies the engine"
+  },
+  {
+   "id": "init-catalog",
+   "from": "init",
+   "to": "catalog",
+   "label": "runs",
+   "variant": "emphasis"
+  },
+  {
+   "id": "catalog-setup",
+   "from": "catalog",
+   "to": "setup",
+   "label": "the person picks",
+   "variant": "emphasis"
+  },
+  {
+   "id": "setup-claude",
+   "from": "setup",
+   "to": "claude",
+   "toSide": "bottom",
+   "label": "copies the skill"
+  },
+  {
+   "id": "crew-gemini",
+   "from": "crew",
+   "to": "gemini",
+   "toSide": "bottom",
+   "label": "headless tasks"
+  },
+  {
+   "id": "crew-antigravity",
+   "from": "crew",
+   "to": "antigravity",
+   "toSide": "bottom"
+  },
+  {
+   "id": "crew-kiro",
+   "from": "crew",
+   "to": "kiro",
+   "toSide": "bottom"
+  },
+  {
+   "id": "studio-crew",
+   "from": "studio",
+   "to": "crew",
+   "label": "parallel",
+   "variant": "dashed"
+  },
+  {
+   "id": "studio-script",
+   "from": "studio",
+   "to": "script"
+  },
+  {
+   "id": "studio-brand",
+   "from": "studio",
+   "to": "brand"
+  },
+  {
+   "id": "studio-logo",
+   "from": "studio",
+   "to": "logo"
+  },
+  {
+   "id": "studio-deck",
+   "from": "studio",
+   "to": "deck"
+  },
+  {
+   "id": "studio-graphic",
+   "from": "studio",
+   "to": "graphic"
+  },
+  {
+   "id": "studio-extract",
+   "from": "studio",
+   "to": "extract"
+  },
+  {
+   "id": "studio-diagram",
+   "from": "studio",
+   "to": "diagram"
+  },
+  {
+   "id": "studio-iso3d",
+   "from": "studio",
+   "to": "iso3d"
+  },
+  {
+   "id": "studio-math",
+   "from": "studio",
+   "to": "math"
+  },
+  {
+   "id": "studio-motion",
+   "from": "studio",
+   "to": "motion"
+  },
+  {
+   "id": "studio-voice",
+   "from": "studio",
+   "to": "voice"
+  },
+  {
+   "id": "studio-edit",
+   "from": "studio",
+   "to": "edit"
+  },
+  {
+   "id": "brand-brands",
+   "from": "brand",
+   "to": "brands"
+  },
+  {
+   "id": "voice-voices",
+   "from": "voice",
+   "to": "voices"
+  },
+  {
+   "id": "extract-envs_extract",
+   "from": "extract",
+   "to": "envs_extract",
+   "label": "docling"
+  },
+  {
+   "id": "math-envs_media",
+   "from": "math",
+   "to": "envs_media",
+   "label": "manimgx"
+  },
+  {
+   "id": "voice-envs_clone",
+   "from": "voice",
+   "to": "envs_clone",
+   "label": "clone"
+  },
+  {
+   "id": "motion-node",
+   "from": "motion",
+   "to": "node",
+   "label": "hyperframes"
+  },
+  {
+   "id": "diagram-upstream",
+   "from": "diagram",
+   "to": "upstream",
+   "label": "archify"
+  },
+  {
+   "id": "iso3d-playwright",
+   "from": "iso3d",
+   "to": "playwright",
+   "label": "record-html"
+  },
+  {
+   "id": "harness-output",
+   "from": "harness",
+   "to": "output",
+   "label": "cutroom job"
+  },
+  {
+   "id": "deck-harness",
+   "from": "deck",
+   "to": "harness",
+   "label": "cutroom_deck"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "rose",
+   "title": "Install",
+   "items": [
+    "install.py copies the base skills (init, studio, script, brand) to every agent found, on Linux, macOS or Windows",
+    "and the engine to the cutroom home: ~/.local/share/cutroom, %LOCALAPPDATA%\\cutroom, or any folder given with --home"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Choose",
+   "items": [
+    "cutroom-init runs cutroom catalog: skills, tools and download sizes",
+    "the person picks; cutroom setup <component> --yes downloads it and copies its skill to each agent"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Skills and pinned tools",
+   "items": [
+    "14 skills: init, studio, script, brand, logo, deck, graphic, extract, diagram, iso3d, math, motion, voice, edit",
+    "Docling 2.141, Archify 3.2, Anatomy 1.1, Hairline 0.5.1, ManimGX 0.1.1, HyperFrames 0.8.183, Kokoro v1.0, Chatterbox 0.1.7, logo-design 1.4.5"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Parallel crew",
+   "items": [
+    "cutroom crew runs independent parts on Claude Code, Codex, Antigravity, Gemini CLI or Kiro at once",
+    "each task follows a cutroom skill and writes only its own files; overlaps are refused before running"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Yours",
+   "items": [
+    "brands/ and voices/ hold the person's brands, profiles and consented clones; they survive reinstalls",
+    "every piece lands in its own folder: <date>-<slug>/{src,work,out}"
+   ]
+  }
+ ]
+}

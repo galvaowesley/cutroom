@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Component drawers · frame</title>
+<!-- Brand frame, only to record the PNG and GIF previews. The figure itself is ../out/drawers.html. -->
+<style>
+@font-face{font-family:"Bricolage Grotesque";font-weight:600;font-display:block;src:url(fonts/BricolageGrotesque-600.subset.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:400;font-display:block;src:url(fonts/Inter-400.subset.woff2) format("woff2")}
+:root{--primary:#FF2D6F;--text:#16072B;--muted:#55466B;--bg:#FFF7FA}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+.frame{position:relative;width:800px;padding:36px 40px 40px}
+.eyebrow{margin:0 0 8px;font:600 12px/1 "Bricolage Grotesque",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--primary)}
+h1{margin:0 150px 8px 0;font:600 30px/1.12 "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;text-wrap:pretty}
+.caption{margin:0 0 24px;max-width:62ch;font:400 16px/1.5 Inter,sans-serif;color:var(--muted);text-wrap:pretty}
+.window{border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px #F2DDE6,0 6px 24px rgba(22,7,43,.06);background:#fff}
+.window iframe{display:block;width:100%;height:720px;border:0}
+.logo{position:absolute;top:40px;right:40px;height:30px}
+</style>
+</head>
+<body>
+<main class="frame">
+  <p class="eyebrow">cutroom-iso3d example · Anatomy</p>
+  <h1>Every component is a drawer</h1>
+  <p class="caption">Each drawer's depth is its download size, on a log scale. Nothing comes open: you open only the drawers you choose, and the open total is what you download.</p>
+  <div class="window"><iframe src="../out/drawers.html" title="cutroom component drawers"></iframe></div>
+  <img class="logo" src="logo.svg" alt="cutroom">
+</main>
+<script>
+addEventListener("message", (event) => {
+  const height = event.data && event.data.drawers;
+  if (height) document.querySelector(".window iframe").style.height = height + "px";
+});
+</script>
+</body>
+</html>

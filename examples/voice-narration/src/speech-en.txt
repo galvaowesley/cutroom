@@ -1,0 +1,11 @@
+cutroom. Media for coding agents, made on your machine.
+
+It works in Claude Code, Codex, Antigravity, Gemini and Kiro.
+
+Decks, diagrams, figures, math videos, motion, voice, graphics and edits. Fourteen skills, one folder per piece.
+
+Bring your brand, or build one. Your voice too: with consent, it clones locally.
+
+Nothing leaves the machine, and every version is pinned. Agents can even work in parallel.
+
+Start with install dot py. Then, cutroom init.

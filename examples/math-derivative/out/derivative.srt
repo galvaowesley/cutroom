@@ -1,0 +1,60 @@
+1
+00:00:00,030 --> 00:00:01,280
+A curve rises and falls.
+
+2
+00:00:01,592 --> 00:00:03,468
+How steep is it at one single point?
+
+3
+00:00:03,933 --> 00:00:06,237
+Take a second point, a small step h away.
+
+4
+00:00:06,558 --> 00:00:08,969
+The line through both has a slope: rise
+
+5
+00:00:08,969 --> 00:00:09,451
+over run.
+
+6
+00:00:09,917 --> 00:00:11,373
+Now shrink h toward zero.
+
+7
+00:00:11,723 --> 00:00:13,412
+The line becomes the tangent.
+
+8
+00:00:13,761 --> 00:00:16,207
+Its slope, one point two five, is the
+
+9
+00:00:16,207 --> 00:00:16,848
+derivative.
+
+10
+00:00:17,353 --> 00:00:18,708
+Slide the point along the curve.
+
+11
+00:00:19,122 --> 00:00:21,126
+Where it is flat, the slope is zero.
+
+12
+00:00:21,443 --> 00:00:23,816
+All the slopes together draw f prime: x
+
+13
+00:00:23,816 --> 00:00:24,766
+squared minus one.
+
+14
+00:00:25,413 --> 00:00:27,632
+The derivative: the slope of the tangent,
+
+15
+00:00:27,632 --> 00:00:28,312
+at every point.
+

@@ -1,0 +1,254 @@
+{
+  "name": "cutroom-hot",
+  "display_name": "cutroom",
+  "description": "Proposal B · Hot Signal",
+  "language": "en",
+  "colors": {
+    "primary": "#FF2D6F",
+    "deep": "#16072B",
+    "accent": "#FFC43D",
+    "accent_soft": "#FF9BC0",
+    "tint": "#FFE9F0",
+    "background": "#FFFFFF",
+    "surface": "#FFF7FA",
+    "on_primary": "#16072B",
+    "text": "#16072B",
+    "text_muted": "#55466B",
+    "border": "#F2DDE6",
+    "success": "#17784C",
+    "success_bg": "#E3F4EB",
+    "warning": "#7D5200",
+    "warning_bg": "#FFF3D6",
+    "danger": "#B42A36",
+    "danger_bg": "#FBE5E7",
+    "info": "#2563EB",
+    "scale": [
+      "#FFE9F0",
+      "#FFC9DA",
+      "#FF9BBC",
+      "#FF6E9C",
+      "#FF4A83",
+      "#FF2D6F"
+    ],
+    "neutral": {
+      "100": "#F7F3F7",
+      "200": "#EDE4EC",
+      "300": "#D4C7D6",
+      "500": "#7E7088",
+      "700": "#433655",
+      "900": "#16072B"
+    },
+    "on_deep": "#FFFFFF"
+  },
+  "fonts": {
+    "display": "Bricolage Grotesque",
+    "text": "Inter",
+    "mono": "JetBrains Mono NL",
+    "files": [
+      {
+        "family": "Inter",
+        "weight": "400",
+        "style": "normal",
+        "file": "fonts/Inter-400.ttf"
+      },
+      {
+        "family": "Inter",
+        "weight": "600",
+        "style": "normal",
+        "file": "fonts/Inter-600.ttf"
+      },
+      {
+        "family": "JetBrains Mono NL",
+        "weight": "400",
+        "style": "normal",
+        "file": "fonts/JetBrainsMonoNL-Regular.ttf"
+      },
+      {
+        "family": "JetBrains Mono NL",
+        "weight": "700",
+        "style": "normal",
+        "file": "fonts/JetBrainsMonoNL-Bold.ttf"
+      },
+      {
+        "family": "Bricolage Grotesque",
+        "weight": "300",
+        "style": "normal",
+        "file": "fonts/BricolageGrotesque-300.ttf"
+      },
+      {
+        "family": "Bricolage Grotesque",
+        "weight": "500",
+        "style": "normal",
+        "file": "fonts/BricolageGrotesque-500.ttf"
+      },
+      {
+        "family": "Bricolage Grotesque",
+        "weight": "700",
+        "style": "normal",
+        "file": "fonts/BricolageGrotesque-700.ttf"
+      },
+      {
+        "family": "Bricolage Grotesque",
+        "weight": "800",
+        "style": "normal",
+        "file": "fonts/BricolageGrotesque-800.ttf"
+      }
+    ],
+    "licenses": [
+      "fonts/OFL-Inter.txt",
+      "fonts/OFL-JetBrainsMono.txt",
+      "fonts/OFL-BricolageGrotesque.txt"
+    ]
+  },
+  "logos": {
+    "on_primary": "logos/wordmark-light.svg",
+    "on_light": "logos/wordmark.svg",
+    "symbol_on_primary": "logos/symbol-light.svg",
+    "symbol_on_light": "logos/symbol.svg",
+    "stacked": "logos/stacked.svg",
+    "app_icon": "logos/app-icon.svg",
+    "mono": "logos/mono.svg",
+    "on_deep": "logos/wordmark-deep.svg",
+    "symbol_on_deep": "logos/symbol-deep.svg"
+  },
+  "shape": {
+    "radius": 16
+  },
+  "motion": {
+    "ease": "cubic-bezier(.2,.8,.2,1)",
+    "duration_ms": 450
+  },
+  "cover": {
+    "glow": true
+  },
+  "narration": {
+    "en": "af_heart",
+    "pt-BR": "pf_dora"
+  },
+  "tagline": "Every piece, cut on your machine.",
+  "palette": [
+    {
+      "token": "deep",
+      "name": "Night Plum",
+      "use": "Code, verdicts, dark video",
+      "share": 0.38
+    },
+    {
+      "token": "primary",
+      "name": "Hot Signal",
+      "use": "The brand: covers, marks, big numbers",
+      "share": 0.22
+    },
+    {
+      "token": "accent",
+      "name": "Sunflower",
+      "use": "The one highlight per frame",
+      "share": 0.06
+    },
+    {
+      "token": "surface",
+      "name": "Blush Paper",
+      "use": "Pages and cards",
+      "share": 0.28
+    },
+    {
+      "token": "text_muted",
+      "name": "Mauve Grey",
+      "use": "Supporting text",
+      "share": 0.06
+    }
+  ],
+  "book": {
+    "version": "1.0",
+    "date": "October 2026",
+    "eyebrow": "Brand proposal B",
+    "headlines": {
+      "logo": "A c spliced like a take.",
+      "color": "Hot Signal: young, loud, local.",
+      "icons": "Thin line, round joins, one bright cue.",
+      "applications": "The brand, day to day."
+    },
+    "icon_grid": "24 x 24 grid · 1.75 px stroke · coral cue dot"
+  },
+  "contact": {
+    "name": "cutroom",
+    "role": "Open-source media studio for coding agents",
+    "email": "github.com/galvaowesley/cutroom",
+    "phone": "MIT license",
+    "site": "install.py · /cutroom-init"
+  },
+  "icons": [
+    {
+      "name": "video",
+      "label": "Video",
+      "note": "Renders and cuts",
+      "file": "icons/video.svg"
+    },
+    {
+      "name": "voice",
+      "label": "Voice",
+      "note": "Narration and clones",
+      "file": "icons/voice.svg"
+    },
+    {
+      "name": "deck",
+      "label": "Decks",
+      "note": "16:9 PDF decks",
+      "file": "icons/deck.svg"
+    },
+    {
+      "name": "diagram",
+      "label": "Diagrams",
+      "note": "Architecture, flows",
+      "file": "icons/diagram.svg"
+    },
+    {
+      "name": "figure",
+      "label": "Figures",
+      "note": "Isometric explainers",
+      "file": "icons/figure.svg"
+    },
+    {
+      "name": "graphic",
+      "label": "Graphics",
+      "note": "Posts, posters, thumbnails",
+      "file": "icons/graphic.svg"
+    },
+    {
+      "name": "edit",
+      "label": "Editing",
+      "note": "Trim, mix, reframe",
+      "file": "icons/edit.svg"
+    },
+    {
+      "name": "brand",
+      "label": "Brand",
+      "note": "Design systems",
+      "file": "icons/brand.svg"
+    },
+    {
+      "name": "script",
+      "label": "Scripts",
+      "note": "Facts and scenes",
+      "file": "icons/script.svg"
+    },
+    {
+      "name": "extract",
+      "label": "Documents",
+      "note": "PDF to Markdown",
+      "file": "icons/extract.svg"
+    },
+    {
+      "name": "math",
+      "label": "Math",
+      "note": "Formulas in motion",
+      "file": "icons/math.svg"
+    },
+    {
+      "name": "motion",
+      "label": "Motion",
+      "note": "HTML to video",
+      "file": "icons/motion.svg"
+    }
+  ]
+}

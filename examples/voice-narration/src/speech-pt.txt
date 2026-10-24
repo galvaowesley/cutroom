@@ -1,0 +1,11 @@
+cutroom. Mídia para agentes de código, feita na sua máquina.
+
+Funciona no Claude Code, no Codex, no Antigravity, no Gemini e no Kiro.
+
+Apresentações, diagramas, figuras, vídeos de matemática, animação, voz, gráficos e edição. Catorze skills, uma pasta por peça.
+
+Traga a sua marca, ou crie uma. A sua voz também: com consentimento, ela é clonada localmente.
+
+Nada sai da máquina, e toda versão é fixada. Agentes podem até trabalhar em paralelo.
+
+Comece com install ponto py. Depois, cutroom init.

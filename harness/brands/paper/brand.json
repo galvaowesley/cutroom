@@ -1,0 +1,116 @@
+{
+  "name": "paper",
+  "display_name": "Paper",
+  "description": "Editorial sample brand: warm paper, terracotta and a serif display, for essays and reports.",
+  "language": "en",
+  "colors": {
+    "primary": "#A8432A",
+    "deep": "#2A2420",
+    "accent": "#2F6F62",
+    "accent_soft": "#8CC7B8",
+    "tint": "#F6ECE4",
+    "background": "#FBF8F1",
+    "surface": "#F4EFE5",
+    "on_primary": "#FFFFFF",
+    "text": "#1E1A16",
+    "text_muted": "#544B40",
+    "border": "#E4DCCD",
+    "success": "#246B3E",
+    "success_bg": "#E6F1E3",
+    "warning": "#7A5300",
+    "warning_bg": "#F8EDD2",
+    "danger": "#A3262F",
+    "danger_bg": "#F7E2DF",
+    "info": "#2B5C8A",
+    "scale": [
+      "#F6ECE4",
+      "#EDD5C6",
+      "#DDAE95",
+      "#CB8466",
+      "#B85E43",
+      "#A8432A"
+    ],
+    "neutral": {
+      "100": "#F3EEE4",
+      "200": "#E4DCCD",
+      "300": "#CEC4B2",
+      "500": "#857B6C",
+      "700": "#4A4238",
+      "900": "#1E1A16"
+    }
+  },
+  "fonts": {
+    "display": "Fraunces",
+    "text": "Instrument Sans",
+    "mono": "JetBrains Mono NL",
+    "files": [
+      {
+        "family": "Fraunces",
+        "weight": "300",
+        "style": "normal",
+        "file": "fonts/Fraunces-300.ttf"
+      },
+      {
+        "family": "Fraunces",
+        "weight": "600",
+        "style": "normal",
+        "file": "fonts/Fraunces-600.ttf"
+      },
+      {
+        "family": "Fraunces",
+        "weight": "800",
+        "style": "normal",
+        "file": "fonts/Fraunces-800.ttf"
+      },
+      {
+        "family": "Instrument Sans",
+        "weight": "400",
+        "style": "normal",
+        "file": "fonts/InstrumentSans-400.ttf"
+      },
+      {
+        "family": "Instrument Sans",
+        "weight": "600",
+        "style": "normal",
+        "file": "fonts/InstrumentSans-600.ttf"
+      },
+      {
+        "family": "JetBrains Mono NL",
+        "weight": "400",
+        "style": "normal",
+        "file": "fonts/JetBrainsMonoNL-Regular.ttf"
+      },
+      {
+        "family": "JetBrains Mono NL",
+        "weight": "700",
+        "style": "normal",
+        "file": "fonts/JetBrainsMonoNL-Bold.ttf"
+      }
+    ],
+    "licenses": [
+      "fonts/OFL-Fraunces.txt",
+      "fonts/OFL-InstrumentSans.txt",
+      "fonts/OFL-JetBrainsMono.txt"
+    ]
+  },
+  "logos": {
+    "on_primary": "logos/wordmark-light.svg",
+    "on_light": "logos/wordmark.svg",
+    "symbol_on_primary": "logos/symbol-light.svg",
+    "symbol_on_light": "logos/symbol.svg"
+  },
+  "shape": {
+    "radius": 6
+  },
+  "motion": {
+    "ease": "cubic-bezier(.25,.7,.25,1)",
+    "duration_ms": 600
+  },
+  "cover": {
+    "glow": false
+  },
+  "narration": {
+    "en": "bf_emma",
+    "pt-BR": "pm_alex"
+  }
+}
