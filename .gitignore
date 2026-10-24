@@ -21,3 +21,4 @@ harness/brands/*/specimen.*
 
 .env
 .env.*
+/wesley.m4a

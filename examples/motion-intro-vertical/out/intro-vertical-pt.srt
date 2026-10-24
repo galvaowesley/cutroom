@@ -1,0 +1,15 @@
+1
+00:00:00,500 --> 00:00:05,500
+Cutroom. Quinze skills que transformam dados e documentos em apresentações, diagramas vivos e figuras isométricas.
+
+2
+00:00:06,400 --> 00:00:12,900
+Vídeos de matemática e motion, sistemas de marca, clonagem de voz local em vinte e três idiomas, e efeitos sonoros com earshot.
+
+3
+00:00:13,900 --> 00:00:19,900
+Compatível com seis agentes coding: Claude Code, Cursor, Codex, Antigravity, Gemini e Kiro. Local, versionado e em paralelo.
+
+4
+00:00:20,800 --> 00:00:25,800
+Para instalar, envie o link do repositório ao seu agente coding, e deixe ele configurar o cutroom.
