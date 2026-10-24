@@ -19,6 +19,7 @@
 - **Transitions:** zoom through the icon ring and circle mask (1→2), whip pan with blur (2→3), vertical push with blur (3→4), pink circle mask (4→5).
 - **Last frame held:** the speech ends at 30.6 s and the video runs to 34.1 s (3.5 s) with a slow push, a sheen on the URL and the logo on screen.
 - **Motto:** "Every piece cut on your machine." (no comma, in the speech and on screen).
+- **Agent icons:** the six agents appear with their own marks (`src/intro/assets/agents/`), each on a tile that keeps it legible on the dark card (white for most, the Kiro purple for Kiro). The marks belong to their owners and are used only to name the agents the project works with.
 
 ## One piece per language
 

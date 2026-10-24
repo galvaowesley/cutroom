@@ -21,6 +21,7 @@
 - **Transições**: zoom através do anel de ícones e máscara circular (1→2), whip-pan com desfoque (2→3), push vertical com desfoque (3→4), máscara circular rosa (4→5).
 - **Último quadro no ar**: a fala termina em 30,9 s e o vídeo segue até 34,4 s (3,5 s) com aproximação lenta, brilho na URL e o logo em tela.
 - **Mote**: "Toda peça gerada na sua máquina." (sem vírgula, na fala e na tela).
+- **Ícones dos agentes**: os seis agentes aparecem com a própria marca (`src/intro/assets/agents/`), cada uma sobre um quadrado que a mantém legível no cartão escuro (branco na maioria, o roxo da Kiro para a Kiro). As marcas pertencem aos seus donos e servem só para nomear os agentes com que o projeto funciona.
 
 ## Padrão de animação no harness
 

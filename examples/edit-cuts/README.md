@@ -11,13 +11,13 @@
   <a href="out/intro-audiogram.mp4"><strong>▶ 1:1 Audiogram (<code>out/intro-audiogram.mp4</code>)</strong></a>
 </p>
 
-[`out/intro-final.mp4`](out/intro-final.mp4) (34.1 s, 1080×1920, -14.1 LUFS, 4.48 MB) · [`out/derivative-9x16-captions.mp4`](out/derivative-9x16-captions.mp4) (29.93 s, 1080x1920 vertical, 1.49 MB) · [`out/intro-audiogram.mp4`](out/intro-audiogram.mp4) (34.1 s, 1080x1080, 8.26 MB) · [`out/intro-email.mp4`](out/intro-email.mp4) (34.1 s, 304×540, 707 KB) · source in [`src/bed.m4a`](src/bed.m4a)
+[`out/intro-final.mp4`](out/intro-final.mp4) (34.1 s, 1080×1920, -14.1 LUFS, 4.49 MB) · [`out/derivative-9x16-captions.mp4`](out/derivative-9x16-captions.mp4) (29.93 s, 1080x1920 vertical, 1.49 MB) · [`out/intro-audiogram.mp4`](out/intro-audiogram.mp4) (34.1 s, 1080x1080, 8.26 MB) · [`out/intro-email.mp4`](out/intro-email.mp4) (34.1 s, 304×540, 708 KB) · source in [`src/bed.m4a`](src/bed.m4a)
 
 | File | Description |
 |---|---|
 | [`src/bed.m4a`](src/bed.m4a) | Synthesized music bed generated with `ffmpeg aevalsrc` (32.12 s, AAC stereo, -30.6 LUFS, 339 KB) |
-| [`out/intro-final.mp4`](out/intro-final.mp4) | Scored product intro with music bed ducked under narration + `earshot` SFX, normalized to -14.1 LUFS (34.1 s, 4.48 MB) |
-| [`out/intro-email.mp4`](out/intro-email.mp4) | Compressed 540 px email preset deliverable under 1 MB (34.1 s, 304×540, 707 KB) |
+| [`out/intro-final.mp4`](out/intro-final.mp4) | Scored product intro with music bed ducked under narration + `earshot` SFX, normalized to -14.1 LUFS (34.1 s, 4.49 MB) |
+| [`out/intro-email.mp4`](out/intro-email.mp4) | Compressed 540 px email preset deliverable under 1 MB (34.1 s, 304×540, 708 KB) |
 | [`out/derivative-9x16-captions.mp4`](out/derivative-9x16-captions.mp4) | 9:16 vertical reframe of math video with blur padding, `earshot` SFX, and burned brand captions (29.93 s, 1.49 MB) |
 | [`out/intro-audiogram.mp4`](out/intro-audiogram.mp4) | 1:1 square audiogram with animated waveform in Sunflower yellow on Night Plum (34.1 s, 8.26 MB) |
 | [`out/intro.gif`](out/intro.gif) | 300 px animated preview GIF of the first 12 s at 10 fps (2.0 MB) |
@@ -89,7 +89,7 @@ All operations use the `cutroom edit` tool wrappers around standard `ffmpeg` fil
 
 - `cutroom edit probe` verified file properties:
   - `out/intro-final.mp4`: duration 34.1 s, 1080×1920, 30.0 fps, loudness -14.1 LUFS (target was -14 LUFS).
-  - `out/intro-email.mp4`: duration 34.1 s, 304×540, 30.0 fps, size 707 KB (below the 1 MB email limit).
+  - `out/intro-email.mp4`: duration 34.1 s, 304×540, 30.0 fps, size 708 KB (below the 1 MB email limit).
   - `out/derivative-9x16-captions.mp4`: duration 29.93 s, 1080×1920, 19.01 fps, loudness -22.1 LUFS.
   - `out/intro-audiogram.mp4`: duration 34.1 s, 1080×1080, 30.0 fps, size 8.26 MB.
   - `src/bed.m4a`: duration 32.12 s, AAC 48,000 Hz stereo, loudness -30.6 LUFS.

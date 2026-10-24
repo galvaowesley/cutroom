@@ -88,7 +88,8 @@
       #cam { position: absolute; left: 0; top: 0; width: 936px; height: 1200px; transform-origin: 0 0; }
       .slot { position: absolute; width: 456px; height: 384px; border-radius: 34px; border: 3px dashed #482178; }
       .ag { position: absolute; width: 456px; height: 384px; border-radius: 34px; background: #210c3d; border: 3px solid #5b2896; padding: 36px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 24px 56px rgba(0,0,0,0.45); }
-      .ag .mono-c { width: 92px; height: 92px; border-radius: 28px; background: #ff2d6f; color: #fff; display: flex; align-items: center; justify-content: center; font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 56px; }
+      .ag .mono-c { width: 108px; height: 108px; border-radius: 30px; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 22px rgba(0,0,0,0.35); }
+      .ag .mono-c img { width: 72px; height: 72px; object-fit: contain; }
       .ag .nm { font-family: "Bricolage Grotesque"; font-weight: 800; font-size: 54px; letter-spacing: -0.02em; line-height: 1; }
       .ag .vd { font-family: "JetBrains Mono NL", monospace; font-size: 24px; color: #ffc43d; margin-top: 12px; }
 
@@ -337,18 +338,19 @@
         tl.fromTo("#sixi", { yPercent: 118 }, { yPercent: 0, duration: 0.7, ease: EXPO }, TM.six0);
         words("#sixlab", [TM.six0 + 0.17, TM.six0 + 0.27]);
         tl.to("#six", { scale: 1.08, duration: 0.25, ease: "power2.out", yoyo: true, repeat: 1, transformOrigin: "0 50%" }, TM.six0 + 0.05);
-        const AG = [["Claude Code", "Anthropic", "C", TM.ag[0]], ["Cursor", "Anysphere", "Cu", TM.ag[1]], ["Codex", "OpenAI", "Cx", TM.ag[2]], ["Antigravity", "Google DeepMind", "A", TM.ag[3]], ["Gemini CLI", "Google", "G", TM.ag[4]], ["Kiro", "AWS", "K", TM.ag[5]]];
+        // [name, vendor, icon file, tile color, time]: the icons are the agents' own marks, on a tile that keeps each one legible
+        const AG = [["Claude Code", "Anthropic", "claude.png", "#fff", TM.ag[0]], ["Cursor", "Anysphere", "cursor.png", "#fff", TM.ag[1]], ["Codex", "OpenAI", "codex.png", "#fff", TM.ag[2]], ["Antigravity", "Google DeepMind", "antigravity.png", "#fff", TM.ag[3]], ["Gemini CLI", "Google", "gemini.svg", "#fff", TM.ag[4]], ["Kiro", "AWS", "kiro.png", "#9046ff", TM.ag[5]]];
         const pos = (i) => ({ x: (i % 2) * 480, y: Math.floor(i / 2) * 408 });
         AG.forEach((a, i) => {
           const p = pos(i);
           const slot = document.createElement("div"); slot.className = "slot"; slot.style.left = p.x + "px"; slot.style.top = p.y + "px"; $("#cam").appendChild(slot);
           const c = document.createElement("div"); c.className = "ag"; c.id = "ag" + i; c.style.left = p.x + "px"; c.style.top = p.y + "px";
-          c.innerHTML = `<div class="mono-c">${a[2]}</div><div><div class="nm">${a[0]}</div><div class="vd">${a[1]}</div></div>`; $("#cam").appendChild(c);
-          tl.fromTo(c, { scale: 0.82, clipPath: "inset(0 0 100% 0 round 34px)", transformOrigin: "50% 50%" }, { scale: 1, clipPath: "inset(0 0 0% 0 round 34px)", duration: 0.55, ease: EXPO }, a[3] - 0.1);
-          tl.fromTo(c, { borderColor: "#ffc43d" }, { borderColor: "#5b2896", duration: 0.9, ease: "power2.out" }, a[3] + 0.2);
+          c.innerHTML = `<div class="mono-c" style="background:${a[3]}"><img src="assets/agents/${a[2]}" alt=""></div><div><div class="nm">${a[0]}</div><div class="vd">${a[1]}</div></div>`; $("#cam").appendChild(c);
+          tl.fromTo(c, { scale: 0.82, clipPath: "inset(0 0 100% 0 round 34px)", transformOrigin: "50% 50%" }, { scale: 1, clipPath: "inset(0 0 0% 0 round 34px)", duration: 0.55, ease: EXPO }, a[4] - 0.1);
+          tl.fromTo(c, { borderColor: "#ffc43d" }, { borderColor: "#5b2896", duration: 0.9, ease: "power2.out" }, a[4] + 0.2);
         });
         tl.fromTo(".slot", { borderColor: "#482178" }, { borderColor: "#ff2d6f", duration: 0.3, stagger: 0.17, yoyo: true, repeat: 1, ease: "power2.out" }, TM.slot0);
-        const camFoc = AG.map((a, i) => { const p = pos(i); return { t: a[3], cx: p.x + 228, cy: p.y + 192, s: 1.5 }; });
+        const camFoc = AG.map((a, i) => { const p = pos(i); return { t: a[4], cx: p.x + 228, cy: p.y + 192, s: 1.5 }; });
         camFoc.push({ t: TM.camEnd, cx: 468, cy: 600, s: 1 });
         const camAt = K.camera("#cam", camFoc, { w: 936, h: 1200, base: (t) => ({ cx: 468, cy: 600, s: 1 + 0.06 * clamp((t - TM.r3 - 0.5) / 2.2) }) });
         K.pushOut(tl, "#s3in", TM.r4 - 0.1);
