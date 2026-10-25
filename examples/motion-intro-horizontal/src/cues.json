@@ -1,0 +1,742 @@
+{
+ "cues": [
+  {
+   "time": 0.42,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "wordmark reveals"
+  },
+  {
+   "time": 1.44,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -17,
+   "note": "wordmark moves up"
+  },
+  {
+   "time": 1.74,
+   "sound": "whoosh_fast/crisp",
+   "align": "peak",
+   "gain_db": -16,
+   "note": "icons burst into a ring"
+  },
+  {
+   "time": 1.94,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -20,
+   "note": "ring chip 1",
+   "seed": 0
+  },
+  {
+   "time": 2.14,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -20,
+   "note": "ring chip 2",
+   "seed": 1
+  },
+  {
+   "time": 2.34,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -20,
+   "note": "ring chip 3",
+   "seed": 2
+  },
+  {
+   "time": 2.54,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -20,
+   "note": "ring chip 4",
+   "seed": 3
+  },
+  {
+   "time": 3.058,
+   "sound": "notify/mid_tine",
+   "align": "onset",
+   "gain_db": -15,
+   "note": "the 15 counter enters"
+  },
+  {
+   "time": 3.108,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -21.0,
+   "note": "counter tick 1",
+   "seed": 0
+  },
+  {
+   "time": 3.238,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -20.6,
+   "note": "counter tick 2",
+   "seed": 1
+  },
+  {
+   "time": 3.368,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -20.2,
+   "note": "counter tick 3",
+   "seed": 2
+  },
+  {
+   "time": 3.498,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -19.8,
+   "note": "counter tick 4",
+   "seed": 3
+  },
+  {
+   "time": 3.628,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -19.4,
+   "note": "counter tick 5",
+   "seed": 4
+  },
+  {
+   "time": 3.758,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -19.0,
+   "note": "counter tick 6",
+   "seed": 5
+  },
+  {
+   "time": 4.81,
+   "sound": "whoosh_big/thump_airy",
+   "align": "peak",
+   "gain_db": -14,
+   "note": "zoom-through into the feed"
+  },
+  {
+   "time": 4.94,
+   "sound": "swipe/velvet",
+   "align": "peak",
+   "gain_db": -17,
+   "note": "circle mask opens"
+  },
+  {
+   "time": 5.56,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "card 1 takes focus",
+   "seed": 0
+  },
+  {
+   "time": 5.66,
+   "sound": "fit/tick/domino",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "slide bars rise",
+   "seed": 1
+  },
+  {
+   "time": 6.16,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "card 2 takes focus",
+   "seed": 1
+  },
+  {
+   "time": 6.41,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -18,
+   "note": "diagram line draws"
+  },
+  {
+   "time": 7.13,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "card 3 takes focus",
+   "seed": 2
+  },
+  {
+   "time": 7.33,
+   "sound": "knock/wood",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "3D drawer slides out"
+  },
+  {
+   "time": 8.107,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "card 4 takes focus",
+   "seed": 3
+  },
+  {
+   "time": 8.357,
+   "sound": "fit/whoosh.short/bamboo_swish",
+   "align": "peak",
+   "gain_db": -16,
+   "note": "laser scans the PDF"
+  },
+  {
+   "time": 9.74,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "card 5 takes focus",
+   "seed": 4
+  },
+  {
+   "time": 10.04,
+   "sound": "swipe/velvet",
+   "align": "peak",
+   "gain_db": -16,
+   "note": "tangent glides along the curve"
+  },
+  {
+   "time": 10.34,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "card 6 takes focus",
+   "seed": 0
+  },
+  {
+   "time": 10.59,
+   "sound": "fit/land.light/fingertip_book",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "playhead and clips"
+  },
+  {
+   "time": 11.32,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "card 7 takes focus",
+   "seed": 1
+  },
+  {
+   "time": 11.42,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -18,
+   "note": "swatch 1",
+   "seed": 2
+  },
+  {
+   "time": 11.52,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -18,
+   "note": "swatch 2",
+   "seed": 3
+  },
+  {
+   "time": 11.62,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -18,
+   "note": "swatch 3",
+   "seed": 4
+  },
+  {
+   "time": 12.51,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "card 8 takes focus",
+   "seed": 2
+  },
+  {
+   "time": 12.833,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -21.0,
+   "note": "23 languages tick 1",
+   "seed": 0
+  },
+  {
+   "time": 12.953,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -20.6,
+   "note": "23 languages tick 2",
+   "seed": 1
+  },
+  {
+   "time": 13.073,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -20.2,
+   "note": "23 languages tick 3",
+   "seed": 2
+  },
+  {
+   "time": 13.193,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -19.8,
+   "note": "23 languages tick 4",
+   "seed": 3
+  },
+  {
+   "time": 13.313,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -19.4,
+   "note": "23 languages tick 5",
+   "seed": 4
+  },
+  {
+   "time": 13.433,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -19.0,
+   "note": "23 languages tick 6",
+   "seed": 5
+  },
+  {
+   "time": 13.553,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -18.6,
+   "note": "23 languages tick 7",
+   "seed": 6
+  },
+  {
+   "time": 14.417,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -17,
+   "note": "card 9 takes focus",
+   "seed": 3
+  },
+  {
+   "time": 14.567,
+   "sound": "pluck/kalimba_soft",
+   "align": "onset",
+   "gain_db": -13,
+   "note": "spectrum wakes up",
+   "pitch": "E5"
+  },
+  {
+   "time": 14.8,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -18,
+   "note": "feed scrolls on"
+  },
+  {
+   "time": 14.84,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "skill name 1",
+   "seed": 0
+  },
+  {
+   "time": 14.94,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "skill name 2",
+   "seed": 1
+  },
+  {
+   "time": 15.04,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "skill name 3",
+   "seed": 2
+  },
+  {
+   "time": 15.1,
+   "sound": "whoosh_big/thump_airy",
+   "align": "peak",
+   "gain_db": -14,
+   "note": "whip pan to the agents"
+  },
+  {
+   "time": 15.14,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "skill name 4",
+   "seed": 3
+  },
+  {
+   "time": 15.24,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "skill name 5",
+   "seed": 4
+  },
+  {
+   "time": 15.34,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "skill name 6",
+   "seed": 5
+  },
+  {
+   "time": 16.102,
+   "sound": "cut_hit/sub",
+   "align": "onset",
+   "gain_db": -13,
+   "note": "the 6"
+  },
+  {
+   "time": 16.359,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "slot 1 lights",
+   "seed": 0
+  },
+  {
+   "time": 16.529,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "slot 2 lights",
+   "seed": 1
+  },
+  {
+   "time": 16.699,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "slot 3 lights",
+   "seed": 2
+  },
+  {
+   "time": 16.869,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "slot 4 lights",
+   "seed": 3
+  },
+  {
+   "time": 17.039,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "slot 5 lights",
+   "seed": 4
+  },
+  {
+   "time": 17.209,
+   "sound": "hover_tick/mid",
+   "align": "onset",
+   "gain_db": -22,
+   "note": "slot 6 lights",
+   "seed": 5
+  },
+  {
+   "time": 17.29,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -21,
+   "note": "camera to agent 1"
+  },
+  {
+   "time": 17.59,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "agent 1",
+   "seed": 0
+  },
+  {
+   "time": 18.19,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -21,
+   "note": "camera to agent 2"
+  },
+  {
+   "time": 18.49,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "agent 2",
+   "seed": 1
+  },
+  {
+   "time": 18.6,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -21,
+   "note": "camera to agent 3"
+  },
+  {
+   "time": 18.9,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "agent 3",
+   "seed": 2
+  },
+  {
+   "time": 19.147,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -21,
+   "note": "camera to agent 4"
+  },
+  {
+   "time": 19.447,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "agent 4",
+   "seed": 3
+  },
+  {
+   "time": 20.035,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -21,
+   "note": "camera to agent 5"
+  },
+  {
+   "time": 20.335,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "agent 5",
+   "seed": 4
+  },
+  {
+   "time": 20.923,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -21,
+   "note": "camera to agent 6"
+  },
+  {
+   "time": 21.223,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "agent 6",
+   "seed": 5
+  },
+  {
+   "time": 21.77,
+   "sound": "pluck/kalimba_soft",
+   "align": "onset",
+   "gain_db": -13,
+   "note": "all six on screen",
+   "pitch": "G5"
+  },
+  {
+   "time": 21.88,
+   "sound": "whoosh_fast/crisp",
+   "align": "peak",
+   "gain_db": -15,
+   "note": "push up to the install scene"
+  },
+  {
+   "time": 22.52,
+   "sound": "swipe/velvet",
+   "align": "peak",
+   "gain_db": -17,
+   "note": "chat window tilts into place"
+  },
+  {
+   "time": 23.767,
+   "sound": "fit/key/thock",
+   "align": "onset",
+   "gain_db": -21,
+   "note": "typing 1",
+   "seed": 0
+  },
+  {
+   "time": 23.964,
+   "sound": "fit/key/thock",
+   "align": "onset",
+   "gain_db": -21,
+   "note": "typing 2",
+   "seed": 1
+  },
+  {
+   "time": 24.162,
+   "sound": "fit/key/thock",
+   "align": "onset",
+   "gain_db": -21,
+   "note": "typing 3",
+   "seed": 2
+  },
+  {
+   "time": 24.359,
+   "sound": "fit/key/thock",
+   "align": "onset",
+   "gain_db": -21,
+   "note": "typing 4",
+   "seed": 3
+  },
+  {
+   "time": 24.556,
+   "sound": "fit/key/thock",
+   "align": "onset",
+   "gain_db": -21,
+   "note": "typing 5",
+   "seed": 4
+  },
+  {
+   "time": 24.754,
+   "sound": "fit/key/thock",
+   "align": "onset",
+   "gain_db": -21,
+   "note": "typing 6",
+   "seed": 5
+  },
+  {
+   "time": 24.951,
+   "sound": "fit/key/thock",
+   "align": "onset",
+   "gain_db": -21,
+   "note": "typing 7",
+   "seed": 6
+  },
+  {
+   "time": 25.148,
+   "sound": "fit/key/thock",
+   "align": "onset",
+   "gain_db": -21,
+   "note": "typing 8",
+   "seed": 7
+  },
+  {
+   "time": 25.345,
+   "sound": "fit/key/thock",
+   "align": "onset",
+   "gain_db": -21,
+   "note": "typing 9",
+   "seed": 8
+  },
+  {
+   "time": 25.543,
+   "sound": "fit/key/thock",
+   "align": "onset",
+   "gain_db": -21,
+   "note": "typing 10",
+   "seed": 9
+  },
+  {
+   "time": 25.74,
+   "sound": "fit/key.space/thock_space",
+   "align": "onset",
+   "gain_db": -14,
+   "note": "send"
+  },
+  {
+   "time": 25.99,
+   "sound": "swish/soft",
+   "align": "peak",
+   "gain_db": -18,
+   "note": "progress bar"
+  },
+  {
+   "time": 26.14,
+   "sound": "notify/mid_tine",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "reply 1"
+  },
+  {
+   "time": 26.573,
+   "sound": "notify/mid_tine",
+   "align": "onset",
+   "gain_db": -16,
+   "note": "reply 2"
+  },
+  {
+   "time": 27.077,
+   "sound": "notify/mid_tine",
+   "align": "onset",
+   "gain_db": -13,
+   "note": "reply 3"
+  },
+  {
+   "time": 27.88,
+   "sound": "whoosh_big/thump_airy",
+   "align": "peak",
+   "gain_db": -14,
+   "note": "circle mask to the end card"
+  },
+  {
+   "time": 28.47,
+   "sound": "pluck/kalimba_ring",
+   "align": "onset",
+   "gain_db": -11,
+   "note": "logo",
+   "pitch": "C5"
+  },
+  {
+   "time": 28.51,
+   "sound": "shimmer/m0",
+   "align": "onset",
+   "gain_db": -18,
+   "note": "logo shimmer"
+  },
+  {
+   "time": 29.14,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "tagline 1",
+   "seed": 0
+  },
+  {
+   "time": 29.405,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "tagline 2",
+   "seed": 1
+  },
+  {
+   "time": 29.67,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "tagline 3",
+   "seed": 2
+  },
+  {
+   "time": 30.199,
+   "sound": "ui_pop/soft",
+   "align": "onset",
+   "gain_db": -19,
+   "note": "tagline 4",
+   "seed": 3
+  },
+  {
+   "time": 30.62,
+   "sound": "ui_pop/step",
+   "align": "onset",
+   "gain_db": -15,
+   "note": "repository url",
+   "seed": 3
+  },
+  {
+   "time": 31.52,
+   "sound": "swipe/velvet",
+   "align": "peak",
+   "gain_db": -19,
+   "note": "sheen on the url"
+  }
+ ]
+}

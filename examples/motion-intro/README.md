@@ -7,6 +7,7 @@
 </p>
 <p align="center">
   <a href="out/intro.mp4"><strong>▶ Watch &amp; listen (<code>out/intro.mp4</code> · 34.1 s · 1080×1920 vertical · af_heart)</strong></a> ·
+  <a href="../motion-intro-horizontal/"><strong>Horizontal version (16:9)</strong></a> ·
   <a href="../motion-intro-pt/"><strong>Versão em português do Brasil</strong></a>
 </p>
 

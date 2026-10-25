@@ -1,0 +1,27 @@
+1
+00:00:00,400 --> 00:00:01,140
+cutroom.
+
+2
+00:00:01,740 --> 00:00:05,210
+A Swiss army knife, with fifteen skills, for making media.
+
+3
+00:00:05,560 --> 00:00:09,440
+Slides, diagrams, three-D figures, and document extraction.
+
+4
+00:00:09,740 --> 00:00:15,290
+Math and motion videos, brands, local voice in twenty-three languages, and sound effects.
+
+5
+00:00:15,640 --> 00:00:21,920
+Works with six coding agents: Claude Code, Cursor, Codex, Antigravity, Gemini, and Kiro.
+
+6
+00:00:22,320 --> 00:00:27,730
+To install, just send the repository link to your agent, and let it configure everything.
+
+7
+00:00:28,430 --> 00:00:30,720
+cutroom. Every piece cut on your machine.
